@@ -17,12 +17,12 @@ class ChatItemWidget extends StatelessWidget {
               padding: EdgeInsets.fromLTRB(15.0, 10.0, 15.0, 10.0),
               width: 200.0,
               decoration: BoxDecoration(
-                  color: Colors.green,
+                  color: Color(0xffFFF3DF),
                   borderRadius: BorderRadius.circular(8.0)),
               margin: const EdgeInsets.only(right: 10.0),
               child: const Text(
                 'This is a sent message',
-                style: TextStyle(color: Colors.white),
+                style: TextStyle(color: Color(0xff382823), fontSize: 17),
               ),
             )
           ]);
@@ -37,11 +37,12 @@ class ChatItemWidget extends StatelessWidget {
               padding: EdgeInsets.fromLTRB(15.0, 10.0, 15.0, 10.0),
               width: 200.0,
               decoration: BoxDecoration(
-                  color: Colors.pink, borderRadius: BorderRadius.circular(8.0)),
+                  color: Color(0xffFFF8ED),
+                  borderRadius: BorderRadius.circular(8.0)),
               margin: const EdgeInsets.only(left: 10.0),
               child: const Text(
                 'This is a received message',
-                style: TextStyle(color: Colors.white),
+                style: TextStyle(color: Color(0xff382823), fontSize: 17),
               ),
             )
           ],

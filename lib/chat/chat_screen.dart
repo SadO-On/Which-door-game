@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:responsive_sizer/responsive_sizer.dart';
+import 'package:gaurds_game/chat/chat_input_widget.dart';
+import 'package:gaurds_game/chat/chat_list_widget.dart';
 
-import 'chat_list_widget.dart';
+import '../widgets/top_bar_widget.dart';
 
 class ChatScreen extends StatelessWidget {
   const ChatScreen({super.key});
@@ -9,35 +10,20 @@ class ChatScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: const Color(0xffEDE3D4),
       body: SafeArea(
         child: Column(
           children: [
+            Padding(
+                padding:
+                    const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16),
+                child: TopBarWidget(
+                  onBackClicked: () {},
+                  title: 'You have 3 questions to ask for Steve',
+                )),
             ChatListWidget(),
-            Row(
-              children: [
-                SizedBox(
-                    height: 80,
-                    width: Adaptive.w(70),
-                    child: const TextField(
-                      textAlign: TextAlign.center,
-                      decoration: InputDecoration(
-                        focusColor: Colors.black,
-                        focusedBorder: OutlineInputBorder(),
-                        hintText: '1',
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.all(
-                            Radius.circular(0.0),
-                          ),
-                          borderSide: BorderSide(
-                            color: Colors.black,
-                            width: 1.0,
-                          ),
-                        ),
-                      ),
-                    )),
-                Text('btn go here')
-              ],
+            ChatInputWidget(
+              onSendClicked: (text) {},
             )
           ],
         ),
@@ -45,3 +31,6 @@ class ChatScreen extends StatelessWidget {
     );
   }
 }
+
+// ChatListWidget(),
+
