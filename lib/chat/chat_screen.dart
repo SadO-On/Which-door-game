@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gaurds_game/chat/chat_input_widget.dart';
 import 'package:gaurds_game/chat/chat_list_widget.dart';
+import 'package:gaurds_game/chat/id_card_widget.dart';
 
 import '../widgets/top_bar_widget.dart';
 
@@ -21,6 +22,7 @@ class ChatScreen extends StatelessWidget {
                   onBackClicked: () {},
                   title: 'You have 3 questions to ask for Steve',
                 )),
+            const IdCardWidget(),
             ChatListWidget(),
             ChatInputWidget(
               onSendClicked: (text) {},
