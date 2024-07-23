@@ -13,7 +13,7 @@ class ChatListWidget extends StatelessWidget {
         separatorBuilder: (context, index) => const SizedBox(
           height: 10,
         ),
-        itemCount: 90,
+        itemCount: 1,
         scrollDirection: Axis.vertical,
         shrinkWrap: true,
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),

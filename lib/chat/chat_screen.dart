@@ -2,11 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:gaurds_game/chat/chat_input_widget.dart';
 import 'package:gaurds_game/chat/chat_list_widget.dart';
 import 'package:gaurds_game/chat/id_card_widget.dart';
+import 'package:gaurds_game/data/model/guard.dart';
+import 'package:gaurds_game/data/model/level.dart';
 
 import '../widgets/top_bar_widget.dart';
 
 class ChatScreen extends StatelessWidget {
-  const ChatScreen({super.key});
+  ChatScreen({super.key});
+  final Guard guard = levels[1]!.guards.first;
+  final int noQuestions = levels[1]!.noOfQuestions;
 
   @override
   Widget build(BuildContext context) {
@@ -20,9 +24,12 @@ class ChatScreen extends StatelessWidget {
                     const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16),
                 child: TopBarWidget(
                   onBackClicked: () {},
-                  title: 'You have 3 questions to ask for Steve',
+                  title:
+                      'You have $noQuestions questions to ask for ${guard.name}',
                 )),
-            const IdCardWidget(),
+            IdCardWidget(
+              guard: guard,
+            ),
             ChatListWidget(),
             ChatInputWidget(
               onSendClicked: (text) {},

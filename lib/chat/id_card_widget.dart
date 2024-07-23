@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:gaurds_game/data/model/guard.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 import 'package:rich_typewriter/rich_typewriter.dart';
 
 class IdCardWidget extends StatelessWidget {
-  const IdCardWidget({super.key});
-
+  const IdCardWidget({super.key, required this.guard});
+  final Guard guard;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -43,17 +44,20 @@ class IdCardWidget extends StatelessWidget {
                       const SizedBox(
                         height: 28,
                       ),
-                      SvgPicture.asset('assets/images/SteveImage.svg',
-                          semanticsLabel: 'Steve Image'),
+                      SvgPicture.asset(guard.imageAsset,
+                          semanticsLabel: '${guard.name}\'s Image'),
                       const SizedBox(
                         height: 8,
                       ),
                       Image(
                           width: Adaptive.px(84),
                           image: const AssetImage('assets/images/barcode.png')),
-                      const Text(
-                        '6 0 2 9 8 3 9 8 3 2',
-                        style: TextStyle(fontFamily: 'Inter', fontSize: 10),
+                      Text(
+                        guard.id,
+                        style: const TextStyle(
+                            fontFamily: 'Inter',
+                            fontSize: 10,
+                            letterSpacing: 4),
                       )
                     ],
                   ),
@@ -73,24 +77,24 @@ class IdCardWidget extends StatelessWidget {
                       Table(
                         children: [
                           TableRow(children: [
-                            idCellWidget('ID:', '345678'),
-                            idCellWidget('Age:', '33 Years old'),
+                            idCellWidget('ID:', guard.id),
+                            idCellWidget('Age:', '${guard.age} Years old'),
                           ]),
                           TableRow(children: [
-                            idCellWidget('Name:', 'Steve'),
-                            idCellWidget('DOE:', '01/12/2029'),
+                            idCellWidget('Name:', guard.name),
+                            idCellWidget('DOE:', guard.expiryDate),
                           ]),
                           TableRow(children: [
-                            idCellWidget('Gender:', 'Male'),
-                            idCellWidget('Employee ID:', '45633'),
+                            idCellWidget('Gender:', guard.gender),
+                            idCellWidget('Employee ID:', guard.eId),
                           ]),
                           TableRow(children: [
-                            idCellWidget('Nationality:', 'Quarls'),
-                            idCellWidget('Blood Type:', 'O+'),
+                            idCellWidget('Nationality:', guard.nationality),
+                            idCellWidget('Blood Type:', guard.bloodType),
                           ]),
                           TableRow(children: [
-                            idCellWidget('Phone:', '+99 012 345 6789'),
-                            idCellWidget('Joined:', '09/04/2020'),
+                            idCellWidget('Phone:', guard.phoneNum),
+                            idCellWidget('Joined:', guard.joinedDate),
                           ]),
                         ],
                       ),

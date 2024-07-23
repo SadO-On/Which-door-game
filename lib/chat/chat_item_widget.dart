@@ -7,17 +7,16 @@ class ChatItemWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
     if (index % 2 == 0) {
       //This is the sent message. We'll later use data from firebase instead of index to determine the message is sent or received.
       return Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             Container(
-              padding: EdgeInsets.fromLTRB(15.0, 10.0, 15.0, 10.0),
+              padding: const EdgeInsets.fromLTRB(15.0, 10.0, 15.0, 10.0),
               width: 200.0,
               decoration: BoxDecoration(
-                  color: Color(0xffFFF3DF),
+                  color: const Color(0xffFFF3DF),
                   borderRadius: BorderRadius.circular(8.0)),
               margin: const EdgeInsets.only(right: 10.0),
               child: const Text(
@@ -34,10 +33,10 @@ class ChatItemWidget extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.end,
           children: <Widget>[
             Container(
-              padding: EdgeInsets.fromLTRB(15.0, 10.0, 15.0, 10.0),
+              padding: const EdgeInsets.fromLTRB(15.0, 10.0, 15.0, 10.0),
               width: 200.0,
               decoration: BoxDecoration(
-                  color: Color(0xffFFF8ED),
+                  color: const Color(0xffFFF8ED),
                   borderRadius: BorderRadius.circular(8.0)),
               margin: const EdgeInsets.only(left: 10.0),
               child: const Text(
