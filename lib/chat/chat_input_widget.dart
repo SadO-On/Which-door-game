@@ -37,7 +37,10 @@ class ChatInputWidget extends StatelessWidget {
                 ),
               )),
           ThreeDimensionButton(
-              size: 66,
+              width: 66,
+              height: 66,
+              shadowColor: const Color(0xffB9B39F),
+              backgroundColor: const Color(0xffE9E4D1),
               assetPath: 'assets/images/message_send.svg',
               label: 'Send Button',
               iconSize: 32,

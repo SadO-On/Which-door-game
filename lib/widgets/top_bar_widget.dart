@@ -18,9 +18,12 @@ class TopBarWidget extends StatelessWidget {
         ThreeDimensionButton(
           isRight: false,
           assetPath: 'assets/images/back_arrow.svg',
-          size: 46,
+          height: 46,
+          width: 46,
           iconSize: 32,
           label: 'Back button',
+          shadowColor: const Color(0xffB9B39F),
+          backgroundColor: const Color(0xffE9E4D1),
           onClick: () {},
         ),
         Text(

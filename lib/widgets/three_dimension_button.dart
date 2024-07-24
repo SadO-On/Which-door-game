@@ -4,16 +4,24 @@ import 'package:flutter_svg/svg.dart';
 class ThreeDimensionButton extends StatefulWidget {
   const ThreeDimensionButton(
       {super.key,
-      required this.size,
+      required this.height,
+      required this.width,
       required this.assetPath,
       required this.label,
       required this.iconSize,
       required this.onClick,
+      required this.backgroundColor,
+      required this.shadowColor,
+      this.text = '',
       required this.isRight});
 
-  final double size;
-  final String assetPath;
+  final double height;
+  final String? assetPath;
   final String label;
+  final String text;
+  final double width;
+  final Color backgroundColor;
+  final Color shadowColor;
   final double iconSize;
   final Function onClick;
   final bool isRight;
@@ -53,8 +61,8 @@ class _ThreeDimensionButtonState extends State<ThreeDimensionButton> {
             });
           },
           child: SizedBox(
-            height: widget.size,
-            width: widget.size,
+            height: widget.height,
+            width: widget.width,
             child: Stack(
               clipBehavior: Clip.none,
               children: [
@@ -62,11 +70,12 @@ class _ThreeDimensionButtonState extends State<ThreeDimensionButton> {
                   right: 0,
                   bottom: 0,
                   child: Container(
-                    height: widget.size,
-                    width: widget.size,
-                    decoration: const BoxDecoration(
-                        color: Color(0xffB9B39F),
-                        borderRadius: BorderRadius.all(Radius.circular(1))),
+                    height: widget.height,
+                    width: widget.width,
+                    decoration: BoxDecoration(
+                        color: widget.shadowColor,
+                        borderRadius:
+                            const BorderRadius.all(Radius.circular(1))),
                   ),
                 ),
                 AnimatedPositioned(
@@ -75,16 +84,28 @@ class _ThreeDimensionButtonState extends State<ThreeDimensionButton> {
                   bottom: _positionBottom,
                   duration: const Duration(milliseconds: 150),
                   child: Container(
-                    height: widget.size,
-                    width: widget.size,
-                    decoration: const BoxDecoration(
-                        color: Color(0xffE9E4D1),
-                        borderRadius: BorderRadius.all(Radius.circular(1))),
-                    child: SvgPicture.asset(widget.assetPath,
-                        fit: BoxFit.scaleDown,
-                        width: widget.iconSize,
-                        height: widget.iconSize,
-                        semanticsLabel: widget.label),
+                    height: widget.height,
+                    width: widget.width,
+                    decoration: BoxDecoration(
+                        color: widget.backgroundColor,
+                        borderRadius:
+                            const BorderRadius.all(Radius.circular(1))),
+                    child: widget.assetPath != null
+                        ? SvgPicture.asset(widget.assetPath!,
+                            fit: BoxFit.scaleDown,
+                            width: widget.iconSize,
+                            height: widget.iconSize,
+                            semanticsLabel: widget.label)
+                        : Align(
+                            alignment: Alignment.center,
+                            child: Text(
+                              widget.text,
+                              style: const TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 32,
+                                  fontFamily: 'IMFellDoublePica'),
+                            ),
+                          ),
                   ),
                 ),
               ],
