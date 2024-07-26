@@ -10,12 +10,12 @@ class LevelButtonWidget extends StatelessWidget {
 
   final bool isOpened;
   final int levelNumber;
-  final Function onClick;
+  final Function(int index) onClick;
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        onClick();
+        onClick(levelNumber);
       },
       child: SvgPicture.asset(
         'assets/images/level_$levelNumber.svg',

@@ -12,6 +12,10 @@ class GeminiAI {
       GeminiAI(GenerativeModel(
           model: 'gemini-1.5-flash',
           apiKey: apiKey,
+          safetySettings: _safetySettings,
+          generationConfig: GenerationConfig(
+            temperature: 1,
+          ),
           systemInstruction: systemInstructions));
 
   final GenerativeModel _generativeModel;
@@ -24,3 +28,22 @@ class GeminiAI {
     return promptResponse;
   }
 }
+
+List<SafetySetting> _safetySettings = [
+  SafetySetting(
+    HarmCategory.harassment,
+    HarmBlockThreshold.medium,
+  ),
+  SafetySetting(
+    HarmCategory.hateSpeech,
+    HarmBlockThreshold.medium,
+  ),
+  SafetySetting(
+    HarmCategory.sexuallyExplicit,
+    HarmBlockThreshold.high,
+  ),
+  SafetySetting(
+    HarmCategory.dangerousContent,
+    HarmBlockThreshold.medium,
+  ),
+];

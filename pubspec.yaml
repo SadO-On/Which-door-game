@@ -42,6 +42,8 @@ dependencies:
   flutter_svg: ^2.0.10+1
   rich_typewriter: ^1.0.1
   url_launcher: ^6.3.0
+  mobx: ^2.3.3+2
+  mobx_codegen: ^2.6.1
 
 dev_dependencies:
   flutter_test:

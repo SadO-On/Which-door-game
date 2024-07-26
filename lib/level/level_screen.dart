@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gaurds_game/chat/chat_screen.dart';
 import 'package:gaurds_game/level/level_button_widget.dart';
 import 'package:gaurds_game/utils/theme.dart';
 
@@ -37,7 +38,11 @@ class LevelScreen extends StatelessWidget {
                 itemCount: 9,
                 itemBuilder: (context, index) {
                   return LevelButtonWidget(
-                      onClick: () {},
+                      onClick: (levelNumber) {
+                        Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context) => ChatScreen(
+                                levelNumber: levelNumber, guardIndex: 0)));
+                      },
                       isOpened: index < 1,
                       levelNumber: index + 1);
                 },
