@@ -12,5 +12,5 @@ void setupGetIt() {
       GeminiAI.withApiKey(apiKey: Env.geminiKey, systemInstructions: s));
 
   getIt.registerFactoryParam<MainRepository, int, void>(
-      (i, _) => MainRepository(levelNumber: i));
+      (i, _) => MainRepository(i));
 }

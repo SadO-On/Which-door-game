@@ -27,7 +27,7 @@ The response will be in JSON format I'll give the example.
 Example:
 {
 "response":"Door B is the correct one",
-"guard_emotions""EVIL"
+"guard_emotions":"EVIL"
 }
 
 guard_emotions depends on your feeling it could be EVIL, MAD, IDLE

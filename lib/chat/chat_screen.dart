@@ -4,7 +4,8 @@ import 'package:gaurds_game/chat/widgets/chat_input_widget.dart';
 import 'package:gaurds_game/chat/widgets/chat_list_widget.dart';
 import 'package:gaurds_game/chat/widgets/id_card_widget.dart';
 import 'package:gaurds_game/data/model/level.dart';
-
+import 'package:mobx/mobx.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 import '../widgets/top_bar_widget.dart';
 
 class ChatScreen extends StatefulWidget {
@@ -22,8 +23,7 @@ class _ChatScreenState extends State<ChatScreen> {
 
   @override
   void initState() {
-    _store = ChatStore(levelNumber: widget.levelNumber);
-    _store.initRepo();
+    _store = ChatStore(widget.levelNumber);
     super.initState();
   }
 
@@ -46,9 +46,13 @@ class _ChatScreenState extends State<ChatScreen> {
             IdCardWidget(
               guard: levels[widget.levelNumber]!.guards[widget.guardIndex],
             ),
-            ChatListWidget(),
+            ChatListWidget(
+              store: _store,
+            ),
             ChatInputWidget(
-              onSendClicked: (text) {},
+              onSendClicked: (text) {
+                _store.sendPrompt(text);
+              },
             )
           ],
         ),

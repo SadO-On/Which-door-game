@@ -1,25 +1,31 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:gaurds_game/chat/chat_store.dart';
 
 import 'chat_item_widget.dart';
 
 class ChatListWidget extends StatelessWidget {
-  ChatListWidget({super.key});
+  ChatListWidget({super.key, required this.store});
   final ScrollController listScrollController = ScrollController();
+  final ChatStore store;
 
   @override
   Widget build(BuildContext context) {
     return Expanded(
-      child: ListView.separated(
-        separatorBuilder: (context, index) => const SizedBox(
-          height: 10,
+      child: Observer(
+        builder: (context) => ListView.separated(
+          separatorBuilder: (context, index) => const SizedBox(
+            height: 10,
+          ),
+          itemCount: store.conversations.length,
+          scrollDirection: Axis.vertical,
+          shrinkWrap: true,
+          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+          itemBuilder: (context, index) =>
+              ChatItemWidget(index: index, text: store.conversations[index]),
+          reverse: true,
+          controller: listScrollController,
         ),
-        itemCount: 1,
-        scrollDirection: Axis.vertical,
-        shrinkWrap: true,
-        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-        itemBuilder: (context, index) => ChatItemWidget(index),
-        reverse: true,
-        controller: listScrollController,
       ),
     );
   }

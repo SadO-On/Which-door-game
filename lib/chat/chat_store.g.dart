@@ -25,10 +25,49 @@ mixin _$ChatStore on _ChatStore, Store {
     });
   }
 
+  late final _$conversationsAtom =
+      Atom(name: '_ChatStore.conversations', context: context);
+
+  @override
+  ObservableList<String> get conversations {
+    _$conversationsAtom.reportRead();
+    return super.conversations;
+  }
+
+  @override
+  set conversations(ObservableList<String> value) {
+    _$conversationsAtom.reportWrite(value, super.conversations, () {
+      super.conversations = value;
+    });
+  }
+
+  late final _$sendPromptAsyncAction =
+      AsyncAction('_ChatStore.sendPrompt', context: context);
+
+  @override
+  Future<dynamic> sendPrompt(String text) {
+    return _$sendPromptAsyncAction.run(() => super.sendPrompt(text));
+  }
+
+  late final _$_ChatStoreActionController =
+      ActionController(name: '_ChatStore', context: context);
+
+  @override
+  void addNewConversation(String text) {
+    final _$actionInfo = _$_ChatStoreActionController.startAction(
+        name: '_ChatStore.addNewConversation');
+    try {
+      return super.addNewConversation(text);
+    } finally {
+      _$_ChatStoreActionController.endAction(_$actionInfo);
+    }
+  }
+
   @override
   String toString() {
     return '''
-isLoading: ${isLoading}
+isLoading: ${isLoading},
+conversations: ${conversations}
     ''';
   }
 }

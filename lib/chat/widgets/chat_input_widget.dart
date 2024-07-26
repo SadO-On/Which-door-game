@@ -3,11 +3,25 @@ import 'package:gaurds_game/widgets/three_dimension_button.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
 // ignore: must_be_immutable
-class ChatInputWidget extends StatelessWidget {
-  ChatInputWidget({super.key, required this.onSendClicked});
+class ChatInputWidget extends StatefulWidget {
+  const ChatInputWidget({super.key, required this.onSendClicked});
 
   final Function(String text) onSendClicked;
+
+  @override
+  State<ChatInputWidget> createState() => _ChatInputWidgetState();
+}
+
+class _ChatInputWidgetState extends State<ChatInputWidget> {
   String prompt = '';
+  final _controller = TextEditingController();
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -23,6 +37,7 @@ class ChatInputWidget extends StatelessWidget {
                   prompt = value;
                 },
                 textAlign: TextAlign.center,
+                controller: _controller,
                 decoration: const InputDecoration(
                   focusedBorder: OutlineInputBorder(),
                   hintStyle: TextStyle(
@@ -46,7 +61,9 @@ class ChatInputWidget extends StatelessWidget {
               iconSize: 32,
               isRight: true,
               onClick: () {
-                onSendClicked(prompt);
+                widget.onSendClicked(prompt);
+                prompt = '';
+                _controller.clear();
               })
         ],
       ),
