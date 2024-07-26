@@ -23,6 +23,7 @@ class ChatScreen extends StatelessWidget {
                 padding:
                     const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16),
                 child: TopBarWidget(
+                  fontSize: 16,
                   onBackClicked: () {},
                   title:
                       'You have $noQuestions questions to ask for ${guard.name}',

@@ -4,10 +4,14 @@ import 'three_dimension_button.dart';
 
 class TopBarWidget extends StatelessWidget {
   const TopBarWidget(
-      {super.key, required this.onBackClicked, required this.title});
+      {super.key,
+      required this.onBackClicked,
+      required this.title,
+      required this.fontSize});
 
   final String title;
   final Function onBackClicked;
+  final double fontSize;
 
   @override
   Widget build(BuildContext context) {
@@ -24,14 +28,18 @@ class TopBarWidget extends StatelessWidget {
           label: 'Back button',
           shadowColor: const Color(0xffB9B39F),
           backgroundColor: const Color(0xffE9E4D1),
-          onClick: () {},
+          onClick: () {
+            Future.delayed(const Duration(milliseconds: 200), () {
+              onBackClicked();
+            });
+          },
         ),
         Text(
           title,
-          style: const TextStyle(
-              color: Color(0xff653E1A),
+          style: TextStyle(
+              color: const Color(0xff653E1A),
               fontWeight: FontWeight.bold,
-              fontSize: 16),
+              fontSize: fontSize),
         ),
         const SizedBox()
       ],

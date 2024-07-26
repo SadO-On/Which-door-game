@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:gaurds_game/level/level_screen.dart';
 import 'package:gaurds_game/widgets/three_dimension_button.dart';
 import 'package:url_launcher/url_launcher.dart';
+
+import '../utils/theme.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -16,7 +19,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xffEDE3D4),
+      backgroundColor: backgroundColor,
       body: SafeArea(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -38,7 +41,15 @@ class _HomeScreenState extends State<HomeScreen> {
                     text: 'OPEN',
                     label: 'Start the game',
                     iconSize: 0,
-                    onClick: () {},
+                    onClick: () {
+                      Future.delayed(const Duration(milliseconds: 200), () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const LevelScreen()),
+                        );
+                      });
+                    },
                     backgroundColor: const Color(0xff653E1A),
                     shadowColor: const Color(0xff99846A),
                     isRight: false),
