@@ -46,7 +46,9 @@ dependencies:
   mobx_codegen: ^2.6.1
   flutter_mobx: ^2.2.1+1
   animated_text_kit: ^4.2.2
-  
+  flame_splash_screen: ^0.3.0
+  video_player: ^2.9.1
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -74,6 +76,7 @@ flutter:
   assets:
     - assets/images/
     - assets/lottie/
+    - assets/videos/
 
 
   # An image asset can refer to one or more resolution-specific "variants", see

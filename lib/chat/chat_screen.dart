@@ -4,8 +4,6 @@ import 'package:gaurds_game/chat/widgets/chat_input_widget.dart';
 import 'package:gaurds_game/chat/widgets/chat_list_widget.dart';
 import 'package:gaurds_game/chat/widgets/id_card_widget.dart';
 import 'package:gaurds_game/data/model/level.dart';
-import 'package:mobx/mobx.dart';
-import 'package:flutter_mobx/flutter_mobx.dart';
 import '../widgets/top_bar_widget.dart';
 
 class ChatScreen extends StatefulWidget {

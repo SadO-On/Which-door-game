@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:gaurds_game/chat/chat_screen.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
 import 'home/home_screen.dart';
@@ -30,3 +29,20 @@ class MyApp extends StatelessWidget {
     );
   }
 }
+
+
+
+// FlameSplashScreen(
+//             showBefore: (context) {
+//               return SvgPicture.asset(
+//                 width: 166,
+//                 height: 157,
+//                 'assets/images/98s_studio.svg',
+//                 semanticsLabel: '98\'s Studio Logo',
+//               );
+//             },
+//             onFinish: (BuildContext context) => Navigator.push(
+//                   context,
+//                   MaterialPageRoute(builder: (context) => const HomeScreen()),
+//                 ),
+//             theme: FlameSplashTheme.white)
