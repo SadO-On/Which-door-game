@@ -29,13 +29,13 @@ mixin _$ChatStore on _ChatStore, Store {
       Atom(name: '_ChatStore.conversations', context: context);
 
   @override
-  ObservableList<String> get conversations {
+  ObservableList<ChatModel> get conversations {
     _$conversationsAtom.reportRead();
     return super.conversations;
   }
 
   @override
-  set conversations(ObservableList<String> value) {
+  set conversations(ObservableList<ChatModel> value) {
     _$conversationsAtom.reportWrite(value, super.conversations, () {
       super.conversations = value;
     });
@@ -53,11 +53,11 @@ mixin _$ChatStore on _ChatStore, Store {
       ActionController(name: '_ChatStore', context: context);
 
   @override
-  void addNewConversation(String text) {
+  void addNewConversation(ChatModel model) {
     final _$actionInfo = _$_ChatStoreActionController.startAction(
         name: '_ChatStore.addNewConversation');
     try {
-      return super.addNewConversation(text);
+      return super.addNewConversation(model);
     } finally {
       _$_ChatStoreActionController.endAction(_$actionInfo);
     }

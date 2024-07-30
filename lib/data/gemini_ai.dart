@@ -23,6 +23,7 @@ class GeminiAI {
   Future<PromptResponse> sendPrompt(String prompt) async {
     final content = [Content.text(prompt)];
     final response = await _generativeModel.generateContent(content);
+    print(response.text);
     final json = jsonDecode(response.text!) as Map<String, dynamic>;
     final PromptResponse promptResponse = PromptResponse.fromJson(json);
     return promptResponse;
@@ -32,11 +33,11 @@ class GeminiAI {
 List<SafetySetting> _safetySettings = [
   SafetySetting(
     HarmCategory.harassment,
-    HarmBlockThreshold.medium,
+    HarmBlockThreshold.none,
   ),
   SafetySetting(
     HarmCategory.hateSpeech,
-    HarmBlockThreshold.medium,
+    HarmBlockThreshold.none,
   ),
   SafetySetting(
     HarmCategory.sexuallyExplicit,
@@ -44,6 +45,6 @@ List<SafetySetting> _safetySettings = [
   ),
   SafetySetting(
     HarmCategory.dangerousContent,
-    HarmBlockThreshold.medium,
+    HarmBlockThreshold.none,
   ),
 ];

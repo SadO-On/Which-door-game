@@ -39,7 +39,9 @@ class _ChatScreenState extends State<ChatScreen> {
                     const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16),
                 child: TopBarWidget(
                   fontSize: 16,
-                  onBackClicked: () {},
+                  onBackClicked: () {
+                    Navigator.pop(context);
+                  },
                   title:
                       'You have ${levels[widget.levelNumber]!.noOfQuestions} questions to ask for ${levels[widget.levelNumber]!.guards[widget.guardIndex].name}',
                 )),

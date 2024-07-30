@@ -1,3 +1,4 @@
+import 'package:gaurds_game/chat/model/chat_model.dart';
 import 'package:gaurds_game/data/main_repository.dart';
 import 'package:gaurds_game/locator.dart';
 import 'package:mobx/mobx.dart';
@@ -19,18 +20,22 @@ abstract class _ChatStore with Store {
   bool isLoading = false;
 
   @observable
-  ObservableList<String> conversations = ObservableList<String>.of(
-      ["You only have 3 questions to ask, so choose wisely."]);
+  ObservableList<ChatModel> conversations = ObservableList<ChatModel>.of([
+    ChatModel(
+        text: "You only have 3 questions to ask, so ask wisely.",
+        type: ChattingType.receiver)
+  ]);
 
   @action
-  void addNewConversation(String text) => conversations.add(text);
+  void addNewConversation(ChatModel model) => conversations.add(model);
 
   @action
   Future sendPrompt(String text) async {
     isLoading = true;
-    addNewConversation(text);
+    addNewConversation(ChatModel(text: text, type: ChattingType.sender));
     PromptResponse gemini = await _repository.sendPrompt(text);
 
-    addNewConversation(gemini.response);
+    addNewConversation(
+        ChatModel(text: gemini.response, type: ChattingType.receiver));
   }
 }

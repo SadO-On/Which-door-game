@@ -22,8 +22,8 @@ class ChatListWidget extends StatelessWidget {
           shrinkWrap: true,
           padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
           itemBuilder: (context, index) =>
-              ChatItemWidget(index: index, text: store.conversations[index]),
-          reverse: true,
+              ChatItemWidget(chatModel: store.conversations[index]),
+          reverse: false,
           controller: listScrollController,
         ),
       ),
