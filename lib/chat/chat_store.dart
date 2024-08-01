@@ -16,8 +16,9 @@ abstract class _ChatStore with Store {
 
   _ChatStore(this.levelNumber, this.guardIndex) {
     _repository = getIt.get<MainRepository>(
-        param1:
-            levelNumber); //TODO pass gaurdInex to get the correct system instructions
+        param1: levelNumber,
+        param2:
+            guardIndex); //TODO pass gaurdInex to get the correct system instructions
   }
   @observable
   bool isLoading = false;

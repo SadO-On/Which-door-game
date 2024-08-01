@@ -10,11 +10,13 @@ class GamePlayContainer extends StatelessWidget {
   final Level level;
   @override
   Widget build(BuildContext context) {
-    return GameWidget(
-      game: WhichDoorGameScreen(level: level),
+    return GameWidget.controlled(
+      gameFactory: () {
+        return WhichDoorGameScreen(level: level);
+      },
       overlayBuilderMap: {
         ChatScreen.overlayName: (context, WhichDoorGameScreen game) {
-          return ChatScreen(levelNumber: 1, guardIndex: 0, gameScreen: game);
+          return ChatScreen(levelNumber: level.id, gameScreen: game);
         }
       },
     );

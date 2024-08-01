@@ -2,7 +2,9 @@ import 'dart:async';
 
 import 'package:flame/components.dart';
 import 'package:flame/events.dart';
+import 'package:flame/flame.dart';
 import 'package:flame_rive/flame_rive.dart';
+import 'package:flutter/services.dart';
 import 'package:gaurds_game/data/model/level.dart';
 import 'package:gaurds_game/game/components/rive_button_component.dart';
 import 'package:gaurds_game/game/which_door_game_screen.dart';
@@ -76,7 +78,8 @@ class GameLevelOne extends Component
     super.onGameResize(size);
   }
 
-  void openChat() {
+  void openChat() async {
+    await Flame.device.setPortrait();
     gameRef.overlays.add("ChatScreen");
   }
 
@@ -92,12 +95,14 @@ class GameLevelOne extends Component
 
     chatWithWillyComponent =
         RiveButtonComponent(chatWithWillyArtBoard, 'Chat with Willy', () {
-      print("cleck");
+      gameRef.guardIndex = 1;
+      openChat();
     });
 
     chatWithSteveComponent =
         RiveButtonComponent(chatWithSteveArtBoard, 'Chat with Steve', () {
-      print("cleck");
+      gameRef.guardIndex = 0;
+      openChat();
     });
 
     viewSteveIdComponent =

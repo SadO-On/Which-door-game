@@ -24,23 +24,8 @@ class _ChatScreenState extends State<ChatScreen> {
 
   @override
   void initState() {
-    SystemChrome.setPreferredOrientations([
-      DeviceOrientation.portraitDown,
-      DeviceOrientation.portraitUp,
-    ]);
     _store = ChatStore(widget.levelNumber, widget.gameScreen.guardIndex);
     super.initState();
-  }
-
-  @override
-  void dispose() {
-    SystemChrome.setPreferredOrientations([
-      DeviceOrientation.landscapeRight,
-      DeviceOrientation.landscapeLeft,
-      DeviceOrientation.portraitUp,
-      DeviceOrientation.portraitDown,
-    ]);
-    super.dispose();
   }
 
   @override
@@ -56,6 +41,7 @@ class _ChatScreenState extends State<ChatScreen> {
                 child: TopBarWidget(
                   fontSize: 16,
                   onBackClicked: () {
+                    widget.gameScreen.setLandScape();
                     widget.gameScreen.overlays.remove(ChatScreen.overlayName);
                   },
                   title:
