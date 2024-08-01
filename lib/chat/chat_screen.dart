@@ -1,17 +1,24 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:gaurds_game/chat/chat_store.dart';
 import 'package:gaurds_game/chat/widgets/chat_input_widget.dart';
 import 'package:gaurds_game/chat/widgets/chat_list_widget.dart';
 import 'package:gaurds_game/chat/widgets/id_card_widget.dart';
 import 'package:gaurds_game/data/model/level.dart';
+import 'package:gaurds_game/game/which_door_game_screen.dart';
 import '../widgets/top_bar_widget.dart';
 
 class ChatScreen extends StatefulWidget {
   const ChatScreen(
-      {super.key, required this.levelNumber, required this.guardIndex});
+      {super.key,
+      required this.levelNumber,
+      required this.guardIndex,
+      required this.gameScreen});
   final int levelNumber;
   final int guardIndex;
+  final WhichDoorGameScreen gameScreen;
 
+  static const String overlayName = "ChatScreen";
   @override
   State<ChatScreen> createState() => _ChatScreenState();
 }
@@ -21,8 +28,23 @@ class _ChatScreenState extends State<ChatScreen> {
 
   @override
   void initState() {
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.portraitDown,
+      DeviceOrientation.portraitUp,
+    ]);
     _store = ChatStore(widget.levelNumber);
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.landscapeRight,
+      DeviceOrientation.landscapeLeft,
+      DeviceOrientation.portraitUp,
+      DeviceOrientation.portraitDown,
+    ]);
+    super.dispose();
   }
 
   @override
@@ -38,7 +60,7 @@ class _ChatScreenState extends State<ChatScreen> {
                 child: TopBarWidget(
                   fontSize: 16,
                   onBackClicked: () {
-                    Navigator.pop(context);
+                    widget.gameScreen.overlays.remove(ChatScreen.overlayName);
                   },
                   title:
                       'You have ${levels[widget.levelNumber]!.noOfQuestions} questions to ask for ${levels[widget.levelNumber]!.guards[widget.guardIndex].name}',

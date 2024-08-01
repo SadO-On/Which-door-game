@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gaurds_game/game/game_play_container.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
 import 'home/home_screen.dart';
@@ -24,7 +25,7 @@ class MyApp extends StatelessWidget {
               colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
               useMaterial3: true,
             ),
-            home: const HomeScreen());
+            home: const GamePlayContainer());
       },
     );
   }

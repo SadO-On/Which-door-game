@@ -39,9 +39,9 @@ class LevelScreen extends StatelessWidget {
                 itemBuilder: (context, index) {
                   return LevelButtonWidget(
                       onClick: (levelNumber) {
-                        Navigator.of(context).push(MaterialPageRoute(
-                            builder: (context) => ChatScreen(
-                                levelNumber: levelNumber, guardIndex: 0)));
+                        // Navigator.of(context).push(MaterialPageRoute(
+                        //     builder: (context) => ChatScreen(
+                        //         levelNumber: levelNumber, guardIndex: 0)));
                       },
                       isOpened: index < 1,
                       levelNumber: index + 1);
