@@ -49,6 +49,7 @@ dependencies:
   flame_splash_screen: ^0.3.0
   video_player: ^2.9.1
   flame: ^1.18.0
+  flame_rive: ^1.10.2
 
 dev_dependencies:
   flutter_test:
@@ -78,6 +79,7 @@ flutter:
     - assets/images/
     - assets/lottie/
     - assets/videos/
+    - assets/rive/
 
 
   # An image asset can refer to one or more resolution-specific "variants", see
