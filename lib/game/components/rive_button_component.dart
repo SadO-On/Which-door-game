@@ -28,7 +28,13 @@ class RiveButtonComponent extends RiveComponent with TapCallbacks {
     _controller =
         StateMachineController.fromArtboard(artboard, "State Machine 1");
     artboard.addController(_controller!);
-    textComponent = TextComponent(text: text);
+    textComponent = TextComponent(
+        text: text,
+        textRenderer: TextPaint(
+            style: const TextStyle(
+                color: Colors.white,
+                fontFamily: 'IMFellDoublePica',
+                fontSize: 10)));
     _trigger = _controller?.findSMI('Button click');
     add(textComponent);
 
@@ -37,14 +43,8 @@ class RiveButtonComponent extends RiveComponent with TapCallbacks {
 
   @override
   void onGameResize(Vector2 size) {
-    textComponent.textRenderer = TextPaint(
-        style: const TextStyle(
-            color: Colors.white,
-            fontFamily: 'IM FELL Double Pica',
-            fontSize: 10));
-
     textComponent.position = Vector2(width / 2 - (textComponent.size.x / 2) - 4,
-        height / 2 - (textComponent.size.y / 2));
+        height / 2 - (textComponent.size.y / 2 - textComponent.y / 6));
     super.onGameResize(size);
   }
 

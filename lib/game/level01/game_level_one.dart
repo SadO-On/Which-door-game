@@ -4,7 +4,6 @@ import 'package:flame/components.dart';
 import 'package:flame/events.dart';
 import 'package:flame_rive/flame_rive.dart';
 import 'package:gaurds_game/game/components/rive_button_component.dart';
-import 'package:gaurds_game/game/level01/components/button_component.dart';
 import 'package:gaurds_game/game/which_door_game_screen.dart';
 
 import '../components/mission_component.dart';
@@ -14,9 +13,13 @@ class GameLevelOne extends Component
     with HasGameRef<WhichDoorGameScreen>, TapCallbacks {
   late final SpriteComponent doorA;
   late final SpriteComponent doorB;
-  late final SpriteComponent gaurd2;
   late final GuardComponent willy;
-  late final RiveButtonComponent buttonComponent;
+  late final GuardComponent steve;
+  late final RiveButtonComponent viewWillyIdComponent;
+  late final RiveButtonComponent viewSteveIdComponent;
+  late final RiveButtonComponent chatWithSteveComponent;
+  late final RiveButtonComponent chatWithWillyComponent;
+
   @override
   FutureOr<void> onLoad() async {
     add(MissionComponent(
@@ -30,25 +33,17 @@ class GameLevelOne extends Component
     doorB = SpriteComponent(size: size, sprite: spriteB);
     add(doorB);
 
-    final spriteGaurd = await Sprite.load('test_guard.png');
-    final gaurdSize = Vector2(77, 222);
-
-    gaurd2 = SpriteComponent(size: gaurdSize, sprite: spriteGaurd);
-    add(gaurd2);
+    final steveArtBoard = await loadArtboard(
+        RiveFile.asset('assets/rive/steve_idle_standing.riv'));
+    steve = GuardComponent(artboard: steveArtBoard);
+    add(steve);
 
     final willyArtBoard = await loadArtboard(
         RiveFile.asset('assets/rive/willy_idle_standing.riv'));
     willy = GuardComponent(artboard: willyArtBoard);
     add(willy);
 
-    final buttonArtBoard =
-        await loadArtboard(RiveFile.asset('assets/rive/button.riv'));
-    buttonComponent =
-        RiveButtonComponent(buttonArtBoard, 'Chat with willy', () {
-      print("cleck");
-    });
-
-    add(buttonComponent);
+    await _loadButtons();
     return super.onLoad();
   }
 
@@ -60,15 +55,62 @@ class GameLevelOne extends Component
     willy.position = Vector2(
         size.x * 0.25 - (willy.size.x - 20), size.y * 0.5 - willy.size.y / 3);
 
-    gaurd2.position = Vector2(
-        size.x * 0.75 - (gaurd2.size.x - 20), size.y * 0.5 - gaurd2.size.y / 3);
+    steve.position = Vector2(
+        size.x * 0.75 - (steve.size.x - 20), size.y * 0.5 - steve.size.y / 3);
 
-    buttonComponent.position =
+    chatWithWillyComponent.position =
         Vector2(size.x * 0.10 - (willy.size.x - 20), size.y * 0.5);
+
+    chatWithSteveComponent.position =
+        Vector2(size.x * 0.60 - (steve.size.x - 20), size.y * 0.5);
+
+    viewSteveIdComponent.position = Vector2(size.x * 0.10 - (willy.size.x - 20),
+        (size.y * 0.5 - viewSteveIdComponent.height));
+
+    viewWillyIdComponent.position = Vector2(size.x * 0.60 - (steve.size.x - 20),
+        (size.y * 0.5 - viewWillyIdComponent.height));
     super.onGameResize(size);
   }
 
   void openChat() {
     gameRef.overlays.add("ChatScreen");
+  }
+
+  Future _loadButtons() async {
+    final chatWithWillyArtBoard =
+        await loadArtboard(RiveFile.asset('assets/rive/button.riv'));
+    final chatWithSteveArtBoard =
+        await loadArtboard(RiveFile.asset('assets/rive/button.riv'));
+    final viewWillyIdArtBoard =
+        await loadArtboard(RiveFile.asset('assets/rive/button.riv'));
+    final viewSteveIdArtBoard =
+        await loadArtboard(RiveFile.asset('assets/rive/button.riv'));
+
+    chatWithWillyComponent =
+        RiveButtonComponent(chatWithWillyArtBoard, 'Chat with Willy', () {
+      print("cleck");
+    });
+
+    chatWithSteveComponent =
+        RiveButtonComponent(chatWithSteveArtBoard, 'Chat with Steve', () {
+      print("cleck");
+    });
+
+    viewSteveIdComponent =
+        RiveButtonComponent(viewSteveIdArtBoard, 'View Steve’s ID', () {
+      print("cleck");
+    });
+
+    viewWillyIdComponent =
+        RiveButtonComponent(viewWillyIdArtBoard, 'View Willy’s ID', () {
+      print("cleck");
+    });
+
+    addAll([
+      viewSteveIdComponent,
+      viewWillyIdComponent,
+      chatWithSteveComponent,
+      chatWithWillyComponent
+    ]);
   }
 }
