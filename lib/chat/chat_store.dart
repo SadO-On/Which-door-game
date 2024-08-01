@@ -11,10 +11,13 @@ class ChatStore = _ChatStore with _$ChatStore;
 
 abstract class _ChatStore with Store {
   final int levelNumber;
+  final int guardIndex;
   late MainRepository _repository;
 
-  _ChatStore(this.levelNumber) {
-    _repository = getIt.get<MainRepository>(param1: levelNumber);
+  _ChatStore(this.levelNumber, this.guardIndex) {
+    _repository = getIt.get<MainRepository>(
+        param1:
+            levelNumber); //TODO pass gaurdInex to get the correct system instructions
   }
   @observable
   bool isLoading = false;

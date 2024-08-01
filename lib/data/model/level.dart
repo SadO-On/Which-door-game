@@ -1,12 +1,14 @@
 import 'guard.dart';
 
 class Level {
+  final int id;
   final List<Guard> guards;
   final String riddle;
   final int noOfQuestions;
   final String systemInstructions;
   Level(
-      {required this.riddle,
+      {required this.id,
+      required this.riddle,
       required this.guards,
       required this.systemInstructions,
       required this.noOfQuestions});
@@ -14,6 +16,7 @@ class Level {
 
 final levels = {
   1: Level(
+      id: 1,
       guards: [guards['steve']!],
       noOfQuestions: 3,
       systemInstructions: """

@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flame/components.dart';
 import 'package:flame/events.dart';
 import 'package:flame_rive/flame_rive.dart';
+import 'package:gaurds_game/data/model/level.dart';
 import 'package:gaurds_game/game/components/rive_button_component.dart';
 import 'package:gaurds_game/game/which_door_game_screen.dart';
 
@@ -11,6 +12,9 @@ import 'components/guard_component.dart';
 
 class GameLevelOne extends Component
     with HasGameRef<WhichDoorGameScreen>, TapCallbacks {
+  GameLevelOne({required this.level});
+
+  final Level level;
   late final SpriteComponent doorA;
   late final SpriteComponent doorB;
   late final GuardComponent willy;

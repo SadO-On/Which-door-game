@@ -10,12 +10,8 @@ import '../widgets/top_bar_widget.dart';
 
 class ChatScreen extends StatefulWidget {
   const ChatScreen(
-      {super.key,
-      required this.levelNumber,
-      required this.guardIndex,
-      required this.gameScreen});
+      {super.key, required this.levelNumber, required this.gameScreen});
   final int levelNumber;
-  final int guardIndex;
   final WhichDoorGameScreen gameScreen;
 
   static const String overlayName = "ChatScreen";
@@ -32,7 +28,7 @@ class _ChatScreenState extends State<ChatScreen> {
       DeviceOrientation.portraitDown,
       DeviceOrientation.portraitUp,
     ]);
-    _store = ChatStore(widget.levelNumber);
+    _store = ChatStore(widget.levelNumber, widget.gameScreen.guardIndex);
     super.initState();
   }
 
@@ -63,10 +59,11 @@ class _ChatScreenState extends State<ChatScreen> {
                     widget.gameScreen.overlays.remove(ChatScreen.overlayName);
                   },
                   title:
-                      'You have ${levels[widget.levelNumber]!.noOfQuestions} questions to ask for ${levels[widget.levelNumber]!.guards[widget.guardIndex].name}',
+                      'You have ${levels[widget.levelNumber]!.noOfQuestions} questions to ask for ${levels[widget.levelNumber]!.guards[widget.gameScreen.guardIndex].name}',
                 )),
             IdCardWidget(
-              guard: levels[widget.levelNumber]!.guards[widget.guardIndex],
+              guard: levels[widget.levelNumber]!
+                  .guards[widget.gameScreen.guardIndex],
             ),
             ChatListWidget(
               store: _store,
