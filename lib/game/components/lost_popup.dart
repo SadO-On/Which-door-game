@@ -17,6 +17,8 @@ class LostPopup extends StatelessWidget {
         asset: 'assets/images/lost_door.svg',
         btnText: 'Retry',
         isAnimation: false,
+        width: null,
+        height: null,
         onClick: () {
           Navigator.pushReplacement(
             context,

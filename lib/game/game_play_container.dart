@@ -2,6 +2,7 @@ import 'package:flame/game.dart';
 import 'package:flutter/material.dart';
 import 'package:gaurds_game/chat/chat_screen.dart';
 import 'package:gaurds_game/data/model/level.dart';
+import 'package:gaurds_game/game/components/guard_id_popup.dart';
 import 'package:gaurds_game/game/components/win_popup.dart';
 import 'package:gaurds_game/game/which_door_game_screen.dart';
 
@@ -13,17 +14,22 @@ class GamePlayContainer extends StatelessWidget {
   final Level level;
   @override
   Widget build(BuildContext context) {
-    return GameWidget(
-        game: WhichDoorGameScreen(level: level),
-        overlayBuilderMap: {
-          ChatScreen.overlayName: (context, WhichDoorGameScreen game) =>
-              ChatScreen(levelNumber: level.id, gameScreen: game),
-          WinPopup.overlayName: (context, WhichDoorGameScreen game) => WinPopup(
-                game: game,
-              ),
-          LostPopup.overlayName: (context, WhichDoorGameScreen game) =>
-              LostPopup(game: game)
-        });
+    return GameWidget.controlled(
+      gameFactory: () {
+        return WhichDoorGameScreen(level: level);
+      },
+      overlayBuilderMap: {
+        ChatScreen.overlayName: (context, WhichDoorGameScreen game) =>
+            ChatScreen(levelNumber: level.id, gameScreen: game),
+        WinPopup.overlayName: (context, WhichDoorGameScreen game) => WinPopup(
+              game: game,
+            ),
+        LostPopup.overlayName: (context, WhichDoorGameScreen game) =>
+            LostPopup(game: game),
+        GuardIdPopup.overlayName: (context, WhichDoorGameScreen game) =>
+            GuardIdPopup(game: game, levelNumber: level.id)
+      },
+    );
   }
 }
 
@@ -31,9 +37,31 @@ class GamePlayContainer extends StatelessWidget {
 //       gameFactory: () {
 //         return WhichDoorGameScreen(level: level);
 //       },
-//       overlayBuilderMap: {
-//         ChatScreen.overlayName: (context, WhichDoorGameScreen game) {
-//           return ChatScreen(levelNumber: level.id, gameScreen: game);
-//         }
-//       },
+// overlayBuilderMap: {
+//           ChatScreen.overlayName: (context, WhichDoorGameScreen game) =>
+//               ChatScreen(levelNumber: level.id, gameScreen: game),
+//           WinPopup.overlayName: (context, WhichDoorGameScreen game) => WinPopup(
+//                 game: game,
+//               ),
+//           LostPopup.overlayName: (context, WhichDoorGameScreen game) =>
+//               LostPopup(game: game),
+//           GuardIdPopup.overlayName: (context, WhichDoorGameScreen game) =>
+//               GuardIdPopup(game: game, levelNumber: level.id)
+//         },
 //     )
+
+
+
+// GameWidget(
+//         game: WhichDoorGameScreen(level: level),
+//         overlayBuilderMap: {
+//           ChatScreen.overlayName: (context, WhichDoorGameScreen game) =>
+//               ChatScreen(levelNumber: level.id, gameScreen: game),
+//           WinPopup.overlayName: (context, WhichDoorGameScreen game) => WinPopup(
+//                 game: game,
+//               ),
+//           LostPopup.overlayName: (context, WhichDoorGameScreen game) =>
+//               LostPopup(game: game),
+//           GuardIdPopup.overlayName: (context, WhichDoorGameScreen game) =>
+//               GuardIdPopup(game: game, levelNumber: level.id)
+//         });

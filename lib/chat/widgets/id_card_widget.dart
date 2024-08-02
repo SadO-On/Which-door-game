@@ -1,3 +1,4 @@
+import 'package:flame_rive/flame_rive.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/svg.dart';
@@ -44,8 +45,13 @@ class IdCardWidget extends StatelessWidget {
                       const SizedBox(
                         height: 28,
                       ),
-                      SvgPicture.asset(guard.imageAsset,
-                          semanticsLabel: '${guard.name}\'s Image'),
+                      SizedBox(
+                        width: 78,
+                        height: 90,
+                        child: RiveAnimation.asset(
+                          guard.asset,
+                        ),
+                      ),
                       const SizedBox(
                         height: 8,
                       ),

@@ -22,27 +22,19 @@ class WhichDoorGameScreen extends FlameGame {
 
   int guardIndex = 0;
 
-  void setLandScape() {
-    Flame.device.setLandscape();
+  FutureOr<void> setLandScape() async {
+    await Flame.device.setLandscape();
   }
 
   @override
-  FutureOr<void> onLoad() {
-    setLandScape();
+  FutureOr<void> onLoad() async {
+    await setLandScape();
 
     add(FpsTextComponent(
         position: Vector2(30, 20),
         textRenderer: TextPaint(style: const TextStyle(color: Colors.black))));
-    add(levelDecider());
+    await add(levelDecider());
     return super.onLoad();
-  }
-
-  void playerLost() {
-    overlays.add(LostPopup.overlayName);
-  }
-
-  void playerWin() {
-    overlays.add(WinPopup.overlayName);
   }
 
   Component levelDecider() {
@@ -54,5 +46,13 @@ class WhichDoorGameScreen extends FlameGame {
       default:
         return GameLevelOne(level: level);
     }
+  }
+
+  void hideOverlay(String overlayName) {
+    overlays.remove(overlayName);
+  }
+
+  void showOverlay(String overlayName) {
+    overlays.add(overlayName);
   }
 }

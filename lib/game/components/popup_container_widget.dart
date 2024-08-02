@@ -12,11 +12,15 @@ class PopupContainerWidget extends StatelessWidget {
       required this.btnText,
       required this.isAnimation,
       required this.onClick,
+      required this.height,
+      required this.width,
       required this.text});
 
   final bool isAnimation;
   final String asset;
   final String text;
+  final double? width;
+  final double? height;
   final String btnText;
   final Function onClick;
   @override
@@ -35,7 +39,12 @@ class PopupContainerWidget extends StatelessWidget {
                   semanticsLabel: 'Pop up screen'),
               Column(
                 children: [
-                  SvgPicture.asset(asset, semanticsLabel: text),
+                  SvgPicture.asset(
+                    asset,
+                    semanticsLabel: text,
+                    width: width,
+                    height: height,
+                  ),
                   Padding(
                     padding: const EdgeInsets.symmetric(vertical: 12),
                     child: Text(

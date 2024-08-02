@@ -17,6 +17,8 @@ class WinPopup extends StatelessWidget {
         asset: 'assets/images/correct_door.svg',
         btnText: 'Next',
         isAnimation: false,
+        width: null,
+        height: null,
         onClick: () {
           Navigator.pushReplacement(
             context,

@@ -7,7 +7,10 @@ import 'package:flame_rive/flame_rive.dart';
 import 'package:flame_svg/flame_svg.dart';
 import 'package:gaurds_game/chat/chat_screen.dart';
 import 'package:gaurds_game/data/model/level.dart';
+import 'package:gaurds_game/game/components/guard_id_popup.dart';
+import 'package:gaurds_game/game/components/lost_popup.dart';
 import 'package:gaurds_game/game/components/rive_button_component.dart';
+import 'package:gaurds_game/game/components/win_popup.dart';
 import 'package:gaurds_game/game/which_door_game_screen.dart';
 
 import '../components/mission_component.dart';
@@ -30,18 +33,17 @@ class GameLevelOne extends Component
   RiveButtonComponent? doorAButton;
   RiveButtonComponent? doorBButton;
   LampComponent? lampAnimation;
-
+  SvgComponent? background;
   @override
   FutureOr<void> onLoad() async {
     final svgInstance = await Svg.load('images/background_2_doors.svg');
-    final backgroundSize = gameRef.size;
 
-    final background = SvgComponent(
-      size: backgroundSize,
+    background = SvgComponent(
+      size: gameRef.size,
       svg: svgInstance,
     );
 
-    add(background);
+    add(background!);
 
     add(MissionComponent(
         'You have 3 questions. You can choose the guard you want to ask to find out who is the liar and who is the honest one.'));
@@ -94,6 +96,8 @@ class GameLevelOne extends Component
 
     doorBButton?.position = Vector2(size.x * 0.68 - (willy?.size.x ?? 0 - 20),
         (size.y * 0.5 - (viewSteveIdComponent?.height ?? 0)));
+
+    background?.size = size;
     super.onGameResize(size);
   }
 
@@ -115,7 +119,7 @@ class GameLevelOne extends Component
 
   void openChat() async {
     await Flame.device.setPortrait();
-    gameRef.overlays.add(ChatScreen.overlayName);
+    gameRef.showOverlay(ChatScreen.overlayName);
   }
 
   Future _loadButtons() async {
@@ -133,11 +137,11 @@ class GameLevelOne extends Component
         await loadArtboard(RiveFile.asset('assets/rive/button.riv'));
 
     doorAButton = RiveButtonComponent(aDoorArtBoard, 'Door A', () {
-      gameRef.playerWin();
+      gameRef.showOverlay(WinPopup.overlayName);
     });
 
     doorBButton = RiveButtonComponent(bDoorArtBoard, 'Door B', () {
-      gameRef.playerLost();
+      gameRef.showOverlay(LostPopup.overlayName);
     });
 
     chatWithWillyComponent =
@@ -156,12 +160,16 @@ class GameLevelOne extends Component
 
     viewSteveIdComponent =
         RiveButtonComponent(viewSteveIdArtBoard, 'View Steve’s ID', () {
-      print("cleck");
+      gameRef.guardIndex = 0;
+
+      game.showOverlay(GuardIdPopup.overlayName);
     });
 
     viewWillyIdComponent =
         RiveButtonComponent(viewWillyIdArtBoard, 'View Willy’s ID', () {
-      print("cleck");
+      gameRef.guardIndex = 1;
+
+      game.showOverlay(GuardIdPopup.overlayName);
     });
 
     await addAll([
