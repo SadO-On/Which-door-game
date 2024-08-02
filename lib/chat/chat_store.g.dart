@@ -25,6 +25,22 @@ mixin _$ChatStore on _ChatStore, Store {
     });
   }
 
+  late final _$remainingQuestionsAtom =
+      Atom(name: '_ChatStore.remainingQuestions', context: context);
+
+  @override
+  int get remainingQuestions {
+    _$remainingQuestionsAtom.reportRead();
+    return super.remainingQuestions;
+  }
+
+  @override
+  set remainingQuestions(int value) {
+    _$remainingQuestionsAtom.reportWrite(value, super.remainingQuestions, () {
+      super.remainingQuestions = value;
+    });
+  }
+
   late final _$conversationsAtom =
       Atom(name: '_ChatStore.conversations', context: context);
 
@@ -67,6 +83,7 @@ mixin _$ChatStore on _ChatStore, Store {
   String toString() {
     return '''
 isLoading: ${isLoading},
+remainingQuestions: ${remainingQuestions},
 conversations: ${conversations}
     ''';
   }

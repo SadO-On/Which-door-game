@@ -14,7 +14,7 @@ abstract class _ChatStore with Store {
   final int guardIndex;
   late MainRepository _repository;
 
-  _ChatStore(this.levelNumber, this.guardIndex) {
+  _ChatStore(this.levelNumber, this.guardIndex, this.remainingQuestions) {
     _repository = getIt.get<MainRepository>(
         param1: levelNumber,
         param2:
@@ -22,6 +22,9 @@ abstract class _ChatStore with Store {
   }
   @observable
   bool isLoading = false;
+
+  @observable
+  int remainingQuestions;
 
   @observable
   ObservableList<ChatModel> conversations = ObservableList<ChatModel>.of([
@@ -38,8 +41,12 @@ abstract class _ChatStore with Store {
     isLoading = true;
     addNewConversation(ChatModel(text: text, type: ChattingType.sender));
     PromptResponse gemini = await _repository.sendPrompt(text);
-
+    isLoading = false;
+    remainingQuestions -= 1;
     addNewConversation(
         ChatModel(text: gemini.response, type: ChattingType.receiver));
+    if (remainingQuestions == 0) {
+      //TODO navigate back progress
+    }
   }
 }

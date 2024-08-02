@@ -25,6 +25,8 @@ class GameLevelOne extends Component
   late final RiveButtonComponent viewSteveIdComponent;
   late final RiveButtonComponent chatWithSteveComponent;
   late final RiveButtonComponent chatWithWillyComponent;
+  late final RiveButtonComponent doorAButton;
+  late final RiveButtonComponent doorBButton;
 
   @override
   FutureOr<void> onLoad() async {
@@ -75,6 +77,12 @@ class GameLevelOne extends Component
 
     viewWillyIdComponent.position = Vector2(size.x * 0.60 - (steve.size.x - 20),
         (size.y * 0.5 - viewWillyIdComponent.height));
+
+    doorAButton.position = Vector2(size.x * 0.60 - (steve.size.x - 20),
+        (size.y * 0.5 - viewWillyIdComponent.height));
+
+    doorBButton.position = Vector2(size.x * 0.10 - (willy.size.x - 20),
+        (size.y * 0.5 - viewSteveIdComponent.height));
     super.onGameResize(size);
   }
 
@@ -92,17 +100,31 @@ class GameLevelOne extends Component
         await loadArtboard(RiveFile.asset('assets/rive/button.riv'));
     final viewSteveIdArtBoard =
         await loadArtboard(RiveFile.asset('assets/rive/button.riv'));
+    final aDoorArtBoard =
+        await loadArtboard(RiveFile.asset('assets/rive/button.riv'));
+    final bDoorArtBoard =
+        await loadArtboard(RiveFile.asset('assets/rive/button.riv'));
+
+    doorAButton = RiveButtonComponent(aDoorArtBoard, 'Door A', () {
+      print("cleck"); //TODO win
+    });
+
+    doorBButton = RiveButtonComponent(bDoorArtBoard, 'Door B', () {
+      print("cleck"); // TODO lose
+    });
 
     chatWithWillyComponent =
         RiveButtonComponent(chatWithWillyArtBoard, 'Chat with Willy', () {
       gameRef.guardIndex = 1;
       openChat();
+      showOptions();
     });
 
     chatWithSteveComponent =
         RiveButtonComponent(chatWithSteveArtBoard, 'Chat with Steve', () {
       gameRef.guardIndex = 0;
       openChat();
+      showOptions();
     });
 
     viewSteveIdComponent =
@@ -115,11 +137,21 @@ class GameLevelOne extends Component
       print("cleck");
     });
 
-    addAll([
+    await addAll([
       viewSteveIdComponent,
       viewWillyIdComponent,
       chatWithSteveComponent,
       chatWithWillyComponent
     ]);
+  }
+
+  void showOptions() async {
+    removeAll([
+      viewSteveIdComponent,
+      viewWillyIdComponent,
+      chatWithSteveComponent,
+      chatWithWillyComponent
+    ]);
+    await addAll([doorAButton, doorBButton]);
   }
 }
