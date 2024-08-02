@@ -19,8 +19,8 @@ class GameLevelOne extends Component
   GameLevelOne({required this.level});
 
   final Level level;
-  SpriteComponent? doorA;
-  SpriteComponent? doorB;
+  SvgComponent? doorA;
+  SvgComponent? doorB;
   GuardComponent? willy;
   GuardComponent? steve;
   RiveButtonComponent? viewWillyIdComponent;
@@ -45,14 +45,13 @@ class GameLevelOne extends Component
 
     add(MissionComponent(
         'You have 3 questions. You can choose the guard you want to ask to find out who is the liar and who is the honest one.'));
-    final sprite = await Sprite.load('door_a.png');
-    final size = Vector2(130, 265);
-    doorA = SpriteComponent(size: size, sprite: sprite);
+    final sprite = await Svg.load('images/door_a.svg');
+    final spriteB = await Svg.load('images/door_b.svg');
 
-    add(doorA!);
-    final spriteB = await Sprite.load('door_b.png');
-    doorB = SpriteComponent(size: size, sprite: spriteB);
-    add(doorB!);
+    final size = Vector2(130, 265);
+    doorA = SvgComponent(size: size, svg: sprite);
+    doorB = SvgComponent(size: size, svg: spriteB);
+    addAll([doorA!, doorB!]);
 
     final steveArtBoard = await loadArtboard(
         RiveFile.asset('assets/rive/steve_idle_standing.riv'));

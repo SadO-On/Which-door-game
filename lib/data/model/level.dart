@@ -53,5 +53,12 @@ guard_emotions depends on your feeling it could be HAPPY, MAD, IDLE
 """
       ],
       riddle:
-          'You have 2 doors and 2 guards: one always tells the truth, and the other always lies. Choose one guard and ask three questions to figure out which door is correct')
+          'You have 2 doors and 2 guards: one always tells the truth, and the other always lies. Choose one guard and ask three questions to figure out which door is correct'),
+  2: Level(
+      id: 2,
+      riddle:
+          "The guard, Sam, is hesitant to speak. You must give him a compelling reason to talk and reveal the correct door.",
+      guards: [guards['steve']!],
+      systemInstructions: [],
+      noOfQuestions: 6)
 };

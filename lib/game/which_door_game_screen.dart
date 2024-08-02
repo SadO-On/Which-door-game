@@ -8,6 +8,7 @@ import 'package:flame/game.dart';
 import 'package:flutter/material.dart';
 import 'package:gaurds_game/game/components/win_popup.dart';
 import 'package:gaurds_game/game/level01/game_level_one.dart';
+import 'package:gaurds_game/game/level02/game_level_two.dart';
 
 import '../data/model/level.dart';
 import 'components/lost_popup.dart';
@@ -48,7 +49,8 @@ class WhichDoorGameScreen extends FlameGame {
     switch (level.id) {
       case 1:
         return GameLevelOne(level: level);
-
+      case 2:
+        return GameLevelTwo(level);
       default:
         return GameLevelOne(level: level);
     }

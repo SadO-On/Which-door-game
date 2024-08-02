@@ -1,0 +1,29 @@
+<svg width="932" height="430" viewBox="0 0 932 430" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g filter="url(#filter0_b_372_1945)">
+<g clip-path="url(#clip0_372_1945)">
+<rect y="430" width="430" height="932" rx="3" transform="rotate(-90 0 430)" fill="#DBC7AB"/>
+<rect y="267" width="932" height="107" fill="#6E5643"/>
+<rect x="1.5" y="311.5" width="929" height="3" stroke="#785F48" stroke-width="3"/>
+<rect x="0.75" y="314.75" width="930.5" height="1.5" stroke="#897059" stroke-width="1.5"/>
+<rect x="1.5" y="338.5" width="929" height="3" stroke="#785F48" stroke-width="3"/>
+<rect x="0.75" y="341.75" width="930.5" height="1.5" stroke="#897059" stroke-width="1.5"/>
+<rect y="267" width="932" height="8" fill="#86674B"/>
+<rect y="372" width="932" height="58" fill="#965C5D"/>
+<rect x="9.5" y="298.5" width="929" height="3" stroke="#785F48" stroke-width="3"/>
+<rect x="8.75" y="301.75" width="930.5" height="1.5" stroke="#897059" stroke-width="1.5"/>
+<rect x="9.5" y="325.5" width="929" height="3" stroke="#785F48" stroke-width="3"/>
+<rect x="8.75" y="328.75" width="930.5" height="1.5" stroke="#897059" stroke-width="1.5"/>
+</g>
+</g>
+<defs>
+<filter id="filter0_b_372_1945" x="-21" y="-21" width="974" height="472" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+<feFlood flood-opacity="0" result="BackgroundImageFix"/>
+<feGaussianBlur in="BackgroundImageFix" stdDeviation="10.5"/>
+<feComposite in2="SourceAlpha" operator="in" result="effect1_backgroundBlur_372_1945"/>
+<feBlend mode="normal" in="SourceGraphic" in2="effect1_backgroundBlur_372_1945" result="shape"/>
+</filter>
+<clipPath id="clip0_372_1945">
+<rect y="430" width="430" height="932" rx="3" transform="rotate(-90 0 430)" fill="white"/>
+</clipPath>
+</defs>
+</svg>
