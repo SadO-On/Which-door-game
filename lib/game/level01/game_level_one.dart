@@ -4,91 +4,119 @@ import 'package:flame/components.dart';
 import 'package:flame/events.dart';
 import 'package:flame/flame.dart';
 import 'package:flame_rive/flame_rive.dart';
-import 'package:flutter/services.dart';
+import 'package:flame_svg/flame_svg.dart';
+import 'package:gaurds_game/chat/chat_screen.dart';
 import 'package:gaurds_game/data/model/level.dart';
 import 'package:gaurds_game/game/components/rive_button_component.dart';
 import 'package:gaurds_game/game/which_door_game_screen.dart';
 
 import '../components/mission_component.dart';
 import 'components/guard_component.dart';
+import 'components/lamp_component.dart';
 
 class GameLevelOne extends Component
     with HasGameRef<WhichDoorGameScreen>, TapCallbacks {
   GameLevelOne({required this.level});
 
   final Level level;
-  late final SpriteComponent doorA;
-  late final SpriteComponent doorB;
-  late final GuardComponent willy;
-  late final GuardComponent steve;
-  late final RiveButtonComponent viewWillyIdComponent;
-  late final RiveButtonComponent viewSteveIdComponent;
-  late final RiveButtonComponent chatWithSteveComponent;
-  late final RiveButtonComponent chatWithWillyComponent;
-  late final RiveButtonComponent doorAButton;
-  late final RiveButtonComponent doorBButton;
+  SpriteComponent? doorA;
+  SpriteComponent? doorB;
+  GuardComponent? willy;
+  GuardComponent? steve;
+  RiveButtonComponent? viewWillyIdComponent;
+  RiveButtonComponent? viewSteveIdComponent;
+  RiveButtonComponent? chatWithSteveComponent;
+  RiveButtonComponent? chatWithWillyComponent;
+  RiveButtonComponent? doorAButton;
+  RiveButtonComponent? doorBButton;
+  LampComponent? lampAnimation;
 
   @override
   FutureOr<void> onLoad() async {
+    final svgInstance = await Svg.load('images/background_2_doors.svg');
+    final backgroundSize = gameRef.size;
+
+    final background = SvgComponent(
+      size: backgroundSize,
+      svg: svgInstance,
+    );
+
+    add(background);
+
     add(MissionComponent(
         'You have 3 questions. You can choose the guard you want to ask to find out who is the liar and who is the honest one.'));
     final sprite = await Sprite.load('door_a.png');
     final size = Vector2(130, 265);
     doorA = SpriteComponent(size: size, sprite: sprite);
 
-    add(doorA);
+    add(doorA!);
     final spriteB = await Sprite.load('door_b.png');
     doorB = SpriteComponent(size: size, sprite: spriteB);
-    add(doorB);
+    add(doorB!);
 
     final steveArtBoard = await loadArtboard(
         RiveFile.asset('assets/rive/steve_idle_standing.riv'));
     steve = GuardComponent(artboard: steveArtBoard);
-    add(steve);
+    add(steve!);
 
     final willyArtBoard = await loadArtboard(
         RiveFile.asset('assets/rive/willy_idle_standing.riv'));
     willy = GuardComponent(artboard: willyArtBoard);
-    add(willy);
+    add(willy!);
 
+    final lampArtBoard =
+        await loadArtboard(RiveFile.asset('assets/rive/lamp_animation.riv'));
+    lampAnimation = LampComponent(artboard: lampArtBoard);
+    add(lampAnimation!);
     await _loadButtons();
     return super.onLoad();
   }
 
   @override
   void onGameResize(Vector2 size) {
-    doorA.position = Vector2(size.x * 0.25, size.y * 0.5 - doorA.size.y / 2);
-    doorB.position = Vector2(size.x * 0.75, size.y * 0.5 - doorB.size.y / 2);
+    doorA?.position =
+        Vector2(size.x * 0.25, size.y * 0.557 - (doorA?.size.y ?? 0) / 2);
+    doorB?.position =
+        Vector2(size.x * 0.78, size.y * 0.557 - (doorB?.size.y ?? 0) / 2);
 
-    willy.position = Vector2(
-        size.x * 0.25 - (willy.size.x - 20), size.y * 0.5 - willy.size.y / 3);
+    willy?.position = Vector2(size.x * 0.28 - (willy?.size.x ?? 0 - 20),
+        size.y * 0.557 - (willy?.size.y ?? 0) / 3);
 
-    steve.position = Vector2(
-        size.x * 0.75 - (steve.size.x - 20), size.y * 0.5 - steve.size.y / 3);
+    steve?.position = Vector2(size.x * 0.81 - (steve?.size.x ?? 0 - 20),
+        size.y * 0.557 - (steve?.size.y ?? 0) / 3);
 
-    chatWithWillyComponent.position =
-        Vector2(size.x * 0.10 - (willy.size.x - 20), size.y * 0.5);
+    lampAnimation?.position = Vector2(
+        size.x * 0.49, size.y * 0.557 - (lampAnimation?.size.y ?? 0) / 3);
 
-    chatWithSteveComponent.position =
-        Vector2(size.x * 0.60 - (steve.size.x - 20), size.y * 0.5);
+    _optionsSizing(size);
 
-    viewSteveIdComponent.position = Vector2(size.x * 0.10 - (willy.size.x - 20),
-        (size.y * 0.5 - viewSteveIdComponent.height));
+    doorAButton?.position = Vector2(size.x * 0.14 - (steve?.size.x ?? 0 - 20),
+        (size.y * 0.5 - (viewWillyIdComponent?.height ?? 0)));
 
-    viewWillyIdComponent.position = Vector2(size.x * 0.60 - (steve.size.x - 20),
-        (size.y * 0.5 - viewWillyIdComponent.height));
-
-    doorAButton.position = Vector2(size.x * 0.60 - (steve.size.x - 20),
-        (size.y * 0.5 - viewWillyIdComponent.height));
-
-    doorBButton.position = Vector2(size.x * 0.10 - (willy.size.x - 20),
-        (size.y * 0.5 - viewSteveIdComponent.height));
+    doorBButton?.position = Vector2(size.x * 0.68 - (willy?.size.x ?? 0 - 20),
+        (size.y * 0.5 - (viewSteveIdComponent?.height ?? 0)));
     super.onGameResize(size);
+  }
+
+  void _optionsSizing(Vector2 size) {
+    chatWithWillyComponent?.position =
+        Vector2(size.x * 0.14 - (willy?.size.x ?? 0 - 20), size.y * 0.5);
+
+    chatWithSteveComponent?.position =
+        Vector2(size.x * 0.68 - (steve?.size.x ?? 0 - 20), size.y * 0.5);
+
+    viewSteveIdComponent?.position = Vector2(
+        size.x * 0.68 - (steve?.size.x ?? 0 - 20),
+        (size.y * 0.5 - (viewWillyIdComponent?.height ?? 0)));
+
+    viewWillyIdComponent?.position = Vector2(
+        size.x * 0.14 - (willy?.size.x ?? 0 - 20),
+        (size.y * 0.5 - (viewSteveIdComponent?.height ?? 0)));
   }
 
   void openChat() async {
     await Flame.device.setPortrait();
-    gameRef.overlays.add("ChatScreen");
+    gameRef.overlays.add(ChatScreen.overlayName);
   }
 
   Future _loadButtons() async {
@@ -106,11 +134,11 @@ class GameLevelOne extends Component
         await loadArtboard(RiveFile.asset('assets/rive/button.riv'));
 
     doorAButton = RiveButtonComponent(aDoorArtBoard, 'Door A', () {
-      print("cleck"); //TODO win
+      gameRef.playerWin();
     });
 
     doorBButton = RiveButtonComponent(bDoorArtBoard, 'Door B', () {
-      print("cleck"); // TODO lose
+      gameRef.playerLost();
     });
 
     chatWithWillyComponent =
@@ -138,20 +166,20 @@ class GameLevelOne extends Component
     });
 
     await addAll([
-      viewSteveIdComponent,
-      viewWillyIdComponent,
-      chatWithSteveComponent,
-      chatWithWillyComponent
+      viewSteveIdComponent!,
+      viewWillyIdComponent!,
+      chatWithSteveComponent!,
+      chatWithWillyComponent!
     ]);
   }
 
   void showOptions() async {
     removeAll([
-      viewSteveIdComponent,
-      viewWillyIdComponent,
-      chatWithSteveComponent,
-      chatWithWillyComponent
+      viewSteveIdComponent!,
+      viewWillyIdComponent!,
+      chatWithSteveComponent!,
+      chatWithWillyComponent!
     ]);
-    await addAll([doorAButton, doorBButton]);
+    await addAll([doorAButton!, doorBButton!]);
   }
 }

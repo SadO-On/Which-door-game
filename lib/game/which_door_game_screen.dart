@@ -6,9 +6,11 @@ import 'package:flame/debug.dart';
 import 'package:flame/flame.dart';
 import 'package:flame/game.dart';
 import 'package:flutter/material.dart';
+import 'package:gaurds_game/game/components/win_popup.dart';
 import 'package:gaurds_game/game/level01/game_level_one.dart';
 
 import '../data/model/level.dart';
+import 'components/lost_popup.dart';
 
 class WhichDoorGameScreen extends FlameGame {
   WhichDoorGameScreen({required this.level});
@@ -32,6 +34,14 @@ class WhichDoorGameScreen extends FlameGame {
         textRenderer: TextPaint(style: const TextStyle(color: Colors.black))));
     add(levelDecider());
     return super.onLoad();
+  }
+
+  void playerLost() {
+    overlays.add(LostPopup.overlayName);
+  }
+
+  void playerWin() {
+    overlays.add(WinPopup.overlayName);
   }
 
   Component levelDecider() {

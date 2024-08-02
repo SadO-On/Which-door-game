@@ -12,6 +12,7 @@ class ThreeDimensionButton extends StatefulWidget {
       required this.onClick,
       required this.backgroundColor,
       required this.shadowColor,
+      this.fontSize = 32,
       this.text = '',
       required this.isRight});
 
@@ -20,6 +21,7 @@ class ThreeDimensionButton extends StatefulWidget {
   final String label;
   final String text;
   final double width;
+  final double fontSize;
   final Color backgroundColor;
   final Color shadowColor;
   final double iconSize;
@@ -100,9 +102,9 @@ class _ThreeDimensionButtonState extends State<ThreeDimensionButton> {
                             alignment: Alignment.center,
                             child: Text(
                               widget.text,
-                              style: const TextStyle(
+                              style: TextStyle(
                                   color: Colors.white,
-                                  fontSize: 32,
+                                  fontSize: widget.fontSize,
                                   fontFamily: 'IMFellDoublePica'),
                             ),
                           ),
