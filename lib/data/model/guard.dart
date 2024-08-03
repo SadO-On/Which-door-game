@@ -9,7 +9,9 @@ class Guard {
   final String bloodType;
   final String phoneNum;
   final String asset;
+  final String slogan;
   final String joinedDate;
+  final String idAsset;
 
   Guard({
     required this.id,
@@ -18,6 +20,8 @@ class Guard {
     required this.expiryDate,
     required this.gender,
     required this.eId,
+    this.slogan = "",
+    this.idAsset = "",
     required this.asset,
     required this.nationality,
     required this.bloodType,
@@ -50,5 +54,19 @@ final guards = {
       bloodType: 'B+',
       asset: 'assets/rive/steve_id_animation.riv',
       phoneNum: '+99 012 345 6789',
-      joinedDate: '09/04/2020')
+      joinedDate: '09/04/2020'),
+  "fred": Guard(
+      id: '4355625736',
+      age: DateTime.now().year - 1966,
+      name: "Fred",
+      expiryDate: '01/12/2029',
+      gender: "Male",
+      eId: '12575',
+      nationality: 'Vaelorian',
+      idAsset: "assets/images/fred_id.svg",
+      bloodType: 'A+',
+      slogan: "In questions, find the truth.",
+      asset: 'assets/rive/steve_id_animation.riv',
+      phoneNum: '+99 676 778 3227',
+      joinedDate: '24/12/2002')
 };

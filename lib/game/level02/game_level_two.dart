@@ -4,138 +4,152 @@ import 'package:flame/components.dart';
 import 'package:flame/flame.dart';
 import 'package:flame_rive/flame_rive.dart';
 import 'package:flame_svg/flame_svg.dart';
+import 'package:gaurds_game/game/components/lost_popup.dart';
+import 'package:gaurds_game/game/components/win_popup.dart';
 import 'package:gaurds_game/game/which_door_game_screen.dart';
 
 import '../../chat/chat_screen.dart';
 import '../../data/model/level.dart';
+import '../components/guard_id_popup.dart';
 import '../components/mission_component.dart';
 import '../components/rive_button_component.dart';
 import '../level01/components/guard_component.dart';
 
 class GameLevelTwo extends Component with HasGameRef<WhichDoorGameScreen> {
-  GameLevelTwo(this.level);
-
+  GameLevelTwo({required this.level});
   final Level level;
+
   SvgComponent? doorA;
   SvgComponent? doorB;
   SvgComponent? doorC;
-  SvgComponent? doorD;
-  GuardComponent? sam;
-  RiveButtonComponent? viewSamIdComponent;
-  RiveButtonComponent? chatWithSamComponent;
-  // RiveButtonComponent? doorAButton;
-  // RiveButtonComponent? doorBButton;
+  GuardComponent? fred;
+  RiveButtonComponent? viewFredIdComponent;
+  RiveButtonComponent? chatWithFredIdComponent;
+  RiveButtonComponent? doorAButton;
+  RiveButtonComponent? doorBButton;
+  RiveButtonComponent? doorCButton;
+  SvgComponent? background;
 
   @override
   FutureOr<void> onLoad() async {
-    final svgInstance = await Svg.load('images/background_4_doors.svg');
-    final backgroundSize = gameRef.size;
-
-    final background = SvgComponent(
-      size: backgroundSize,
+    final svgInstance = await Svg.load('images/background_level_two.svg');
+    background = SvgComponent(
+      size: gameRef.size,
       svg: svgInstance,
     );
 
-    add(background);
-
-    add(MissionComponent(
-        'The guard, Sam, is hesitant to speak. You must give him a compelling reason to talk and reveal the correct door.'));
+    add(background!);
+    add(MissionComponent(levels[gameRef.level.id]!.riddle));
 
     final sprite = await Svg.load('images/door_a.svg');
     final spriteB = await Svg.load('images/door_b.svg');
     final spriteC = await Svg.load('images/door_c.svg');
-    final spriteD = await Svg.load('images/door_d.svg');
 
     final size = Vector2(130, 265);
-
     doorA = SvgComponent(size: size, svg: sprite);
     doorB = SvgComponent(size: size, svg: spriteB);
     doorC = SvgComponent(size: size, svg: spriteC);
-    doorD = SvgComponent(size: size, svg: spriteD);
 
-    addAll([doorA!, doorB!, doorC!, doorD!]);
+    addAll([doorA!, doorB!, doorC!]);
 
-    final samArtBoard = await loadArtboard(
-        RiveFile.asset('assets/rive/steve_idle_standing.riv'));
-    sam = GuardComponent(artboard: samArtBoard);
-    add(sam!);
-
+    final fredArtBoard = await loadArtboard(
+        RiveFile.asset('assets/rive/steve_idle_standing.riv')); //TODO change it
+    fred = GuardComponent(artboard: fredArtBoard);
+    add(fred!);
     await _loadButtons();
     return super.onLoad();
   }
 
-  @override
-  void onGameResize(Vector2 size) {
-    doorA?.position =
-        Vector2(size.x * 0.23, size.y * 0.557 - (doorA?.size.y ?? 0) / 2);
-    doorB?.position =
-        Vector2(size.x * 0.41, size.y * 0.557 - (doorB?.size.y ?? 0) / 2);
-    doorC?.position =
-        Vector2(size.x * 0.59, size.y * 0.557 - (doorC?.size.y ?? 0) / 2);
-    doorD?.position =
-        Vector2(size.x * 0.77, size.y * 0.557 - (doorC?.size.y ?? 0) / 2);
-    sam?.position = Vector2(size.x * 0.26 - (sam?.size.x ?? 0 - 20),
-        size.y * 0.557 - (sam?.size.y ?? 0) / 3);
-
-    _optionsSizing(size);
-    super.onGameResize(size);
-  }
-
-  void _optionsSizing(Vector2 size) {
-    chatWithSamComponent?.position =
-        Vector2(size.x * 0.13 - (sam?.size.x ?? 0 - 20), size.y * 0.5);
-
-    viewSamIdComponent?.position = Vector2(
-        size.x * 0.13 - (sam?.size.x ?? 0 - 20),
-        (size.y * 0.5 - (viewSamIdComponent?.height ?? 0)));
-  }
-
-  void openChat() async {
-    await Flame.device.setPortrait();
-    gameRef.overlays.add(ChatScreen.overlayName);
-  }
-
   Future _loadButtons() async {
-    final chatWithSamArtBoard =
+    final chatWithFredArtBoard =
         await loadArtboard(RiveFile.asset('assets/rive/button.riv'));
-    final viewSamIdArtBoard =
+    final viewFredIdArtBoard =
         await loadArtboard(RiveFile.asset('assets/rive/button.riv'));
 
-    //     await loadArtboard(RiveFile.asset('assets/rive/button.riv'));
-    // final bDoorArtBoard =
-    //     await loadArtboard(RiveFile.asset('assets/rive/button.riv'));
+    final aDoorArtBoard =
+        await loadArtboard(RiveFile.asset('assets/rive/button.riv'));
+    final bDoorArtBoard =
+        await loadArtboard(RiveFile.asset('assets/rive/button.riv'));
+    final cDoorArtBoard =
+        await loadArtboard(RiveFile.asset('assets/rive/button.riv'));
 
-    // doorAButton = RiveButtonComponent(aDoorArtBoard, 'Door A', () {
-    //   gameRef.playerWin();
-    // });
+    doorAButton = RiveButtonComponent(aDoorArtBoard, 'Door A', () {
+      gameRef.showOverlay(WinPopup.overlayName);
+    });
 
-    // doorBButton = RiveButtonComponent(bDoorArtBoard, 'Door B', () {
-    //   gameRef.playerLost();
-    // });
+    doorBButton = RiveButtonComponent(bDoorArtBoard, 'Door B', () {
+      gameRef.showOverlay(LostPopup.overlayName);
+    });
 
-    chatWithSamComponent =
-        RiveButtonComponent(chatWithSamArtBoard, 'Chat with Sam', () {
-      gameRef.guardIndex = 1;
+    doorCButton = RiveButtonComponent(cDoorArtBoard, 'Door C', () {
+      gameRef.showOverlay(LostPopup.overlayName);
+    });
+
+    chatWithFredIdComponent =
+        RiveButtonComponent(chatWithFredArtBoard, 'Chat with Fred', () {
+      gameRef.guardIndex = 0;
       openChat();
       showOptions();
     });
 
-    viewSamIdComponent =
-        RiveButtonComponent(viewSamIdArtBoard, 'View Sam’s ID', () {
-      print("cleck"); //TODO viewID
+    viewFredIdComponent =
+        RiveButtonComponent(viewFredIdArtBoard, 'View Fred’s ID', () {
+      gameRef.guardIndex = 0;
+
+      game.showOverlay(GuardIdPopup.overlayName);
     });
 
     await addAll([
-      viewSamIdComponent!,
-      chatWithSamComponent!,
+      chatWithFredIdComponent!,
+      viewFredIdComponent!,
     ]);
   }
 
   void showOptions() async {
     removeAll([
-      viewSamIdComponent!,
-      chatWithSamComponent!,
+      chatWithFredIdComponent!,
+      viewFredIdComponent!,
     ]);
-    // await addAll([doorAButton!, doorBButton!]);
+    await addAll([doorAButton!, doorBButton!, doorCButton!]);
+  }
+
+  void openChat() async {
+    await Flame.device.setPortrait();
+    gameRef.showOverlay(ChatScreen.overlayName);
+  }
+
+  @override
+  void onGameResize(Vector2 size) {
+    doorA?.position =
+        Vector2(size.x * 0.25, size.y * 0.557 - (doorA?.size.y ?? 0) / 2);
+    doorB?.position =
+        Vector2(size.x * 0.52, size.y * 0.557 - (doorB?.size.y ?? 0) / 2);
+    doorC?.position =
+        Vector2(size.x * 0.79, size.y * 0.557 - (doorC?.size.y ?? 0) / 2);
+    fred?.position = Vector2(size.x * 0.28 - (fred?.size.x ?? 0 - 20),
+        size.y * 0.557 - (fred?.size.y ?? 0) / 3);
+
+    _optionsSizing(size);
+
+    doorAButton?.position = Vector2(size.x * 0.14 - (fred?.size.x ?? 0 - 20),
+        (size.y * 0.5 - (viewFredIdComponent?.height ?? 0)));
+
+    doorBButton?.position = Vector2(size.x * 0.47 - (fred?.size.x ?? 0 - 20),
+        (size.y * 0.5 - (viewFredIdComponent?.height ?? 0)));
+
+    doorCButton?.position = Vector2(size.x * 0.74 - (fred?.size.x ?? 0 - 20),
+        (size.y * 0.5 - (viewFredIdComponent?.height ?? 0)));
+
+    background?.size = size;
+    super.onGameResize(size);
+  }
+
+  void _optionsSizing(Vector2 size) {
+    chatWithFredIdComponent?.position =
+        Vector2(size.x * 0.14 - (fred?.size.x ?? 0 - 20), size.y * 0.5);
+
+    viewFredIdComponent?.position = Vector2(
+        size.x * 0.14 - (fred?.size.x ?? 0 - 20),
+        (size.y * 0.5 - (viewFredIdComponent?.height ?? 0)));
   }
 }

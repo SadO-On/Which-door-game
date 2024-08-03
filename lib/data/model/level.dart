@@ -57,6 +57,13 @@ guard_emotions depends on your feeling it could be HAPPY, MAD, IDLE
   2: Level(
       id: 2,
       riddle:
+          "Guard Fred knows the correct door to take, but you have just one minute to convince him to reveal it.",
+      guards: [guards['fred']!],
+      noOfQuestions: 6,
+      systemInstructions: []),
+  3: Level(
+      id: 3,
+      riddle:
           "The guard, Sam, is hesitant to speak. You must give him a compelling reason to talk and reveal the correct door.",
       guards: [guards['steve']!],
       systemInstructions: [],

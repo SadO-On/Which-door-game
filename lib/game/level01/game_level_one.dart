@@ -34,6 +34,7 @@ class GameLevelOne extends Component
   RiveButtonComponent? doorBButton;
   LampComponent? lampAnimation;
   SvgComponent? background;
+
   @override
   FutureOr<void> onLoad() async {
     final svgInstance = await Svg.load('images/background_2_doors.svg');

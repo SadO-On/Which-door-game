@@ -14,7 +14,7 @@ class GuardIdPopup extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return PopupContainerWidget(
-        asset: 'assets/images/test_id.svg',
+        asset: levels[levelNumber]!.guards[game.guardIndex].idAsset,
         btnText: 'Ok',
         width: 230,
         height: 120,
@@ -22,6 +22,6 @@ class GuardIdPopup extends StatelessWidget {
         onClick: () {
           game.hideOverlay(overlayName);
         },
-        text: levels[levelNumber]!.guards[game.guardIndex].name);
+        text: levels[levelNumber]!.guards[game.guardIndex].slogan);
   }
 }
