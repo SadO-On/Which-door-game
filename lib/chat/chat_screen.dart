@@ -7,7 +7,9 @@ import 'package:gaurds_game/chat/widgets/chat_list_widget.dart';
 import 'package:gaurds_game/chat/widgets/id_card_widget.dart';
 import 'package:gaurds_game/data/model/level.dart';
 import 'package:gaurds_game/game/which_door_game_screen.dart';
+import 'package:gaurds_game/utils/utils.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
+import 'package:timer_count_down/timer_count_down.dart';
 import '../widgets/three_dimension_button.dart';
 import '../widgets/top_bar_widget.dart';
 
@@ -49,15 +51,33 @@ class _ChatScreenState extends State<ChatScreen> {
                       widget.gameScreen.setLandScape();
                       widget.gameScreen.overlays.remove(ChatScreen.overlayName);
                     },
-                    title: _store.remainingQuestions > 1
-                        ? 'You have ${_store.remainingQuestions} questions left to ask for ${levels[widget.levelNumber]!.guards[widget.gameScreen.guardIndex].name}'
-                        : 'You have ${_store.remainingQuestions} question left to ask for ${levels[widget.levelNumber]!.guards[widget.gameScreen.guardIndex].name}',
+                    title: levels[widget.levelNumber]!.type ==
+                            ChallengeType.time
+                        ? 'You have ${levels[widget.levelNumber]!.time} minutes to convince the guard'
+                        : _store.remainingQuestions > 1
+                            ? 'You have ${_store.remainingQuestions} questions left to ask for ${levels[widget.levelNumber]!.guards[widget.gameScreen.guardIndex].name}'
+                            : 'You have ${_store.remainingQuestions} question left to ask for ${levels[widget.levelNumber]!.guards[widget.gameScreen.guardIndex].name}',
                   ),
                 )),
             IdCardWidget(
               guard: levels[widget.levelNumber]!
                   .guards[widget.gameScreen.guardIndex],
             ),
+            if (levels[widget.levelNumber]!.type == ChallengeType.time)
+              Countdown(
+                seconds: levels[widget.levelNumber]!.time * 60,
+                build: (BuildContext context, double time) => Text(
+                  "Timer: ${time.toMMSS()}",
+                  style: const TextStyle(
+                      color: Color(0xff653E1A),
+                      fontWeight: FontWeight.bold,
+                      fontSize: 16),
+                ),
+                interval: const Duration(milliseconds: 100),
+                onFinished: () {
+                  _store.isTimesUp = true;
+                },
+              ),
             ChatListWidget(
               store: _store,
             ),
@@ -84,7 +104,9 @@ class _ChatScreenState extends State<ChatScreen> {
               },
             ),
             Observer(builder: (_) {
-              if (_store.remainingQuestions <= 0) {
+              if ((levels[widget.levelNumber]!.type == ChallengeType.time &&
+                      _store.remainingQuestions <= 0) ||
+                  _store.isTimesUp) {
                 return Row(
                   mainAxisSize: MainAxisSize.max,
                   mainAxisAlignment: MainAxisAlignment.center,

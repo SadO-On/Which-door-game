@@ -14,19 +14,22 @@ class GamePlayContainer extends StatelessWidget {
   final Level level;
   @override
   Widget build(BuildContext context) {
-    return GameWidget(
-        game: WhichDoorGameScreen(level: level),
-        overlayBuilderMap: {
-          ChatScreen.overlayName: (context, WhichDoorGameScreen game) =>
-              ChatScreen(levelNumber: level.id, gameScreen: game),
-          WinPopup.overlayName: (context, WhichDoorGameScreen game) => WinPopup(
-                game: game,
-              ),
-          LostPopup.overlayName: (context, WhichDoorGameScreen game) =>
-              LostPopup(game: game),
-          GuardIdPopup.overlayName: (context, WhichDoorGameScreen game) =>
-              GuardIdPopup(game: game, levelNumber: level.id)
-        });
+    return GameWidget.controlled(
+      gameFactory: () {
+        return WhichDoorGameScreen(level: level);
+      },
+      overlayBuilderMap: {
+        ChatScreen.overlayName: (context, WhichDoorGameScreen game) =>
+            ChatScreen(levelNumber: level.id, gameScreen: game),
+        WinPopup.overlayName: (context, WhichDoorGameScreen game) => WinPopup(
+              game: game,
+            ),
+        LostPopup.overlayName: (context, WhichDoorGameScreen game) =>
+            LostPopup(game: game),
+        GuardIdPopup.overlayName: (context, WhichDoorGameScreen game) =>
+            GuardIdPopup(game: game, levelNumber: level.id)
+      },
+    );
   }
 }
 

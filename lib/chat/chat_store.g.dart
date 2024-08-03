@@ -25,6 +25,22 @@ mixin _$ChatStore on _ChatStore, Store {
     });
   }
 
+  late final _$isTimesUpAtom =
+      Atom(name: '_ChatStore.isTimesUp', context: context);
+
+  @override
+  bool get isTimesUp {
+    _$isTimesUpAtom.reportRead();
+    return super.isTimesUp;
+  }
+
+  @override
+  set isTimesUp(bool value) {
+    _$isTimesUpAtom.reportWrite(value, super.isTimesUp, () {
+      super.isTimesUp = value;
+    });
+  }
+
   late final _$remainingQuestionsAtom =
       Atom(name: '_ChatStore.remainingQuestions', context: context);
 
@@ -83,6 +99,7 @@ mixin _$ChatStore on _ChatStore, Store {
   String toString() {
     return '''
 isLoading: ${isLoading},
+isTimesUp: ${isTimesUp},
 remainingQuestions: ${remainingQuestions},
 conversations: ${conversations}
     ''';

@@ -53,7 +53,7 @@ class GameLevelTwo extends Component with HasGameRef<WhichDoorGameScreen> {
     addAll([doorA!, doorB!, doorC!]);
 
     final fredArtBoard = await loadArtboard(
-        RiveFile.asset('assets/rive/steve_idle_standing.riv')); //TODO change it
+        RiveFile.asset('assets/rive/guard_fred_idle_standing.riv'));
     fred = GuardComponent(artboard: fredArtBoard);
     add(fred!);
     await _loadButtons();
@@ -74,11 +74,11 @@ class GameLevelTwo extends Component with HasGameRef<WhichDoorGameScreen> {
         await loadArtboard(RiveFile.asset('assets/rive/button.riv'));
 
     doorAButton = RiveButtonComponent(aDoorArtBoard, 'Door A', () {
-      gameRef.showOverlay(WinPopup.overlayName);
+      gameRef.showOverlay(LostPopup.overlayName);
     });
 
     doorBButton = RiveButtonComponent(bDoorArtBoard, 'Door B', () {
-      gameRef.showOverlay(LostPopup.overlayName);
+      gameRef.showOverlay(WinPopup.overlayName);
     });
 
     doorCButton = RiveButtonComponent(cDoorArtBoard, 'Door C', () {

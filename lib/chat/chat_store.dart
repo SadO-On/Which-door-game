@@ -1,5 +1,6 @@
 import 'package:gaurds_game/chat/model/chat_model.dart';
 import 'package:gaurds_game/data/main_repository.dart';
+import 'package:gaurds_game/data/model/level.dart';
 import 'package:gaurds_game/locator.dart';
 import 'package:mobx/mobx.dart';
 
@@ -15,23 +16,26 @@ abstract class _ChatStore with Store {
   late MainRepository _repository;
 
   _ChatStore(this.levelNumber, this.guardIndex, this.remainingQuestions) {
-    _repository = getIt.get<MainRepository>(
-        param1: levelNumber,
-        param2:
-            guardIndex); //TODO pass gaurdInex to get the correct system instructions
+    _repository =
+        getIt.get<MainRepository>(param1: levelNumber, param2: guardIndex);
+
+    conversations.add(ChatModel(
+        text: levels[levelNumber]!.type == ChallengeType.number
+            ? "You only have ${levels[levelNumber]!.noOfQuestions} questions to ask, so ask wisely."
+            : "You only have ${levels[levelNumber]!.time} minutes to figure out the door, so ask quickly",
+        type: ChattingType.receiver));
   }
   @observable
   bool isLoading = false;
 
   @observable
+  bool isTimesUp = false;
+
+  @observable
   int remainingQuestions;
 
   @observable
-  ObservableList<ChatModel> conversations = ObservableList<ChatModel>.of([
-    ChatModel(
-        text: "You only have 3 questions to ask, so ask wisely.",
-        type: ChattingType.receiver)
-  ]);
+  ObservableList<ChatModel> conversations = ObservableList<ChatModel>.of([]);
 
   @action
   void addNewConversation(ChatModel model) => conversations.add(model);

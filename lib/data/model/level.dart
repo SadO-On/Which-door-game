@@ -1,3 +1,5 @@
+import 'package:gaurds_game/data/model/system_instructions.dart';
+
 import 'guard.dart';
 
 class Level {
@@ -5,18 +7,23 @@ class Level {
   final List<Guard> guards;
   final String riddle;
   final int noOfQuestions;
+  final ChallengeType type;
+  final int time;
   final List<String> systemInstructions;
   Level(
       {required this.id,
       required this.riddle,
       required this.guards,
+      required this.type,
+      this.time = 0,
       required this.systemInstructions,
-      required this.noOfQuestions});
+      this.noOfQuestions = 9999});
 }
 
 final levels = {
   1: Level(
       id: 1,
+      type: ChallengeType.number,
       guards: [guards['steve']!, guards['willy']!],
       noOfQuestions: 3,
       systemInstructions: [
@@ -58,14 +65,18 @@ guard_emotions depends on your feeling it could be HAPPY, MAD, IDLE
       id: 2,
       riddle:
           "Guard Fred knows the correct door to take, but you have just one minute to convince him to reveal it.",
+      type: ChallengeType.time,
       guards: [guards['fred']!],
-      noOfQuestions: 6,
-      systemInstructions: []),
+      time: 1,
+      systemInstructions: [fredInstructions]),
   3: Level(
       id: 3,
+      type: ChallengeType.number,
       riddle:
           "The guard, Sam, is hesitant to speak. You must give him a compelling reason to talk and reveal the correct door.",
       guards: [guards['steve']!],
-      systemInstructions: [],
+      systemInstructions: [""" """],
       noOfQuestions: 6)
 };
+
+enum ChallengeType { time, number }

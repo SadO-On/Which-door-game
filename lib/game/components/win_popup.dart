@@ -24,7 +24,7 @@ class WinPopup extends StatelessWidget {
             context,
             MaterialPageRoute(
                 builder: (context) =>
-                    GamePlayContainer(level: levels[game.level.id]!)),
+                    GamePlayContainer(level: levels[game.level.id + 1]!)),
           );
         },
         text: 'You opened the right door!');

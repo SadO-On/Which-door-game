@@ -52,6 +52,7 @@ dependencies:
   flame_rive: ^1.10.2
   loading_animation_widget: ^1.2.1
   flame_svg: ^1.10.2
+  timer_count_down: ^2.2.2
   
 dev_dependencies:
   flutter_test:
