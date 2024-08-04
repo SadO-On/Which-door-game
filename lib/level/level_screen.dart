@@ -45,7 +45,7 @@ class LevelScreen extends StatelessWidget {
                                   level: levels[index + 1]!,
                                 )));
                       },
-                      isOpened: index < 2,
+                      isOpened: index < 3,
                       levelNumber: index + 1);
                 },
               ),

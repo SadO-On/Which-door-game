@@ -74,9 +74,9 @@ guard_emotions depends on your feeling it could be HAPPY, MAD, IDLE
       type: ChallengeType.number,
       riddle:
           "The guard, Sam, is hesitant to speak. You must give him a compelling reason to talk and reveal the correct door.",
-      guards: [guards['steve']!],
-      systemInstructions: [""" """],
-      noOfQuestions: 6)
+      guards: [guards['sam']!],
+      systemInstructions: [samInstructions],
+      noOfQuestions: 7)
 };
 
 enum ChallengeType { time, number }

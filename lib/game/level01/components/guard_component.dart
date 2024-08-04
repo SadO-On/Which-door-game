@@ -9,6 +9,7 @@ class GuardComponent extends RiveComponent {
   FutureOr<void> onLoad() async {
     final controller =
         StateMachineController.fromArtboard(artboard, "State Machine 1");
+
     artboard.addController(controller!);
     return super.onLoad();
   }
