@@ -8,7 +8,9 @@ import 'package:gaurds_game/data/model/math_problem.dart';
 import 'package:gaurds_game/game/components/loading_screen.dart';
 import 'package:gaurds_game/game/components/lost_popup.dart';
 import 'package:gaurds_game/game/components/mission_component.dart';
+import 'package:gaurds_game/game/components/timer_component.dart';
 import 'package:gaurds_game/game/components/win_popup.dart';
+import 'package:gaurds_game/game/level06/components/answer_component.dart';
 import 'package:gaurds_game/game/which_door_game_screen.dart';
 import 'package:gaurds_game/locator.dart';
 import 'package:google_generative_ai/google_generative_ai.dart';
@@ -29,7 +31,6 @@ class GameLevelSix extends Component with HasGameRef<WhichDoorGameScreen> {
   RiveButtonComponent? doorCButton;
   RiveButtonComponent? doorDButton;
   LampComponent? lampAnimation;
-
   @override
   FutureOr<void> onLoad() async {
     final svgInstance = await Svg.load('images/background_level_06.svg');
@@ -40,7 +41,13 @@ class GameLevelSix extends Component with HasGameRef<WhichDoorGameScreen> {
     );
 
     _mathProblem = await _ai.getQuizQuestion();
-    addAll([background, MissionComponent(_mathProblem?.response ?? "")]);
+
+    addAll([
+      background,
+      MissionComponent(_mathProblem?.response ?? ""),
+      LevelTimerComponent(
+          120, "2:00", () => gameRef.showOverlay(LostPopup.overlayName))
+    ]);
     await _doorsAndMessages();
     await _doorsButtons(_mathProblem?.options);
     final lampArtBoard =
@@ -48,6 +55,8 @@ class GameLevelSix extends Component with HasGameRef<WhichDoorGameScreen> {
     lampAnimation = LampComponent(artboard: lampArtBoard);
     add(lampAnimation!);
     gameRef.hideOverlay(LoadingScreen.overlayName);
+    _mathProblem!.options.asMap().forEach(
+        (index, value) async => await add(AnswerComponent(value.value, index)));
 
     return super.onLoad();
   }

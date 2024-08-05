@@ -7,7 +7,7 @@ class MissionComponent extends TextBoxComponent {
   MissionComponent(String text)
       : super(
           text: text,
-          boxConfig: TextBoxConfig(timePerChar: 0.05, maxWidth: 400),
+          boxConfig: const TextBoxConfig(timePerChar: 0.05, maxWidth: 400),
         );
 
   final bgPaint = Paint()..color = brown;
