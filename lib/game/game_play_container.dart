@@ -4,6 +4,7 @@ import 'package:gaurds_game/chat/chat_screen.dart';
 import 'package:gaurds_game/data/model/level.dart';
 import 'package:gaurds_game/game/components/guard_id_popup.dart';
 import 'package:gaurds_game/game/components/win_popup.dart';
+import 'package:gaurds_game/game/level05/components/big_message_component.dart';
 import 'package:gaurds_game/game/which_door_game_screen.dart';
 
 import 'components/lost_popup.dart';
@@ -25,7 +26,10 @@ class GamePlayContainer extends StatelessWidget {
           LostPopup.overlayName: (context, WhichDoorGameScreen game) =>
               LostPopup(game: game),
           GuardIdPopup.overlayName: (context, WhichDoorGameScreen game) =>
-              GuardIdPopup(game: game, levelNumber: level.id)
+              GuardIdPopup(game: game, levelNumber: level.id),
+          BigMessageComponent.overlayName:
+              (context, WhichDoorGameScreen game) =>
+                  BigMessageComponent(game: game)
         });
   }
 }

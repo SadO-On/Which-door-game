@@ -63,6 +63,7 @@ final guards = {
       gender: "Male",
       idAsset: "assets/images/sam_id.svg",
       eId: "93318",
+      slogan: "The quiet one sees all.",
       asset: 'assets/rive/steve_id_animation.riv',
       nationality: "Elarian",
       bloodType: "B+",
