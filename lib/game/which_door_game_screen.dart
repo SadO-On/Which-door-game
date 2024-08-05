@@ -10,8 +10,10 @@ import 'package:gaurds_game/game/level01/game_level_one.dart';
 import 'package:gaurds_game/game/level02/game_level_two.dart';
 import 'package:gaurds_game/game/level03/game_level_three.dart';
 import 'package:gaurds_game/game/level05/game_level_five.dart';
+import 'package:gaurds_game/game/level06/game_level_six.dart';
 
 import '../data/model/level.dart';
+import 'components/loading_screen.dart';
 
 class WhichDoorGameScreen extends FlameGame {
   WhichDoorGameScreen({required this.level});
@@ -33,6 +35,9 @@ class WhichDoorGameScreen extends FlameGame {
     add(FpsTextComponent(
         position: Vector2(30, 20),
         textRenderer: TextPaint(style: const TextStyle(color: Colors.black))));
+    if (level.id == 6) {
+      showOverlay(LoadingScreen.overlayName);
+    }
     await add(levelDecider());
     return super.onLoad();
   }
@@ -47,6 +52,8 @@ class WhichDoorGameScreen extends FlameGame {
         return GameLevelThree(level: level);
       case 5:
         return GameLevelFive(level: level);
+      case 6:
+        return GameLevelSix();
       default:
         return GameLevelOne(level: level);
     }

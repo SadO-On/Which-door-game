@@ -7,6 +7,7 @@ import 'package:gaurds_game/game/components/win_popup.dart';
 import 'package:gaurds_game/game/level05/components/big_message_component.dart';
 import 'package:gaurds_game/game/which_door_game_screen.dart';
 
+import 'components/loading_screen.dart';
 import 'components/lost_popup.dart';
 
 class GamePlayContainer extends StatelessWidget {
@@ -29,7 +30,8 @@ class GamePlayContainer extends StatelessWidget {
               GuardIdPopup(game: game, levelNumber: level.id),
           BigMessageComponent.overlayName:
               (context, WhichDoorGameScreen game) =>
-                  BigMessageComponent(game: game)
+                  BigMessageComponent(game: game),
+          LoadingScreen.overlayName: (context, _) => const LoadingScreen()
         });
   }
 }

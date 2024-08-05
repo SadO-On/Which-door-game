@@ -83,7 +83,13 @@ guard_emotions depends on your feeling it could be HAPPY, MAD, IDLE
       guards: [guards['sam']!],
       type: ChallengeType.number,
       noOfQuestions: 12,
-      systemInstructions: [sam_level_5_system_instruction])
+      systemInstructions: [sam_level_5_system_instruction]),
+  6: Level(
+      id: 6,
+      riddle: "",
+      guards: [],
+      type: ChallengeType.time,
+      systemInstructions: [])
 };
 
 enum ChallengeType { time, number }

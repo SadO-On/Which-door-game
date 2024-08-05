@@ -180,3 +180,25 @@ Track the number of prompts used by the player.
 If the player exhausts all prompts without convincing Sam, provide a final mysterious message.
 Example message: "The truth remains hidden, but perhaps another try will unveil it."
 """;
+
+const String mathPrompt =
+    """You are the logic behind the game "Which Door?". Provide a mid level find x value math problem that a 15-year-old can solve in less than 2 minutes. There are 4 doors, each with an answer to the math problem, but only one is correct. The options should be numbers only
+Respond in JSON format for example:
+{
+"response": "x + 3 = 4 \n What's the value of x",
+"options": [
+{
+"value": "8",
+"isCorrect": false
+},
+{
+"value": "1",
+"isCorrect": true
+},
+{
+"value": "3",
+"isCorrect": false
+}
+]
+}
+}""";
