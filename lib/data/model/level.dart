@@ -89,7 +89,14 @@ guard_emotions depends on your feeling it could be HAPPY, MAD, IDLE
       riddle: "",
       guards: [],
       type: ChallengeType.time,
-      systemInstructions: [])
+      systemInstructions: []),
+  7: Level(
+      id: 7,
+      riddle:
+          "One of these guards is carrying a fake ID. Identify him and have him reveal the correct door.",
+      guards: [guards['fred']!, guards['sam']!, guards['steve']!],
+      type: ChallengeType.number,
+      systemInstructions: [""""""])
 };
 
 enum ChallengeType { time, number }

@@ -11,6 +11,7 @@ import 'package:gaurds_game/game/level02/game_level_two.dart';
 import 'package:gaurds_game/game/level03/game_level_three.dart';
 import 'package:gaurds_game/game/level05/game_level_five.dart';
 import 'package:gaurds_game/game/level06/game_level_six.dart';
+import 'package:gaurds_game/game/level07/game_level_seven.dart';
 
 import '../data/model/level.dart';
 import 'components/loading_screen.dart';
@@ -54,6 +55,8 @@ class WhichDoorGameScreen extends FlameGame {
         return GameLevelFive(level: level);
       case 6:
         return GameLevelSix();
+      case 7:
+        return GameLevelSeven(level: level);
       default:
         return GameLevelOne(level: level);
     }

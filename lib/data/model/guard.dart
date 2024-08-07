@@ -7,6 +7,7 @@ class Guard {
   final String eId;
   final String nationality;
   final String bloodType;
+  String? idBarCode;
   final String phoneNum;
   final String asset;
   final String slogan;
@@ -22,6 +23,7 @@ class Guard {
     required this.eId,
     this.slogan = "",
     this.idAsset = "",
+    this.idBarCode,
     required this.asset,
     required this.nationality,
     required this.bloodType,
@@ -37,6 +39,8 @@ final guards = {
       name: "Steve",
       expiryDate: '01/12/2029',
       gender: "Male",
+      slogan: "Patience is not my virtue.",
+      idAsset: "assets/images/steve_id.svg",
       eId: '38292',
       nationality: 'Quarls',
       bloodType: 'O+',
@@ -82,5 +86,20 @@ final guards = {
       slogan: "In questions, find the truth.",
       asset: 'assets/rive/steve_id_animation.riv',
       phoneNum: '+99 676 778 3227',
-      joinedDate: '24/12/2002')
+      joinedDate: '24/12/2002'),
+  "fred_fake_id": Guard(
+      id: '4355625736',
+      age: DateTime.now().year - 1966,
+      name: "Fred",
+      expiryDate: '01/12/2029',
+      gender: "Male",
+      eId: '12575',
+      nationality: 'Vaelorian',
+      idAsset: "assets/images/fred_fake_id.svg",
+      bloodType: 'A+',
+      slogan: "In questions, find the truth.",
+      asset: 'assets/rive/steve_id_animation.riv',
+      phoneNum: '+99 676 778 3227',
+      joinedDate: '24/12/2002',
+      idBarCode: "4265284222")
 };
