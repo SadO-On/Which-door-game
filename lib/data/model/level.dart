@@ -77,6 +77,20 @@ guard_emotions depends on your feeling it could be HAPPY, MAD, IDLE
       guards: [guards['sam']!],
       systemInstructions: [samInstructions],
       noOfQuestions: 7),
+  4: Level(
+    id: 4,
+    time: 2,
+    type: ChallengeType.time,
+    riddle:
+        "These guards seem bored. You need to make one of them laugh within 2 minutes to get the correct door.",
+    guards: [
+      guards['sam']!,
+      guards['fred']!,
+      guards['steve']!,
+      guards['steve']!
+    ],
+    systemInstructions: [""],
+  ),
   5: Level(
       id: 5,
       riddle: "Well, What happened here ?",

@@ -9,6 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:gaurds_game/game/level01/game_level_one.dart';
 import 'package:gaurds_game/game/level02/game_level_two.dart';
 import 'package:gaurds_game/game/level03/game_level_three.dart';
+import 'package:gaurds_game/game/level04/gameLevelFour.dart';
 import 'package:gaurds_game/game/level05/game_level_five.dart';
 import 'package:gaurds_game/game/level06/game_level_six.dart';
 import 'package:gaurds_game/game/level07/game_level_seven.dart';
@@ -51,6 +52,8 @@ class WhichDoorGameScreen extends FlameGame {
         return GameLevelTwo(level: level);
       case 3:
         return GameLevelThree(level: level);
+      case 4:
+        return GameLevelFour(level: level);
       case 5:
         return GameLevelFive(level: level);
       case 6:
