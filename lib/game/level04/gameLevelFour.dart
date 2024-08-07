@@ -10,61 +10,67 @@ import 'package:gaurds_game/game/which_door_game_screen.dart';
 import '../../chat/chat_screen.dart';
 import '../../data/model/level.dart';
 import '../components/guard_id_popup.dart';
+import '../components/lost_popup.dart';
 import '../components/rive_button_component.dart';
+import '../components/win_popup.dart';
 import '../level01/components/guard_component.dart';
 
 class GameLevelFour extends Component with HasGameRef<WhichDoorGameScreen> {
   GameLevelFour({required this.level});
 
   final Level level;
-  SvgComponent? doorA;
-  SvgComponent? doorB;
-  SvgComponent? doorC;
-  SvgComponent? doorD;
-  GuardComponent? sam;
-  RiveButtonComponent? viewSamIdComponent;
-  RiveButtonComponent? chatWithSamComponent;
-  RiveButtonComponent? doorAButton;
-  RiveButtonComponent? doorBButton;
-  RiveButtonComponent? doorCButton;
-  RiveButtonComponent? doorDButton;
+  SvgComponent? doorA, doorB, doorC;
+  GuardComponent? sam, fred, kane;
+  RiveButtonComponent? viewSamIdComponent,
+      chatWithSamComponent,
+      viewFredIdComponent,
+      chatWithFredComponent,
+      viewKaneIdComponent,
+      chatWithKaneComponent,
+      doorAButton,
+      doorBButton,
+      doorCButton;
 
   @override
   FutureOr<void> onLoad() async {
     final svgInstance = await Svg.load('images/background_level_four.svg');
+
     final backgroundSize = gameRef.size;
 
     final background = SvgComponent(
       size: backgroundSize,
       svg: svgInstance,
     );
-
-    add(background);
-
-    add(MissionComponent(
-        'The guard, Sam, is hesitant to speak. You must give him a compelling reason to talk and reveal the correct door.'));
+    addAll(
+        [background, MissionComponent(text: level.riddle, isWithClock: true)]);
 
     final sprite = await Svg.load('images/door_a.svg');
     final spriteB = await Svg.load('images/door_b.svg');
     final spriteC = await Svg.load('images/door_c.svg');
-    final spriteD = await Svg.load('images/door_d.svg');
 
-    final size = Vector2(97, 195);
+    final size = Vector2(130, 265);
 
     doorA = SvgComponent(size: size, svg: sprite);
     doorB = SvgComponent(size: size, svg: spriteB);
     doorC = SvgComponent(size: size, svg: spriteC);
-    doorD = SvgComponent(size: size, svg: spriteD);
 
-    addAll([doorA!, doorB!, doorC!, doorD!]);
+    addAll([doorA!, doorB!, doorC!]);
 
-    final samArtBoard = await loadArtboard(
-        RiveFile.asset('assets/rive/steve_idle_standing.riv'));
+    final samArtBoard =
+        await loadArtboard(RiveFile.asset('assets/rive/sam_idle_standing.riv'));
     sam = GuardComponent(artboard: samArtBoard);
 
-    add(sam!);
+    final fredArtBoard = await loadArtboard(
+        RiveFile.asset('assets/rive/guard_fred_idle_standing.riv'));
+    fred = GuardComponent(artboard: fredArtBoard);
 
+    final kaneArtBoard = await loadArtboard(
+        RiveFile.asset('assets/rive/kane_idle_standing.riv'));
+    kane = GuardComponent(artboard: kaneArtBoard);
     await _loadButtons();
+
+    addAll([sam!, fred!, kane!]);
+
     return super.onLoad();
   }
 
@@ -74,9 +80,9 @@ class GameLevelFour extends Component with HasGameRef<WhichDoorGameScreen> {
   }
 
   Future _loadButtons() async {
-    final chatWithSamArtBoard =
+    final chatWithFredArtBoard =
         await loadArtboard(RiveFile.asset('assets/rive/button.riv'));
-    final viewSamIdArtBoard =
+    final viewFredIdArtBoard =
         await loadArtboard(RiveFile.asset('assets/rive/button.riv'));
 
     final aDoorArtBoard =
@@ -85,67 +91,94 @@ class GameLevelFour extends Component with HasGameRef<WhichDoorGameScreen> {
         await loadArtboard(RiveFile.asset('assets/rive/button.riv'));
     final cDoorArtBoard =
         await loadArtboard(RiveFile.asset('assets/rive/button.riv'));
-    final dDoorArtBoard =
-        await loadArtboard(RiveFile.asset('assets/rive/button.riv'));
 
     doorAButton = RiveButtonComponent(aDoorArtBoard, 'Door A', () {
-      // gameRef.playerWin();
+      gameRef.showOverlay(LostPopup.overlayName);
     });
 
     doorBButton = RiveButtonComponent(bDoorArtBoard, 'Door B', () {
-      // gameRef.playerLost();
+      gameRef.showOverlay(WinPopup.overlayName);
     });
 
     doorCButton = RiveButtonComponent(cDoorArtBoard, 'Door C', () {
-      // gameRef.playerLost();
+      gameRef.showOverlay(LostPopup.overlayName);
     });
 
-    doorDButton = RiveButtonComponent(dDoorArtBoard, 'Door D', () {
-      // gameRef.playerLost();
-    });
-
-    chatWithSamComponent =
-        RiveButtonComponent(chatWithSamArtBoard, 'Chat with Sam', () {
+    chatWithFredComponent =
+        RiveButtonComponent(chatWithFredArtBoard, 'Chat with Fred', () {
       gameRef.guardIndex = 0;
       openChat();
       showOptions();
     });
 
-    viewSamIdComponent =
-        RiveButtonComponent(viewSamIdArtBoard, 'View Sam’s ID', () {
+    viewFredIdComponent =
+        RiveButtonComponent(viewFredIdArtBoard, 'View Fred’s ID', () {
       gameRef.guardIndex = 0;
-      gameRef.showOverlay(GuardIdPopup.overlayName);
+
+      game.showOverlay(GuardIdPopup.overlayName);
+    });
+
+    chatWithKaneComponent =
+        RiveButtonComponent(chatWithFredArtBoard, 'Chat with Kane', () {
+      gameRef.guardIndex = 2;
+      openChat();
+      showOptions();
+    });
+
+    viewKaneIdComponent =
+        RiveButtonComponent(viewFredIdArtBoard, 'View kane’s ID', () {
+      gameRef.guardIndex = 2;
+
+      game.showOverlay(GuardIdPopup.overlayName);
+    });
+
+    chatWithSamComponent =
+        RiveButtonComponent(chatWithFredArtBoard, 'Chat with Sam', () {
+      gameRef.guardIndex = 1;
+      openChat();
+      showOptions();
+    });
+
+    viewSamIdComponent =
+        RiveButtonComponent(viewFredIdArtBoard, 'View Sam ID', () {
+      gameRef.guardIndex = 1;
+
+      game.showOverlay(GuardIdPopup.overlayName);
     });
 
     await addAll([
+      viewFredIdComponent!,
       viewSamIdComponent!,
+      viewKaneIdComponent!,
+      chatWithFredComponent!,
       chatWithSamComponent!,
+      chatWithKaneComponent!,
     ]);
   }
 
   void showOptions() async {
     removeAll([
-      viewSamIdComponent!,
-      chatWithSamComponent!,
+      chatWithFredComponent!,
+      viewFredIdComponent!,
     ]);
-    await addAll([doorAButton!, doorBButton!, doorCButton!, doorDButton!]);
+    await addAll([doorAButton!, doorBButton!, doorCButton!]);
   }
 
   @override
   void onGameResize(Vector2 size) {
-    //TODO make the size dynamic
-    sam?.width = 83;
-    sam?.height = 180;
     doorA?.position =
-        Vector2(size.x * 0.24, size.y * 0.557 - (doorA?.size.y ?? 0) / 3);
+        Vector2(size.x * 0.22, size.y * 0.557 - (doorA?.size.y ?? 0) / 2);
     doorB?.position =
-        Vector2(size.x * 0.42, size.y * 0.557 - (doorB?.size.y ?? 0) / 3);
+        Vector2(size.x * 0.52, size.y * 0.557 - (doorB?.size.y ?? 0) / 2);
     doorC?.position =
-        Vector2(size.x * 0.60, size.y * 0.557 - (doorC?.size.y ?? 0) / 3);
-    doorD?.position =
-        Vector2(size.x * 0.78, size.y * 0.557 - (doorC?.size.y ?? 0) / 3);
-    sam?.position = Vector2(size.x * 0.26 - (sam?.size.x ?? 0 - 20),
-        size.y * 0.557 - (sam?.size.y ?? 0) / 4);
+        Vector2(size.x * 0.82, size.y * 0.557 - (doorC?.size.y ?? 0) / 2);
+
+    fred?.position = Vector2(size.x * 0.27 - (fred?.size.x ?? 0 - 20),
+        size.y * 0.557 - (fred?.size.y ?? 0) / 3);
+    sam?.position = Vector2(size.x * 0.56 - (sam?.size.x ?? 0 - 20),
+        size.y * 0.557 - (fred?.size.y ?? 0) / 3);
+    kane?.position =
+        Vector2(size.x * 0.77, size.y * 0.557 - (fred?.size.y ?? 0) / 3);
 
     doorAButton?.position =
         Vector2(size.x * 0.24 - (doorAButton?.size.x ?? 0) / 5, size.y * 0.30);
@@ -153,18 +186,31 @@ class GameLevelFour extends Component with HasGameRef<WhichDoorGameScreen> {
         Vector2(size.x * 0.42 - (doorBButton?.size.x ?? 0) / 5, size.y * 0.30);
     doorCButton?.position =
         Vector2(size.x * 0.60 - (doorCButton?.size.x ?? 0) / 5, size.y * 0.30);
-    doorDButton?.position =
-        Vector2(size.x * 0.78 - (doorDButton?.size.x ?? 0) / 5, size.y * 0.30);
     _optionsSizing(size);
+
     super.onGameResize(size);
   }
 
   void _optionsSizing(Vector2 size) {
+    chatWithFredComponent?.position =
+        Vector2(size.x * 0.14 - (fred?.size.x ?? 0 - 20), size.y * 0.5);
+
+    viewFredIdComponent?.position = Vector2(
+        size.x * 0.14 - (fred?.size.x ?? 0 - 20),
+        (size.y * 0.5 - (viewFredIdComponent?.height ?? 0)));
+
     chatWithSamComponent?.position =
-        Vector2(size.x * 0.13 - (sam?.size.x ?? 0 - 20), size.y * 0.5);
+        Vector2(size.x * 0.45 - (sam?.size.x ?? 0 - 20), size.y * 0.5);
 
     viewSamIdComponent?.position = Vector2(
-        size.x * 0.13 - (sam?.size.x ?? 0 - 20),
+        size.x * 0.45 - (fred?.size.x ?? 0 - 20),
         (size.y * 0.5 - (viewSamIdComponent?.height ?? 0)));
+
+    chatWithKaneComponent?.position =
+        Vector2(size.x * 0.75 - (fred?.size.x ?? 0 - 20), size.y * 0.5);
+
+    viewKaneIdComponent?.position = Vector2(
+        size.x * 0.75 - (fred?.size.x ?? 0 - 20),
+        (size.y * 0.5 - (viewFredIdComponent?.height ?? 0)));
   }
 }

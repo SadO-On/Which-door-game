@@ -44,7 +44,7 @@ class GameLevelSix extends Component with HasGameRef<WhichDoorGameScreen> {
 
     addAll([
       background,
-      MissionComponent(_mathProblem?.response ?? ""),
+      MissionComponent(text: _mathProblem?.response ?? ""),
       LevelTimerComponent(
           120, "2:00", () => gameRef.showOverlay(LostPopup.overlayName))
     ]);

@@ -44,10 +44,7 @@ class GameLevelOne extends Component
       svg: svgInstance,
     );
 
-    add(background!);
-
-    add(MissionComponent(
-        'You have 3 questions. You can choose the guard you want to ask to find out who is the liar and who is the honest one.'));
+    addAll([background!, MissionComponent(text: level.riddle)]);
     final sprite = await Svg.load('images/door_a.svg');
     final spriteB = await Svg.load('images/door_b.svg');
 

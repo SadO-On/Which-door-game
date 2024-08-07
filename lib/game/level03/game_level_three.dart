@@ -39,10 +39,7 @@ class GameLevelThree extends Component with HasGameRef<WhichDoorGameScreen> {
       svg: svgInstance,
     );
 
-    add(background);
-
-    add(MissionComponent(
-        'The guard, Sam, is hesitant to speak. You must give him a compelling reason to talk and reveal the correct door.'));
+    addAll([background, MissionComponent(text: level.riddle)]);
 
     final sprite = await Svg.load('images/door_a.svg');
     final spriteB = await Svg.load('images/door_b.svg');

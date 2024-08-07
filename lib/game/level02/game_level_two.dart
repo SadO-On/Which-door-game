@@ -38,7 +38,7 @@ class GameLevelTwo extends Component with HasGameRef<WhichDoorGameScreen> {
       svg: svgInstance,
     );
 
-    addAll([background!, MissionComponent(levels[gameRef.level.id]!.riddle)]);
+    addAll([background!, MissionComponent(text: level.riddle)]);
 
     final sprite = await Svg.load('images/door_a.svg');
     final spriteB = await Svg.load('images/door_b.svg');
