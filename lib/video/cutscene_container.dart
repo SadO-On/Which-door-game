@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:gaurds_game/data/model/level.dart';
+import 'package:gaurds_game/game/game_play_container.dart';
 import 'package:video_player/video_player.dart';
 
 class CutSceneContainerScreen extends StatefulWidget {
@@ -27,7 +29,10 @@ class _CutSceneContainerScreenState extends State<CutSceneContainerScreen> {
     _controller.play();
     _controller.addListener(() {
       if (_controller.value.isCompleted) {
-        //TODO navigate to GameScreen
+        Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(
+                builder: (context) => GamePlayContainer(level: levels[1]!)));
       }
     });
     super.initState();
@@ -47,20 +52,22 @@ class _CutSceneContainerScreenState extends State<CutSceneContainerScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder(
-      future: _initializeVideoPlayerFuture,
-      builder: (context, snapshot) {
-        if (snapshot.connectionState == ConnectionState.done) {
-          return AspectRatio(
-            aspectRatio: 16.0 / 9.0,
-            child: VideoPlayer(_controller),
-          );
-        } else {
-          return const Center(
-            child: CircularProgressIndicator(),
-          );
-        }
-      },
+    return SafeArea(
+      child: FutureBuilder(
+        future: _initializeVideoPlayerFuture,
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.done) {
+            return AspectRatio(
+              aspectRatio: 16.0 / 9.0,
+              child: VideoPlayer(_controller),
+            );
+          } else {
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          }
+        },
+      ),
     );
   }
 }
