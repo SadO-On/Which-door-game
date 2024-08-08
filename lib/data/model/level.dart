@@ -86,8 +86,7 @@ guard_emotions depends on your feeling it could be HAPPY, MAD, IDLE
     guards: [
       guards['sam']!,
       guards['fred']!,
-      guards['steve']!,
-      guards['steve']!
+      guards['steve']!, //TODO kane
     ],
     systemInstructions: [""],
   ),
@@ -110,6 +109,14 @@ guard_emotions depends on your feeling it could be HAPPY, MAD, IDLE
           "One of these guards is carrying a fake ID. Identify him and have him reveal the correct door.",
       guards: [guards['fred']!, guards['sam']!, guards['steve']!],
       type: ChallengeType.number,
+      systemInstructions: [""""""]),
+  9: Level(
+      id: 9,
+      riddle:
+          "One of these guards is carrying a fake ID. Identify him and have him reveal the correct door.",
+      guards: [guards['sam']!, guards['steve']!],
+      type: ChallengeType.number,
+      noOfQuestions: 9,
       systemInstructions: [""""""])
 };
 
