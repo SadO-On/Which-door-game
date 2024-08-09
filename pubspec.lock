@@ -616,14 +616,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "3.3.1"
-  rich_typewriter:
-    dependency: "direct main"
-    description:
-      name: rich_typewriter
-      sha256: "6d05f889e11d1ffa42268b713f01f7a47a654f142f46d3f09949934bbf6be5ba"
-      url: "https://pub.dev"
-    source: hosted
-    version: "1.1.0"
   rive:
     dependency: transitive
     description:

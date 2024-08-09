@@ -5,6 +5,7 @@ import 'package:gaurds_game/chat/chat_store.dart';
 import 'package:gaurds_game/chat/widgets/chat_input_widget.dart';
 import 'package:gaurds_game/chat/widgets/chat_list_widget.dart';
 import 'package:gaurds_game/chat/widgets/id_card_widget.dart';
+import 'package:gaurds_game/data/model/guardMood.dart';
 import 'package:gaurds_game/data/model/level.dart';
 import 'package:gaurds_game/game/which_door_game_screen.dart';
 import 'package:gaurds_game/utils/utils.dart';
@@ -26,12 +27,18 @@ class ChatScreen extends StatefulWidget {
 
 class _ChatScreenState extends State<ChatScreen> {
   late ChatStore _store;
-
+  final _controller = ScrollController();
   @override
   void initState() {
     _store = ChatStore(widget.levelNumber, widget.gameScreen.guardIndex,
-        levels[widget.levelNumber]!.noOfQuestions);
+        levels[widget.levelNumber]!.noOfQuestions, _controller);
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
   }
 
   @override
@@ -59,9 +66,12 @@ class _ChatScreenState extends State<ChatScreen> {
                             : 'You have ${_store.remainingQuestions} question left to ask for ${levels[widget.levelNumber]!.guards[widget.gameScreen.guardIndex].name}',
                   ),
                 )),
-            IdCardWidget(
-              guard: levels[widget.levelNumber]!
-                  .guards[widget.gameScreen.guardIndex],
+            Observer(
+              builder: (context) => IdCardWidget(
+                guard: levels[widget.levelNumber]!
+                    .guards[widget.gameScreen.guardIndex],
+                mood: _store.conversations.last.mood,
+              ),
             ),
             if (levels[widget.levelNumber]!.type == ChallengeType.time)
               Countdown(
@@ -80,6 +90,7 @@ class _ChatScreenState extends State<ChatScreen> {
               ),
             ChatListWidget(
               store: _store,
+              listScrollController: _controller,
             ),
             Observer(
               builder: (_) {
@@ -104,9 +115,11 @@ class _ChatScreenState extends State<ChatScreen> {
               },
             ),
             Observer(builder: (_) {
-              if ((levels[widget.levelNumber]!.type == ChallengeType.time &&
+              if ((levels[widget.levelNumber]!.type == ChallengeType.number &&
                       _store.remainingQuestions <= 0) ||
                   _store.isTimesUp) {
+                print(levels[widget.levelNumber]!.type == ChallengeType.time &&
+                    _store.remainingQuestions <= 0);
                 return Row(
                   mainAxisSize: MainAxisSize.max,
                   mainAxisAlignment: MainAxisAlignment.center,

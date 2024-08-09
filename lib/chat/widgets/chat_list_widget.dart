@@ -5,8 +5,9 @@ import 'package:gaurds_game/chat/chat_store.dart';
 import 'chat_item_widget.dart';
 
 class ChatListWidget extends StatelessWidget {
-  ChatListWidget({super.key, required this.store});
-  final ScrollController listScrollController = ScrollController();
+  const ChatListWidget(
+      {super.key, required this.store, required this.listScrollController});
+  final ScrollController listScrollController;
   final ChatStore store;
 
   @override

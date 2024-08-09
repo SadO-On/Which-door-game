@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:gaurds_game/chat/model/chat_model.dart';
 import 'package:gaurds_game/data/main_repository.dart';
 import 'package:gaurds_game/data/model/level.dart';
@@ -14,8 +15,10 @@ abstract class _ChatStore with Store {
   final int levelNumber;
   final int guardIndex;
   late MainRepository _repository;
+  final ScrollController _controller;
 
-  _ChatStore(this.levelNumber, this.guardIndex, this.remainingQuestions) {
+  _ChatStore(this.levelNumber, this.guardIndex, this.remainingQuestions,
+      this._controller) {
     _repository =
         getIt.get<MainRepository>(param1: levelNumber, param2: guardIndex);
 
@@ -47,8 +50,12 @@ abstract class _ChatStore with Store {
     PromptResponse gemini = await _repository.sendPrompt(text);
     isLoading = false;
     remainingQuestions -= 1;
-    addNewConversation(
-        ChatModel(text: gemini.response, type: ChattingType.receiver));
+    addNewConversation(ChatModel(
+        text: gemini.response,
+        type: ChattingType.receiver,
+        mood: gemini.guardMood));
+    _controller.jumpTo(_controller.position.maxScrollExtent);
+
     if (remainingQuestions == 0) {
       //TODO navigate back progress
     }

@@ -17,6 +17,7 @@ class GeminiAI {
           safetySettings: _safetySettings,
           generationConfig: GenerationConfig(
             temperature: 2,
+            responseMimeType: 'application/json',
           ),
           systemInstruction: systemInstructions));
 
@@ -25,7 +26,8 @@ class GeminiAI {
   Future<PromptResponse> sendPrompt(String prompt) async {
     final content = [Content.text(prompt)];
     final response = await _generativeModel.generateContent(content);
-    final textValue = response.text.toString().replaceAll('\n', '\\n');
+    final textValue = response.text!;
+    print(textValue);
     final json = jsonDecode(textValue) as Map<String, dynamic>;
     final PromptResponse promptResponse = PromptResponse.fromJson(json);
     return promptResponse;

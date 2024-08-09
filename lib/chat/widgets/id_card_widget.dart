@@ -3,20 +3,81 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:gaurds_game/data/model/guard.dart';
+import 'package:gaurds_game/data/model/guardMood.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
-import 'package:rich_typewriter/rich_typewriter.dart';
+import 'package:flutter/material.dart';
+import 'package:rive/rive.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:flutter/material.dart';
+import 'package:rive/rive.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
-class IdCardWidget extends StatelessWidget {
-  const IdCardWidget({super.key, required this.guard});
+class IdCardWidget extends StatefulWidget {
+  const IdCardWidget({super.key, required this.guard, required this.mood});
   final Guard guard;
+  final GuardMood mood;
+
+  @override
+  _IdCardWidgetState createState() => _IdCardWidgetState();
+}
+
+class _IdCardWidgetState extends State<IdCardWidget>
+    with SingleTickerProviderStateMixin {
+  late RiveAnimationController _controller;
+  late AnimationController _bounceController;
+  late Animation<double> _bounceAnimation;
+
+  @override
+  void initState() {
+    super.initState();
+
+    _controller = SimpleAnimation(widget.guard.asset);
+
+    _bounceController = AnimationController(
+      duration: const Duration(
+          milliseconds: 600), // Increase duration for full bounce
+      vsync: this,
+    );
+
+    _bounceAnimation = TweenSequence([
+      TweenSequenceItem<double>(
+        tween: Tween(begin: 1.0, end: 1.1)
+            .chain(CurveTween(curve: Curves.easeOut)),
+        weight: 50,
+      ),
+      TweenSequenceItem<double>(
+        tween: Tween(begin: 1.1, end: 1.0)
+            .chain(CurveTween(curve: Curves.bounceOut)),
+        weight: 50,
+      ),
+    ]).animate(_bounceController);
+  }
+
+  @override
+  void didUpdateWidget(covariant IdCardWidget oldWidget) {
+    super.didUpdateWidget(oldWidget);
+
+    if (oldWidget.mood != widget.mood) {
+      _bounceController.forward(from: 0.0);
+    }
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    _bounceController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
       clipBehavior: Clip.hardEdge,
       decoration: const BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.all(Radius.circular(6))),
+        color: Colors.white,
+        borderRadius: BorderRadius.all(Radius.circular(6)),
+      ),
       margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
       child: Column(
         children: [
@@ -45,25 +106,35 @@ class IdCardWidget extends StatelessWidget {
                       const SizedBox(
                         height: 28,
                       ),
-                      SizedBox(
-                        width: 78,
-                        height: 90,
-                        child: RiveAnimation.asset(
-                          guard.asset,
+                      AnimatedBuilder(
+                        animation: _bounceAnimation,
+                        builder: (context, child) {
+                          return Transform.scale(
+                            scale: _bounceAnimation.value,
+                            child: child,
+                          );
+                        },
+                        child: SizedBox(
+                          width: 78,
+                          height: 90,
+                          child: RiveAnimation.asset(
+                            widget.guard.asset,
+                            stateMachines: [getStateMachineName(widget.mood)],
+                          ),
                         ),
                       ),
                       const SizedBox(
                         height: 8,
                       ),
-                      Image(
-                          width: Adaptive.px(84),
-                          image: const AssetImage('assets/images/barcode.png')),
+                      SvgPicture.asset('assets/images/barcode-.svg',
+                          semanticsLabel: 'barcode'),
                       Text(
-                        guard.id,
+                        widget.guard.id,
                         style: const TextStyle(
-                            fontFamily: 'Inter',
-                            fontSize: 10,
-                            letterSpacing: 4),
+                          fontFamily: 'Inter',
+                          fontSize: 10,
+                          letterSpacing: 4,
+                        ),
                       )
                     ],
                   ),
@@ -83,24 +154,26 @@ class IdCardWidget extends StatelessWidget {
                       Table(
                         children: [
                           TableRow(children: [
-                            idCellWidget('ID:', guard.id),
-                            idCellWidget('Age:', '${guard.age} Years old'),
+                            idCellWidget('ID:', widget.guard.id),
+                            idCellWidget(
+                                'Age:', '${widget.guard.age} Years old'),
                           ]),
                           TableRow(children: [
-                            idCellWidget('Name:', guard.name),
-                            idCellWidget('DOE:', guard.expiryDate),
+                            idCellWidget('Name:', widget.guard.name),
+                            idCellWidget('DOE:', widget.guard.expiryDate),
                           ]),
                           TableRow(children: [
-                            idCellWidget('Gender:', guard.gender),
-                            idCellWidget('Employee ID:', guard.eId),
+                            idCellWidget('Gender:', widget.guard.gender),
+                            idCellWidget('Employee ID:', widget.guard.eId),
                           ]),
                           TableRow(children: [
-                            idCellWidget('Nationality:', guard.nationality),
-                            idCellWidget('Blood Type:', guard.bloodType),
+                            idCellWidget(
+                                'Nationality:', widget.guard.nationality),
+                            idCellWidget('Blood Type:', widget.guard.bloodType),
                           ]),
                           TableRow(children: [
-                            idCellWidget('Phone:', guard.phoneNum),
-                            idCellWidget('Joined:', guard.joinedDate),
+                            idCellWidget('Phone:', widget.guard.phoneNum),
+                            idCellWidget('Joined:', widget.guard.joinedDate),
                           ]),
                         ],
                       ),
@@ -122,23 +195,36 @@ class IdCardWidget extends StatelessWidget {
     return TableCell(
       child: Padding(
         padding: const EdgeInsets.symmetric(vertical: 2),
-        child: RichTypewriter(
-          delay: 75,
-          child: RichText(
-              text: TextSpan(
-                  text: title,
-                  style: const TextStyle(
-                      color: Color(0xff653E1A),
-                      fontSize: 10,
-                      fontFamily: 'Impact'),
-                  children: [
-                TextSpan(
-                    text: ' $value',
-                    style: const TextStyle(
-                        color: Colors.black, fontSize: 10, fontFamily: 'Inter'))
-              ])),
+        child: RichText(
+          text: TextSpan(
+            text: title,
+            style: const TextStyle(
+                color: Color(0xff653E1A), fontSize: 10, fontFamily: 'Impact'),
+            children: [
+              TextSpan(
+                text: ' $value',
+                style: const TextStyle(
+                    color: Colors.black, fontSize: 10, fontFamily: 'Inter'),
+              ),
+            ],
+          ),
         ),
       ),
     );
+  }
+
+  String getStateMachineName(GuardMood mood) {
+    switch (mood) {
+      case GuardMood.EVIL:
+        return "Evil machine";
+      case GuardMood.Angry:
+        return "Angry machine";
+      case GuardMood.Happy:
+        return "Happy machine";
+      case GuardMood.MAD:
+        return "Mad machine";
+      default:
+        return "Idle machine";
+    }
   }
 }
