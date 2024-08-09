@@ -57,6 +57,10 @@ class MyApp extends StatelessWidget {
         fontFamily: 'Impact',
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
+        pageTransitionsTheme: const PageTransitionsTheme(builders: {
+          TargetPlatform.iOS: OpenUpwardsPageTransitionsBuilder(),
+          TargetPlatform.android: OpenUpwardsPageTransitionsBuilder(),
+        }),
       ),
       initialRoute: AppRoutes.home,
       onGenerateRoute: _onGenerateRoute,
@@ -81,3 +85,4 @@ class MyApp extends StatelessWidget {
 //                   MaterialPageRoute(builder: (context) => const HomeScreen()),
 //                 ),
 //             theme: FlameSplashTheme.white)
+

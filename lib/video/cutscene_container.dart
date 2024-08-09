@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:gaurds_game/data/model/level.dart';
+import 'package:gaurds_game/game/components/loading_screen.dart';
 import 'package:gaurds_game/game/game_play_container.dart';
 import 'package:gaurds_game/widgets/three_dimension_button.dart';
 import 'package:video_player/video_player.dart';
@@ -58,9 +59,7 @@ class _CutSceneContainerScreenState extends State<CutSceneContainerScreen> {
                     child: VideoPlayer(_controller),
                   );
                 } else {
-                  return const Center(
-                    child: CircularProgressIndicator(),
-                  );
+                  return const LoadingScreen();
                 }
               },
             ),
