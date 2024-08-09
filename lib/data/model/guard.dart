@@ -86,7 +86,7 @@ final guards = {
       idAsset: "assets/images/fred_id.svg",
       bloodType: 'A+',
       slogan: "In questions, find the truth.",
-      asset: 'assets/rive/steve_id_animation.riv',
+      asset: 'assets/rive/fred_id_animation.riv',
       phoneNum: '+99 676 778 3227',
       joinedDate: '24/12/2002'),
   "fred_fake_id": Guard(

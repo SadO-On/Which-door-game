@@ -35,7 +35,7 @@ final levels = {
           "Guard Fred knows the correct door to take, but you have just one minute to convince him to reveal it.",
       type: ChallengeType.time,
       guards: [guards['fred']!],
-      time: 1,
+      time: 2,
       systemInstructions: [fredInstructions]),
   3: Level(
       id: 3,
