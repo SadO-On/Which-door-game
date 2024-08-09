@@ -115,7 +115,7 @@ final guards = {
       idAsset: "assets/images/margaret_id.svg",
       bloodType: 'O+',
       slogan: "The trickier, the better.",
-      asset: 'assets/rive/margaret_id.riv',
+      asset: 'assets/rive/margaret_id_animation.riv',
       phoneNum: '+99 636 332 3227',
       joinedDate: '24/12/2010',
       idBarCode: "4355625719"),

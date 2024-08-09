@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:gaurds_game/game/components/popup_container_widget.dart';
-import 'package:gaurds_game/game/game_play_container.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
-import 'game/components/loading_screen.dart';
 import 'home/home_screen.dart';
 import 'locator.dart';
 
@@ -27,7 +24,7 @@ class MyApp extends StatelessWidget {
               colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
               useMaterial3: true,
             ),
-            home: const LoadingScreen());
+            home: const HomeScreen());
       },
     );
   }

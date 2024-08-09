@@ -8,5 +8,7 @@ enum GuardMood {
   IDLE,
   WISE,
   FRUSTRATION,
-  CLEVER
+  CLEVER,
+  BOARD,
+  LAUGH
 }

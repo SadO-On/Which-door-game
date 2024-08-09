@@ -10,16 +10,18 @@ class GeminiAI {
   GeminiAI(this._generativeModel);
 
   factory GeminiAI.withApiKey(
-          {required String apiKey, required Content systemInstructions}) =>
-      GeminiAI(GenerativeModel(
-          model: 'gemini-1.5-flash',
-          apiKey: apiKey,
-          safetySettings: _safetySettings,
-          generationConfig: GenerationConfig(
-            temperature: 2,
-            responseMimeType: 'application/json',
-          ),
-          systemInstruction: systemInstructions));
+      {required String apiKey, required Content systemInstructions}) {
+    print("New Instance ");
+    return GeminiAI(GenerativeModel(
+        model: 'gemini-1.5-pro',
+        apiKey: apiKey,
+        safetySettings: _safetySettings,
+        generationConfig: GenerationConfig(
+          temperature: 2,
+          responseMimeType: 'application/json',
+        ),
+        systemInstruction: systemInstructions));
+  }
 
   final GenerativeModel _generativeModel;
 

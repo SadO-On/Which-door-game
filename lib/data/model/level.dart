@@ -52,11 +52,13 @@ final levels = {
     riddle:
         "These guards seem bored. You need to make one of them laugh within 2 minutes to get the correct door.",
     guards: [
-      guards['sam']!,
       guards['fred']!,
-      guards['steve']!, //TODO kane
+      guards['margaret']!,
+      guards['steve']!,
     ],
-    systemInstructions: [""],
+    systemInstructions: [
+      fredPromptLevelFour,
+    ],
   ),
   5: Level(
       id: 5,
