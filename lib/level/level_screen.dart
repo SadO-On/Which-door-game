@@ -5,6 +5,7 @@ import 'package:gaurds_game/level/level_button_widget.dart';
 import 'package:gaurds_game/utils/theme.dart';
 import 'package:gaurds_game/video/cutscene_container.dart';
 
+import '../utils/routes.dart';
 import '../widgets/top_bar_widget.dart';
 
 class LevelScreen extends StatelessWidget {
@@ -42,17 +43,12 @@ class LevelScreen extends StatelessWidget {
                   return LevelButtonWidget(
                       onClick: (levelNumber) {
                         if (levelNumber == 1) {
-                          Navigator.of(context).push(MaterialPageRoute(
-                              builder: (context) =>
-                                  const CutSceneContainerScreen(
-                                      videoAsset:
-                                          "assets/videos/cutscene.mp4")));
+                          Navigator.pushNamed(context, AppRoutes.cutScene,
+                              arguments: "assets/videos/cutscene.mp4");
                           return;
                         }
-                        Navigator.of(context).push(MaterialPageRoute(
-                            builder: (context) => GamePlayContainer(
-                                  level: levels[index + 1]!,
-                                )));
+                        Navigator.pushNamed(context, AppRoutes.game,
+                            arguments: levels[index + 1]!);
                       },
                       isOpened: index < 9,
                       levelNumber: index + 1);

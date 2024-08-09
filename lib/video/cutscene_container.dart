@@ -20,10 +20,6 @@ class _CutSceneContainerScreenState extends State<CutSceneContainerScreen> {
 
   @override
   void initState() {
-    SystemChrome.setPreferredOrientations([
-      DeviceOrientation.landscapeRight,
-      DeviceOrientation.landscapeLeft,
-    ]);
     _controller = VideoPlayerController.asset(widget.videoAsset);
 
     _initializeVideoPlayerFuture = _controller.initialize();
@@ -43,12 +39,6 @@ class _CutSceneContainerScreenState extends State<CutSceneContainerScreen> {
   @override
   void dispose() {
     _controller.dispose();
-    SystemChrome.setPreferredOrientations([
-      DeviceOrientation.landscapeRight,
-      DeviceOrientation.landscapeLeft,
-      DeviceOrientation.portraitUp,
-      DeviceOrientation.portraitDown,
-    ]);
     super.dispose();
   }
 
