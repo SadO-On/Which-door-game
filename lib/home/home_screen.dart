@@ -13,7 +13,8 @@ class HomeScreen extends StatefulWidget {
   State<HomeScreen> createState() => _HomeScreenState();
 }
 
-final Uri _url = Uri.parse('https://www.98s.studio/');
+final Uri _studio_url = Uri.parse('https://www.98s.studio/');
+final Uri _gemini_url = Uri.parse('https://gemini.google.com/');
 
 class _HomeScreenState extends State<HomeScreen> {
   @override
@@ -58,16 +59,35 @@ class _HomeScreenState extends State<HomeScreen> {
                         'Image of dark brown door in the right of the screen')
               ],
             ),
-            GestureDetector(
-              onTap: () async {
-                try {
-                  await _launchUrl();
-                } catch (error) {
-                  //Log it
-                }
-              },
-              child: SvgPicture.asset('assets/images/98sLogo.svg',
-                  semanticsLabel: '98\'s Logo'),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                GestureDetector(
+                  onTap: () async {
+                    try {
+                      await _launchUrl(_studio_url);
+                    } catch (error) {
+                      //Log it
+                    }
+                  },
+                  child: SvgPicture.asset('assets/images/98sLogo.svg',
+                      width: 90, height: 50, semanticsLabel: '98\'s Logo'),
+                ),
+                GestureDetector(
+                  onTap: () async {
+                    try {
+                      await _launchUrl(_gemini_url);
+                    } catch (error) {
+                      //Log it
+                    }
+                  },
+                  child: Image.asset(
+                    'assets/images/gemini.png',
+                    width: 90,
+                    height: 50,
+                  ),
+                )
+              ],
             )
           ],
         ),
@@ -76,8 +96,8 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 }
 
-Future<void> _launchUrl() async {
-  if (!await launchUrl(_url)) {
-    throw Exception('Could not launch $_url');
+Future<void> _launchUrl(url) async {
+  if (!await launchUrl(url)) {
+    throw Exception('Could not launch $url');
   }
 }
