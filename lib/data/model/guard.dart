@@ -35,7 +35,7 @@ class Guard {
 final guards = {
   "steve": Guard(
       id: '6029839832',
-      age: 37,
+      age: DateTime.now().year - 1986,
       name: "Steve",
       expiryDate: '01/12/2029',
       gender: "Male",
@@ -58,7 +58,7 @@ final guards = {
       idAsset: "assets/images/willy_id.svg",
       nationality: 'Quarls',
       bloodType: 'B+',
-      asset: 'assets/rive/steve_id_animation.riv',
+      asset: 'assets/rive/willy_id_animation.riv',
       phoneNum: '+99 094 773 8928',
       joinedDate: '05/19/2015'),
   "sam": Guard(

@@ -214,6 +214,7 @@ class _IdCardWidgetState extends State<IdCardWidget>
   }
 
   String getStateMachineName(GuardMood mood) {
+    print(mood.name);
     switch (mood) {
       case GuardMood.EVIL:
         return "Evil machine";
