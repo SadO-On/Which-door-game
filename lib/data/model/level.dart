@@ -41,9 +41,9 @@ final levels = {
       id: 3,
       type: ChallengeType.number,
       riddle:
-          "The guard, Sam, is hesitant to speak. You must give him a compelling reason to talk and reveal the correct door.",
-      guards: [guards['sam']!],
-      systemInstructions: [samInstructions],
+          "Margaret, the Riddle Master, guards the way. Solve her riddle to proceed.",
+      guards: [guards['margaret']!],
+      systemInstructions: [margaretPrompt],
       noOfQuestions: 7),
   4: Level(
     id: 4,

@@ -219,6 +219,10 @@ class _IdCardWidgetState extends State<IdCardWidget>
         return "Happy machine";
       case GuardMood.MAD:
         return "Mad machine";
+      case GuardMood.FRUSTRATION:
+        return "Frustration machine";
+      case GuardMood.CLEVER:
+        return "Clever machine";
       default:
         return "Idle machine";
     }

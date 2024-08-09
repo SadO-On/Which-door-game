@@ -1,1 +1,12 @@
-enum GuardMood { Happy, Sad, Angry, Neutral, MAD, EVIL, IDLE, WISE }
+enum GuardMood {
+  Happy,
+  Sad,
+  Angry,
+  Neutral,
+  MAD,
+  EVIL,
+  IDLE,
+  WISE,
+  FRUSTRATION,
+  CLEVER
+}

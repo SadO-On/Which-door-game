@@ -21,25 +21,25 @@ class GameLevelThree extends Component with HasGameRef<WhichDoorGameScreen> {
   SvgComponent? doorB;
   SvgComponent? doorC;
   SvgComponent? doorD;
-  GuardComponent? sam;
+  GuardComponent? margaret;
   RiveButtonComponent? viewSamIdComponent;
   RiveButtonComponent? chatWithSamComponent;
   RiveButtonComponent? doorAButton;
   RiveButtonComponent? doorBButton;
   RiveButtonComponent? doorCButton;
   RiveButtonComponent? doorDButton;
-
+  SvgComponent? background;
   @override
   FutureOr<void> onLoad() async {
     final svgInstance = await Svg.load('images/background_4_doors.svg');
     final backgroundSize = gameRef.size;
 
-    final background = SvgComponent(
+    background = SvgComponent(
       size: backgroundSize,
       svg: svgInstance,
     );
 
-    addAll([background, MissionComponent(text: level.riddle)]);
+    addAll([background!, MissionComponent(text: level.riddle)]);
 
     final sprite = await Svg.load('images/door_a.svg');
     final spriteB = await Svg.load('images/door_b.svg');
@@ -56,10 +56,10 @@ class GameLevelThree extends Component with HasGameRef<WhichDoorGameScreen> {
     addAll([doorA!, doorB!, doorC!, doorD!]);
 
     final samArtBoard = await loadArtboard(
-        RiveFile.asset('assets/rive/steve_idle_standing.riv'));
-    sam = GuardComponent(artboard: samArtBoard);
+        RiveFile.asset('assets/rive/margaret_idle_standing.riv'));
+    margaret = GuardComponent(artboard: samArtBoard);
 
-    add(sam!);
+    add(margaret!);
 
     await _loadButtons();
     return super.onLoad();
@@ -68,8 +68,8 @@ class GameLevelThree extends Component with HasGameRef<WhichDoorGameScreen> {
   @override
   void onGameResize(Vector2 size) {
     //TODO make the size dynamic
-    sam?.width = 83;
-    sam?.height = 180;
+    margaret?.width = 83;
+    margaret?.height = 180;
     doorA?.position =
         Vector2(size.x * 0.24, size.y * 0.557 - (doorA?.size.y ?? 0) / 3);
     doorB?.position =
@@ -78,8 +78,8 @@ class GameLevelThree extends Component with HasGameRef<WhichDoorGameScreen> {
         Vector2(size.x * 0.60, size.y * 0.557 - (doorC?.size.y ?? 0) / 3);
     doorD?.position =
         Vector2(size.x * 0.78, size.y * 0.557 - (doorC?.size.y ?? 0) / 3);
-    sam?.position = Vector2(size.x * 0.26 - (sam?.size.x ?? 0 - 20),
-        size.y * 0.557 - (sam?.size.y ?? 0) / 4);
+    margaret?.position = Vector2(size.x * 0.26 - (margaret?.size.x ?? 0 - 20),
+        size.y * 0.557 - (margaret?.size.y ?? 0) / 4);
 
     doorAButton?.position =
         Vector2(size.x * 0.24 - (doorAButton?.size.x ?? 0) / 5, size.y * 0.30);
@@ -90,15 +90,17 @@ class GameLevelThree extends Component with HasGameRef<WhichDoorGameScreen> {
     doorDButton?.position =
         Vector2(size.x * 0.78 - (doorDButton?.size.x ?? 0) / 5, size.y * 0.30);
     _optionsSizing(size);
+    background?.size = size;
+
     super.onGameResize(size);
   }
 
   void _optionsSizing(Vector2 size) {
     chatWithSamComponent?.position =
-        Vector2(size.x * 0.13 - (sam?.size.x ?? 0 - 20), size.y * 0.5);
+        Vector2(size.x * 0.13 - (margaret?.size.x ?? 0 - 20), size.y * 0.5);
 
     viewSamIdComponent?.position = Vector2(
-        size.x * 0.13 - (sam?.size.x ?? 0 - 20),
+        size.x * 0.13 - (margaret?.size.x ?? 0 - 20),
         (size.y * 0.5 - (viewSamIdComponent?.height ?? 0)));
   }
 
@@ -139,14 +141,14 @@ class GameLevelThree extends Component with HasGameRef<WhichDoorGameScreen> {
     });
 
     chatWithSamComponent =
-        RiveButtonComponent(chatWithSamArtBoard, 'Chat with Sam', () {
+        RiveButtonComponent(chatWithSamArtBoard, 'Chat with Margaret', () {
       gameRef.guardIndex = 0;
       openChat();
       showOptions();
     });
 
     viewSamIdComponent =
-        RiveButtonComponent(viewSamIdArtBoard, 'View Sam’s ID', () {
+        RiveButtonComponent(viewSamIdArtBoard, 'View Margaret ID', () {
       gameRef.guardIndex = 0;
       gameRef.showOverlay(GuardIdPopup.overlayName);
     });

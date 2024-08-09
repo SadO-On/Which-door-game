@@ -103,5 +103,20 @@ final guards = {
       asset: 'assets/rive/steve_id_animation.riv',
       phoneNum: '+99 676 778 3227',
       joinedDate: '24/12/2002',
-      idBarCode: "4265284222")
+      idBarCode: "4265284222"),
+  "margaret": Guard(
+      id: '4355625719',
+      age: DateTime.now().year - 1990,
+      name: "Margaret",
+      expiryDate: '01/12/2029',
+      gender: "Female",
+      eId: '56382',
+      nationality: 'Vaelorian',
+      idAsset: "assets/images/margaret_id.svg",
+      bloodType: 'O+',
+      slogan: "The trickier, the better.",
+      asset: 'assets/rive/margaret_id.riv',
+      phoneNum: '+99 636 332 3227',
+      joinedDate: '24/12/2010',
+      idBarCode: "4355625719"),
 };
