@@ -55,9 +55,5 @@ abstract class _ChatStore with Store {
         type: ChattingType.receiver,
         mood: gemini.guardMood));
     _controller.jumpTo(_controller.position.maxScrollExtent);
-
-    if (remainingQuestions == 0) {
-      //TODO navigate back progress
-    }
   }
 }

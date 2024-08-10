@@ -28,7 +28,7 @@ class MyApp extends StatelessWidget {
           settings: rotationSettings(settings, ScreenOrientation.portraitOnly));
     } else if (settings.name == AppRoutes.level) {
       return MaterialPageRoute(
-        builder: (context) => const LevelScreen(),
+        builder: (context) => LevelScreen(),
         settings: rotationSettings(settings, ScreenOrientation.portraitOnly),
       );
     } else if (settings.name == AppRoutes.cutScene) {

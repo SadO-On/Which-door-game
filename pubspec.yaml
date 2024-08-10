@@ -52,6 +52,7 @@ dependencies:
   flame_svg: ^1.10.2
   lottie: ^3.1.2
   timer_count_down: ^2.2.2
+  shared_preferences: ^2.3.1
   
 dev_dependencies:
   flutter_test:

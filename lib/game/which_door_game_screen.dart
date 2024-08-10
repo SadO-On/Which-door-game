@@ -6,6 +6,7 @@ import 'package:flame/debug.dart';
 import 'package:flame/flame.dart';
 import 'package:flame/game.dart';
 import 'package:flutter/material.dart';
+import 'package:gaurds_game/game/components/back_button_game_overlay.dart';
 import 'package:gaurds_game/game/level01/game_level_one.dart';
 import 'package:gaurds_game/game/level02/game_level_two.dart';
 import 'package:gaurds_game/game/level03/game_level_three.dart';
@@ -17,7 +18,6 @@ import 'package:gaurds_game/game/level09/game_level_nine.dart';
 import 'package:gaurds_game/game/level10/finale.dart';
 
 import '../data/model/level.dart';
-import 'components/loading_screen.dart';
 
 class WhichDoorGameScreen extends FlameGame {
   WhichDoorGameScreen({required this.level});
@@ -39,10 +39,8 @@ class WhichDoorGameScreen extends FlameGame {
     add(FpsTextComponent(
         position: Vector2(30, 20),
         textRenderer: TextPaint(style: const TextStyle(color: Colors.black))));
-    if (level.id == 6) {
-      showOverlay(LoadingScreen.overlayName);
-    }
     await add(levelDecider());
+    showOverlay(BackButtonGameOverlay.overlayName);
     return super.onLoad();
   }
 
