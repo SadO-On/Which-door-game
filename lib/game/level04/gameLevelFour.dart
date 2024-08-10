@@ -93,15 +93,27 @@ class GameLevelFour extends Component with HasGameRef<WhichDoorGameScreen> {
         await loadArtboard(RiveFile.asset('assets/rive/button.riv'));
 
     doorAButton = RiveButtonComponent(aDoorArtBoard, 'Door A', () {
-      gameRef.showOverlay(LostPopup.overlayName);
+      if (level.correctDoor == "A") {
+        gameRef.showOverlay(WinPopup.overlayName);
+      } else {
+        gameRef.showOverlay(LostPopup.overlayName);
+      }
     });
 
     doorBButton = RiveButtonComponent(bDoorArtBoard, 'Door B', () {
-      gameRef.showOverlay(WinPopup.overlayName);
+      if (level.correctDoor == "B") {
+        gameRef.showOverlay(WinPopup.overlayName);
+      } else {
+        gameRef.showOverlay(LostPopup.overlayName);
+      }
     });
 
     doorCButton = RiveButtonComponent(cDoorArtBoard, 'Door C', () {
-      gameRef.showOverlay(LostPopup.overlayName);
+      if (level.correctDoor == "C") {
+        gameRef.showOverlay(WinPopup.overlayName);
+      } else {
+        gameRef.showOverlay(LostPopup.overlayName);
+      }
     });
 
     chatWithFredComponent =

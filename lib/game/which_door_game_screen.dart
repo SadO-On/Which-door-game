@@ -93,11 +93,11 @@ class WhichDoorGameScreen extends FlameGame {
   void playLevelMusic() {
     switch (level.id) {
       case 5:
-        FlameAudio.bgm.play('level-five music.mp3', volume: .80);
+        FlameAudio.bgm.play('level-five music.mp3', volume: .75);
 
         break;
       default:
-        FlameAudio.bgm.play('level-five music.mp3', volume: .25);
+        FlameAudio.bgm.play('levels-soundtrack.mp3', volume: .60);
     }
   }
 
@@ -105,7 +105,9 @@ class WhichDoorGameScreen extends FlameGame {
   void onDispose() {
     FlameAudio.bgm.stop();
     FlameAudio.audioCache.clearAll();
-    // (levelComponent as LevelInterface).player?.dispose();
+    if (levelComponent is LevelInterface) {
+      (levelComponent as LevelInterface).player?.dispose();
+    }
     super.onDispose();
   }
 }

@@ -11,13 +11,17 @@ class Level {
   final ChallengeType type;
   final int time;
   QuizQuestion question;
-  final List<String> systemInstructions;
+  String correctDoor;
+  final int noOfDoors;
+  List<String> systemInstructions;
 
   Level({
     required this.id,
     required this.riddle,
     required this.guards,
     required this.type,
+    this.correctDoor = "",
+    required this.noOfDoors,
     this.time = 0,
     QuizQuestion? question,
     required this.systemInstructions,
@@ -31,7 +35,8 @@ final levels = {
       type: ChallengeType.number,
       guards: [guards['steve']!, guards['willy']!],
       noOfQuestions: 3,
-      systemInstructions: [stevePrompt, willyPrompt],
+      noOfDoors: 2,
+      systemInstructions: [],
       riddle:
           'You have 2 doors and 2 guards: one always tells the truth, and the other always lies. Choose one guard and ask three questions to figure out which door is correct'),
   2: Level(
@@ -41,19 +46,22 @@ final levels = {
       type: ChallengeType.time,
       guards: [guards['fred']!],
       time: 2,
-      systemInstructions: [fredInstructions]),
+      noOfDoors: 3,
+      systemInstructions: []),
   3: Level(
       id: 3,
       type: ChallengeType.number,
       riddle:
           "Margaret, the Riddle Master, guards the way. Solve her riddle to proceed.",
       guards: [guards['margaret']!],
-      systemInstructions: [margaretPrompt],
+      noOfDoors: 4,
+      systemInstructions: [],
       noOfQuestions: 7),
   4: Level(
     id: 4,
     type: ChallengeType.number,
     noOfQuestions: 9,
+    noOfDoors: 3,
     riddle:
         "These guards seem bored. You need to make one of them laugh to get the correct door.",
     guards: [
@@ -61,32 +69,23 @@ final levels = {
       guards['margaret']!,
       guards['kane']!,
     ],
-    systemInstructions: [
-      fredPromptLevelFour,
-      margaretPromptLevelFour,
-      kanePromptLevelFour
-    ],
+    systemInstructions: [],
   ),
   5: Level(
       id: 5,
+      noOfDoors: 2,
       riddle: "Well, What happened here ?",
       guards: [guards['sam']!],
       type: ChallengeType.number,
       noOfQuestions: 12,
-      systemInstructions: [sam_level_5_system_instruction]),
+      systemInstructions: []),
   6: Level(
       id: 6,
       riddle: "",
+      noOfDoors: 0,
       guards: [],
       type: ChallengeType.time,
       systemInstructions: []),
-  7: Level(
-      id: 7,
-      riddle:
-          "One of these guards is carrying a fake ID. Identify him and have him reveal the correct door.",
-      guards: [guards['fred']!, guards['sam']!, guards['steve']!],
-      type: ChallengeType.number,
-      systemInstructions: [""""""]),
 };
 
 enum ChallengeType { time, number }
@@ -101,3 +100,12 @@ enum ChallengeType { time, number }
   //     type: ChallengeType.number,
   //     noOfQuestions: 9,
   //     systemInstructions: [""""""])
+
+
+    // 7: Level(
+    //   id: 7,
+    //   riddle:
+    //       "One of these guards is carrying a fake ID. Identify him and have him reveal the correct door.",
+    //   guards: [guards['fred']!, guards['sam']!, guards['steve']!],
+    //   type: ChallengeType.number,
+    //   systemInstructions: [""""""]),

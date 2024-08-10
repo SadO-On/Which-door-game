@@ -53,6 +53,7 @@ class LevelScreen extends StatelessWidget {
                     return Observer(
                       builder: (_) => LevelButtonWidget(
                           onClick: (levelNumber) async {
+                            _store.setRandomDoor(levelNumber);
                             if (levelNumber == 1) {
                               Navigator.pushNamed(context, AppRoutes.cutScene,
                                   arguments: "assets/videos/cutscene.mp4");

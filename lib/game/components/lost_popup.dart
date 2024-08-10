@@ -1,8 +1,5 @@
 import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
-
-import '../../data/model/level.dart';
-import '../game_play_container.dart';
 import '../which_door_game_screen.dart';
 import 'popup_container_widget.dart';
 
@@ -44,12 +41,7 @@ class _LostPopupState extends State<LostPopup> {
         width: null,
         height: null,
         onClick: () {
-          Navigator.pushReplacement(
-            context,
-            MaterialPageRoute(
-                builder: (context) =>
-                    GamePlayContainer(level: levels[widget.game.level.id]!)),
-          );
+          Navigator.pop(context);
         },
         text: 'You opened the wrong door!');
   }

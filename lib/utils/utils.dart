@@ -1,3 +1,5 @@
+import 'dart:math';
+
 extension TimeFormatting on double {
   String toMMSS() {
     int totalSeconds = toInt();
@@ -9,4 +11,14 @@ extension TimeFormatting on double {
 
     return '$minutesStr:$secondsStr';
   }
+}
+
+String getRandomLetter(int count) {
+  if (count < 2 || count > 4) {
+    throw ArgumentError('Count must be between 2 and 4');
+  }
+  const letters = 'ABCD';
+  String selectedLetters = letters.substring(0, count);
+  int randomIndex = Random().nextInt(count);
+  return selectedLetters[randomIndex];
 }

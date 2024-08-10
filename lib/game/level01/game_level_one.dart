@@ -135,11 +135,19 @@ class GameLevelOne extends Component
         await loadArtboard(RiveFile.asset('assets/rive/button.riv'));
 
     doorAButton = RiveButtonComponent(aDoorArtBoard, 'Door A', () {
-      gameRef.showOverlay(WinPopup.overlayName);
+      if (level.correctDoor == "A") {
+        gameRef.showOverlay(WinPopup.overlayName);
+      } else {
+        gameRef.showOverlay(LostPopup.overlayName);
+      }
     });
 
     doorBButton = RiveButtonComponent(bDoorArtBoard, 'Door B', () {
-      gameRef.showOverlay(LostPopup.overlayName);
+      if (level.correctDoor == "B") {
+        gameRef.showOverlay(WinPopup.overlayName);
+      } else {
+        gameRef.showOverlay(LostPopup.overlayName);
+      }
     });
 
     chatWithWillyComponent =
