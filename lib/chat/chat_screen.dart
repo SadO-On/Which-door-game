@@ -37,6 +37,7 @@ class _ChatScreenState extends State<ChatScreen> {
   @override
   void dispose() {
     _controller.dispose();
+    _store.player.dispose();
     super.dispose();
   }
 

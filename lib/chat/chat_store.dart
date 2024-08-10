@@ -2,6 +2,7 @@ import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 import 'package:gaurds_game/chat/model/chat_model.dart';
 import 'package:gaurds_game/data/main_repository.dart';
+import 'package:gaurds_game/data/model/guardMood.dart';
 import 'package:gaurds_game/data/model/level.dart';
 import 'package:gaurds_game/locator.dart';
 import 'package:mobx/mobx.dart';
@@ -17,7 +18,7 @@ abstract class _ChatStore with Store {
   final int guardIndex;
   late MainRepository _repository;
   final ScrollController _controller;
-  final _player = AudioPlayer();
+  final player = AudioPlayer();
 
   _ChatStore(this.levelNumber, this.guardIndex, this.remainingQuestions,
       this._controller) {
@@ -52,12 +53,14 @@ abstract class _ChatStore with Store {
     PromptResponse gemini = await _repository.sendPrompt(text);
     isLoading = false;
     remainingQuestions -= 1;
-    await _player.play(AssetSource('audio/chat pop.mp3'));
-
+    await player.play(AssetSource('audio/chat pop.mp3'));
     addNewConversation(ChatModel(
         text: gemini.response,
         type: ChattingType.receiver,
         mood: gemini.guardMood));
     _controller.jumpTo(_controller.position.maxScrollExtent);
+    if (gemini.guardMood == GuardMood.Nervous) {
+      await player.play(AssetSource('audio/whistle.wav'));
+    }
   }
 }

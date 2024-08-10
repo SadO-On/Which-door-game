@@ -10,5 +10,7 @@ enum GuardMood {
   FRUSTRATION,
   CLEVER,
   BOARD,
-  LAUGH
+  LAUGH,
+  Nervous,
+  Calm
 }

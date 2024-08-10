@@ -70,7 +70,7 @@ final guards = {
       idAsset: "assets/images/sam_id.svg",
       eId: "93318",
       slogan: "The quiet one sees all.",
-      asset: 'assets/rive/sam_idle_standing.riv',
+      asset: 'assets/rive/sam_id_animation.riv',
       nationality: "Elarian",
       bloodType: "B+",
       phoneNum: "+99 087 455 3031",
