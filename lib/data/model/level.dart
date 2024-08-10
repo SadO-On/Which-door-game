@@ -1,3 +1,4 @@
+import 'package:gaurds_game/data/model/math_problem.dart';
 import 'package:gaurds_game/data/model/system_instructions.dart';
 
 import 'guard.dart';
@@ -9,15 +10,19 @@ class Level {
   final int noOfQuestions;
   final ChallengeType type;
   final int time;
+  QuizQuestion question;
   final List<String> systemInstructions;
-  Level(
-      {required this.id,
-      required this.riddle,
-      required this.guards,
-      required this.type,
-      this.time = 0,
-      required this.systemInstructions,
-      this.noOfQuestions = 9999});
+
+  Level({
+    required this.id,
+    required this.riddle,
+    required this.guards,
+    required this.type,
+    this.time = 0,
+    QuizQuestion? question,
+    required this.systemInstructions,
+    this.noOfQuestions = 9999,
+  }) : question = question ?? QuizQuestion(response: "", options: []);
 }
 
 final levels = {

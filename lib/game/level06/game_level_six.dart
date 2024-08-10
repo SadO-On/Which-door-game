@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:flame/components.dart';
 import 'package:flame_rive/flame_rive.dart';
 import 'package:flame_svg/flame_svg.dart';
-import 'package:gaurds_game/data/gemini_ai.dart';
+import 'package:gaurds_game/data/model/level.dart';
 import 'package:gaurds_game/data/model/math_problem.dart';
 import 'package:gaurds_game/game/components/loading_screen.dart';
 import 'package:gaurds_game/game/components/lost_popup.dart';
@@ -12,16 +12,13 @@ import 'package:gaurds_game/game/components/timer_component.dart';
 import 'package:gaurds_game/game/components/win_popup.dart';
 import 'package:gaurds_game/game/level06/components/answer_component.dart';
 import 'package:gaurds_game/game/which_door_game_screen.dart';
-import 'package:gaurds_game/locator.dart';
-import 'package:google_generative_ai/google_generative_ai.dart';
 
 import '../components/rive_button_component.dart';
 import '../level01/components/lamp_component.dart';
 
 class GameLevelSix extends Component with HasGameRef<WhichDoorGameScreen> {
-  final GeminiAI _ai = getIt.get<GeminiAI>(param1: Content.system(""));
-
-  QuizQuestion? _mathProblem;
+  GameLevelSix({required this.level});
+  Level level;
   SvgComponent? doorA;
   SvgComponent? doorB;
   SvgComponent? doorC;
@@ -31,31 +28,30 @@ class GameLevelSix extends Component with HasGameRef<WhichDoorGameScreen> {
   RiveButtonComponent? doorCButton;
   RiveButtonComponent? doorDButton;
   LampComponent? lampAnimation;
+  SvgComponent? background;
   @override
   FutureOr<void> onLoad() async {
     final svgInstance = await Svg.load('images/background_level_06.svg');
     final backgroundSize = gameRef.size;
-    final background = SvgComponent(
+    background = SvgComponent(
       size: backgroundSize,
       svg: svgInstance,
     );
 
-    _mathProblem = await _ai.getQuizQuestion();
-
-    addAll([
-      background,
-      MissionComponent(text: _mathProblem?.response ?? ""),
+    await addAll([
+      background!,
+      MissionComponent(text: level.question.response),
       LevelTimerComponent(
           120, "2:00", () => gameRef.showOverlay(LostPopup.overlayName))
     ]);
     await _doorsAndMessages();
-    await _doorsButtons(_mathProblem?.options);
+    await _doorsButtons(level.question.options);
     final lampArtBoard =
         await loadArtboard(RiveFile.asset('assets/rive/lamp_animation.riv'));
     lampAnimation = LampComponent(artboard: lampArtBoard);
     add(lampAnimation!);
     gameRef.hideOverlay(LoadingScreen.overlayName);
-    _mathProblem!.options.asMap().forEach(
+    level.question.options.asMap().forEach(
         (index, value) async => await add(AnswerComponent(value.value, index)));
 
     return super.onLoad();
@@ -117,6 +113,7 @@ class GameLevelSix extends Component with HasGameRef<WhichDoorGameScreen> {
     doorDButton?.position = Vector2(size.x * 0.77, size.y * 0.30);
     lampAnimation?.scale = Vector2.all(0.8);
     lampAnimation?.position = Vector2(size.x * 0.05, size.y * 0.49);
+    background?.size = size;
     super.onGameResize(size);
   }
 

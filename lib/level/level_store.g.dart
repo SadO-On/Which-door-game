@@ -24,12 +24,20 @@ mixin _$LevelStore on _LevelStore, Store {
     });
   }
 
-  late final _$saveNewLevelAsyncAction =
-      AsyncAction('_LevelStore.saveNewLevel', context: context);
+  late final _$isLoadingAtom =
+      Atom(name: '_LevelStore.isLoading', context: context);
 
   @override
-  Future<dynamic> saveNewLevel(int level) {
-    return _$saveNewLevelAsyncAction.run(() => super.saveNewLevel(level));
+  bool get isLoading {
+    _$isLoadingAtom.reportRead();
+    return super.isLoading;
+  }
+
+  @override
+  set isLoading(bool value) {
+    _$isLoadingAtom.reportWrite(value, super.isLoading, () {
+      super.isLoading = value;
+    });
   }
 
   late final _$_LevelStoreActionController =
@@ -49,7 +57,8 @@ mixin _$LevelStore on _LevelStore, Store {
   @override
   String toString() {
     return '''
-level: ${level}
+level: ${level},
+isLoading: ${isLoading}
     ''';
   }
 }

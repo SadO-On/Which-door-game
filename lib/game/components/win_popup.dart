@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:gaurds_game/game/components/popup_container_widget.dart';
-import 'package:gaurds_game/game/game_play_container.dart';
 import 'package:gaurds_game/level/level_store.dart';
 import 'package:gaurds_game/locator.dart';
 
-import '../../data/model/level.dart';
 import '../which_door_game_screen.dart';
 
 class WinPopup extends StatelessWidget {

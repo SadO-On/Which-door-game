@@ -57,7 +57,7 @@ class WhichDoorGameScreen extends FlameGame {
       case 5:
         return GameLevelFive(level: level);
       case 6:
-        return GameLevelSix();
+        return GameLevelSix(level: level);
       case 7:
         return GameLevelSeven(level: level);
       case 9:
