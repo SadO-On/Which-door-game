@@ -2,12 +2,14 @@ import 'dart:async';
 
 import 'package:flame/components.dart';
 import 'package:flame/flame.dart';
+import 'package:flame_audio/flame_audio.dart';
 import 'package:flame_rive/flame_rive.dart';
 import 'package:flame_svg/flame_svg.dart';
 import 'package:gaurds_game/data/model/level.dart';
 import 'package:gaurds_game/game/components/clock_component.dart';
 import 'package:gaurds_game/game/level05/components/big_message_component.dart';
 import 'package:gaurds_game/game/level05/components/message_component.dart';
+import 'package:gaurds_game/game/level_interface.dart';
 import 'package:gaurds_game/game/which_door_game_screen.dart';
 
 import '../../chat/chat_screen.dart';
@@ -17,7 +19,9 @@ import '../components/rive_button_component.dart';
 import '../level01/components/guard_component.dart';
 import '../level01/components/lamp_component.dart';
 
-class GameLevelFive extends Component with HasGameRef<WhichDoorGameScreen> {
+class GameLevelFive extends Component
+    with HasGameRef<WhichDoorGameScreen>
+    implements LevelInterface {
   GameLevelFive({required this.level});
   final Level level;
   SvgComponent? doorA;
@@ -29,19 +33,20 @@ class GameLevelFive extends Component with HasGameRef<WhichDoorGameScreen> {
   RiveButtonComponent? doorAButton;
   RiveButtonComponent? doorBButton;
   LampComponent? lampAnimation;
-
-  // final MessageComponent _messageComponent = MessageComponent();
+  SvgComponent? background;
+  @override
+  AudioPlayer? player;
   @override
   FutureOr<void> onLoad() async {
     final svgInstance = await Svg.load('images/background_level_5.svg');
     final backgroundSize = gameRef.size;
-    final background = SvgComponent(
+    background = SvgComponent(
       size: backgroundSize,
       svg: svgInstance,
     );
 
-    addAll(
-        [background, ClockComponent(), MissionComponent(text: level.riddle)]);
+    await addAll(
+        [background!, ClockComponent(), MissionComponent(text: level.riddle)]);
 
     final sprite = await Svg.load('images/door_a.svg');
     final spriteB = await Svg.load('images/door_b.svg');
@@ -61,7 +66,15 @@ class GameLevelFive extends Component with HasGameRef<WhichDoorGameScreen> {
     lampAnimation = LampComponent(artboard: lampArtBoard);
     add(lampAnimation!);
     await _loadButtons();
+    player = await FlameAudio.play('clockSound-levelfive.mp3');
     return super.onLoad();
+  }
+
+  @override
+  void onRemove() {
+    player?.stop();
+    player?.dispose();
+    super.onRemove();
   }
 
   @override
@@ -72,13 +85,13 @@ class GameLevelFive extends Component with HasGameRef<WhichDoorGameScreen> {
         Vector2(size.x * 0.78, size.y * 0.557 - (doorB?.size.y ?? 0) / 2);
     sam?.position = Vector2(size.x * 0.28 - (sam?.size.x ?? 0 - 20),
         size.y * 0.557 - (sam?.size.y ?? 0) / 3);
-    doorAButton?.position =
-        Vector2(size.x * 0.24 - (doorAButton?.size.x ?? 0) / 5, size.y * 0.30);
+    doorAButton?.position = Vector2(size.x * 0.04, size.y * 0.50);
     doorBButton?.position =
-        Vector2(size.x * 0.42 - (doorBButton?.size.x ?? 0) / 5, size.y * 0.30);
+        Vector2(size.x * 0.63, (size.y * 0.62 - (readTheMessage?.height ?? 0)));
     lampAnimation?.position = Vector2(
         size.x * 0.49, size.y * 0.557 - (lampAnimation?.size.y ?? 0) / 3);
     _optionsSizing(size);
+    background?.size = size;
     super.onGameResize(size);
   }
 

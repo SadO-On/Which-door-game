@@ -19,6 +19,7 @@ import 'package:gaurds_game/game/level09/game_level_nine.dart';
 import 'package:gaurds_game/game/level10/finale.dart';
 
 import '../data/model/level.dart';
+import 'level_interface.dart';
 
 class WhichDoorGameScreen extends FlameGame {
   WhichDoorGameScreen({required this.level});
@@ -26,7 +27,7 @@ class WhichDoorGameScreen extends FlameGame {
   Color backgroundColor() => const Color(0xffFFFDF2);
 
   final Level level;
-
+  Component? levelComponent;
   int guardIndex = 0;
 
   FutureOr<void> setLandScape() async {
@@ -49,25 +50,35 @@ class WhichDoorGameScreen extends FlameGame {
   Component levelDecider() {
     switch (level.id) {
       case 1:
-        return GameLevelOne(level: level);
+        levelComponent = GameLevelOne(level: level);
+        return levelComponent!;
       case 2:
-        return GameLevelTwo(level: level);
+        levelComponent = GameLevelTwo(level: level);
+        return levelComponent!;
       case 3:
-        return GameLevelThree(level: level);
+        levelComponent = GameLevelThree(level: level);
+        return levelComponent!;
       case 4:
-        return GameLevelFour(level: level);
+        levelComponent = GameLevelFour(level: level);
+        return levelComponent!;
       case 5:
-        return GameLevelFive(level: level);
+        levelComponent = GameLevelFive(level: level);
+        return levelComponent!;
       case 6:
-        return GameLevelSix(level: level);
+        levelComponent = GameLevelSix(level: level);
+        return levelComponent!;
       case 7:
-        return GameLevelSeven(level: level);
+        levelComponent = GameLevelSeven(level: level);
+        return levelComponent!;
       case 9:
-        return GameLevelNine(level: level);
+        levelComponent = GameLevelNine(level: level);
+        return levelComponent!;
       case 10:
-        return Finale(level: level);
+        levelComponent = Finale(level: level);
+        return levelComponent!;
       default:
-        return GameLevelOne(level: level);
+        levelComponent = GameLevelOne(level: level);
+        return levelComponent!;
     }
   }
 
@@ -82,11 +93,19 @@ class WhichDoorGameScreen extends FlameGame {
   void playLevelMusic() {
     switch (level.id) {
       case 5:
-        FlameAudio.bgm.play('music/world-map.mp3', volume: .25);
+        FlameAudio.bgm.play('level-five music.mp3', volume: .80);
 
         break;
       default:
-        FlameAudio.bgm.play('music/world-map.mp3', volume: .25);
+        FlameAudio.bgm.play('level-five music.mp3', volume: .25);
     }
+  }
+
+  @override
+  void onDispose() {
+    FlameAudio.bgm.stop();
+    FlameAudio.audioCache.clearAll();
+    (levelComponent as LevelInterface).player?.dispose();
+    super.onDispose();
   }
 }

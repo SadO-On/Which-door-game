@@ -70,7 +70,7 @@ class LevelScreen extends StatelessWidget {
                             Navigator.pushNamed(context, AppRoutes.game,
                                 arguments: levels[index + 1]!);
                           },
-                          isOpened: index < _store.level,
+                          isOpened: index < 6,
                           levelNumber: index + 1),
                     );
                   },

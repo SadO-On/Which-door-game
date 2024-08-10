@@ -14,7 +14,7 @@ class ClockComponent extends SvgComponent {
 
   @override
   void onGameResize(Vector2 size) {
-    position = Vector2(size.x * 0.05, size.y * 0.10);
+    position = Vector2(size.x * 0.08, size.y * 0.2);
     super.onGameResize(size);
   }
 }
