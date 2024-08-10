@@ -52,17 +52,19 @@ final levels = {
       noOfQuestions: 7),
   4: Level(
     id: 4,
-    time: 2,
-    type: ChallengeType.time,
+    type: ChallengeType.number,
+    noOfQuestions: 9,
     riddle:
-        "These guards seem bored. You need to make one of them laugh within 2 minutes to get the correct door.",
+        "These guards seem bored. You need to make one of them laugh to get the correct door.",
     guards: [
       guards['fred']!,
       guards['margaret']!,
-      guards['steve']!,
+      guards['kane']!,
     ],
     systemInstructions: [
       fredPromptLevelFour,
+      margaretPromptLevelFour,
+      kanePromptLevelFour
     ],
   ),
   5: Level(
@@ -85,14 +87,17 @@ final levels = {
       guards: [guards['fred']!, guards['sam']!, guards['steve']!],
       type: ChallengeType.number,
       systemInstructions: [""""""]),
-  9: Level(
-      id: 9,
-      riddle:
-          "One of these guards is carrying a fake ID. Identify him and have him reveal the correct door.",
-      guards: [guards['sam']!, guards['steve']!],
-      type: ChallengeType.number,
-      noOfQuestions: 9,
-      systemInstructions: [""""""])
 };
 
 enum ChallengeType { time, number }
+
+
+
+  // 9: Level(
+  //     id: 9,
+  //     riddle:
+  //         "One of these guards is carrying a fake ID. Identify him and have him reveal the correct door.",
+  //     guards: [guards['sam']!, guards['steve']!],
+  //     type: ChallengeType.number,
+  //     noOfQuestions: 9,
+  //     systemInstructions: [""""""])

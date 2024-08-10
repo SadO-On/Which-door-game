@@ -105,7 +105,7 @@ class WhichDoorGameScreen extends FlameGame {
   void onDispose() {
     FlameAudio.bgm.stop();
     FlameAudio.audioCache.clearAll();
-    (levelComponent as LevelInterface).player?.dispose();
+    // (levelComponent as LevelInterface).player?.dispose();
     super.onDispose();
   }
 }

@@ -48,7 +48,7 @@ class LevelScreen extends StatelessWidget {
                     mainAxisSpacing: 24,
                     crossAxisCount: 3,
                   ),
-                  itemCount: 9,
+                  itemCount: 6,
                   itemBuilder: (context, index) {
                     return Observer(
                       builder: (_) => LevelButtonWidget(
@@ -70,7 +70,7 @@ class LevelScreen extends StatelessWidget {
                             Navigator.pushNamed(context, AppRoutes.game,
                                 arguments: levels[index + 1]!);
                           },
-                          isOpened: index < 6,
+                          isOpened: index < _store.level,
                           levelNumber: index + 1),
                     );
                   },
