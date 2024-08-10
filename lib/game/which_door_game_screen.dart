@@ -5,6 +5,7 @@ import 'package:flame/components.dart';
 import 'package:flame/debug.dart';
 import 'package:flame/flame.dart';
 import 'package:flame/game.dart';
+import 'package:flame_audio/flame_audio.dart';
 import 'package:flutter/material.dart';
 import 'package:gaurds_game/game/components/back_button_game_overlay.dart';
 import 'package:gaurds_game/game/level01/game_level_one.dart';
@@ -40,6 +41,7 @@ class WhichDoorGameScreen extends FlameGame {
         position: Vector2(30, 20),
         textRenderer: TextPaint(style: const TextStyle(color: Colors.black))));
     await add(levelDecider());
+    playLevelMusic();
     showOverlay(BackButtonGameOverlay.overlayName);
     return super.onLoad();
   }
@@ -75,5 +77,16 @@ class WhichDoorGameScreen extends FlameGame {
 
   void showOverlay(String overlayName) {
     overlays.add(overlayName);
+  }
+
+  void playLevelMusic() {
+    switch (level.id) {
+      case 5:
+        FlameAudio.bgm.play('music/world-map.mp3', volume: .25);
+
+        break;
+      default:
+        FlameAudio.bgm.play('music/world-map.mp3', volume: .25);
+    }
   }
 }

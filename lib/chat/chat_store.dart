@@ -1,3 +1,4 @@
+import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 import 'package:gaurds_game/chat/model/chat_model.dart';
 import 'package:gaurds_game/data/main_repository.dart';
@@ -16,6 +17,7 @@ abstract class _ChatStore with Store {
   final int guardIndex;
   late MainRepository _repository;
   final ScrollController _controller;
+  final _player = AudioPlayer();
 
   _ChatStore(this.levelNumber, this.guardIndex, this.remainingQuestions,
       this._controller) {
@@ -50,6 +52,8 @@ abstract class _ChatStore with Store {
     PromptResponse gemini = await _repository.sendPrompt(text);
     isLoading = false;
     remainingQuestions -= 1;
+    await _player.play(AssetSource('audio/chat pop.mp3'));
+
     addNewConversation(ChatModel(
         text: gemini.response,
         type: ChattingType.receiver,

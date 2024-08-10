@@ -6,7 +6,6 @@ import 'package:google_generative_ai/google_generative_ai.dart';
 import 'package:mobx/mobx.dart';
 
 import '../data/gemini_ai.dart';
-import '../data/model/math_problem.dart';
 
 part 'level_store.g.dart';
 
@@ -15,7 +14,6 @@ class LevelStore = _LevelStore with _$LevelStore;
 abstract class _LevelStore with Store {
   final StorageRepository _repository = getIt<StorageRepository>();
   final GeminiAI _ai = getIt.get<GeminiAI>(param1: Content.system(""));
-  QuizQuestion? _mathProblem;
 
   @observable
   int level = 1;

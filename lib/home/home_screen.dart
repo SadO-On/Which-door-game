@@ -1,3 +1,4 @@
+import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:gaurds_game/utils/routes.dart';
@@ -17,6 +18,14 @@ final Uri _studio_url = Uri.parse('https://www.98s.studio/');
 final Uri _gemini_url = Uri.parse('https://gemini.google.com/');
 
 class _HomeScreenState extends State<HomeScreen> {
+  final _player = AudioPlayer();
+
+  @override
+  void dispose() {
+    _player.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -42,7 +51,9 @@ class _HomeScreenState extends State<HomeScreen> {
                     text: 'OPEN',
                     label: 'Start the game',
                     iconSize: 0,
-                    onClick: () {
+                    onClick: () async {
+                      await _player.play(AssetSource('audio/start game.wav'));
+
                       Future.delayed(const Duration(milliseconds: 200), () {
                         Navigator.pushNamed(context, AppRoutes.level);
                       });

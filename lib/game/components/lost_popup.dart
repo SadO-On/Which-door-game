@@ -1,3 +1,4 @@
+import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 
 import '../../data/model/level.dart';
@@ -5,16 +6,39 @@ import '../game_play_container.dart';
 import '../which_door_game_screen.dart';
 import 'popup_container_widget.dart';
 
-class LostPopup extends StatelessWidget {
+class LostPopup extends StatefulWidget {
   const LostPopup({super.key, required this.game});
 
   final WhichDoorGameScreen game;
-
   static const String overlayName = "lost_popup";
+
+  @override
+  State<LostPopup> createState() => _LostPopupState();
+}
+
+class _LostPopupState extends State<LostPopup> {
+  final _player = AudioPlayer();
+  @override
+  void initState() {
+    super.initState();
+    _player.setVolume(0.5);
+    playSound();
+  }
+
+  Future<void> playSound() async {
+    await _player.play(AssetSource('audio/lost sound.mp3'));
+  }
+
+  @override
+  void dispose() {
+    _player.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return PopupContainerWidget(
-        asset: 'assets/images/lost_door.svg',
+        asset: 'assets/images/wrong_door.svg',
         btnText: 'Retry',
         isAnimation: false,
         width: null,
@@ -24,7 +48,7 @@ class LostPopup extends StatelessWidget {
             context,
             MaterialPageRoute(
                 builder: (context) =>
-                    GamePlayContainer(level: levels[game.level.id]!)),
+                    GamePlayContainer(level: levels[widget.game.level.id]!)),
           );
         },
         text: 'You opened the wrong door!');
