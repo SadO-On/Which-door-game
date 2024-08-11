@@ -12,6 +12,10 @@ class SP {
     return pref.getBool('cutscene_first') ?? true;
   }
 
+  Future setFirstTime() async {
+    await pref.setBool('cutscene_first', false);
+  }
+
   Future saveLevel(int levelNumber) async {
     await pref.setInt('level', levelNumber);
   }

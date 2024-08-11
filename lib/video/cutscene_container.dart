@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:gaurds_game/data/model/level.dart';
-import 'package:gaurds_game/data/sp.dart';
 import 'package:gaurds_game/game/components/loading_screen.dart';
 import 'package:gaurds_game/game/game_play_container.dart';
 import 'package:gaurds_game/locator.dart';
@@ -28,14 +27,16 @@ class _CutSceneContainerScreenState extends State<CutSceneContainerScreen> {
     _controller = VideoPlayerController.asset(widget.videoAsset);
 
     _initializeVideoPlayerFuture = _controller.initialize();
-    _controller.setLooping(true);
     _controller.play();
-    _controller.addListener(() {
+    _controller.addListener(() async {
       if (_controller.value.isCompleted) {
-        Navigator.pushReplacement(
-            context,
-            MaterialPageRoute(
-                builder: (context) => GamePlayContainer(level: levels[1]!)));
+        await widget._storageRepository.setFirstTime();
+        if (mounted) {
+          Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => GamePlayContainer(level: levels[1]!)));
+        }
       }
     });
     super.initState();
@@ -68,7 +69,8 @@ class _CutSceneContainerScreenState extends State<CutSceneContainerScreen> {
               },
             ),
             widget._storageRepository.isFirstTime()
-                ? Positioned(
+                ? const SizedBox()
+                : Positioned(
                     bottom: 0,
                     right: 0,
                     child: Padding(
@@ -92,7 +94,6 @@ class _CutSceneContainerScreenState extends State<CutSceneContainerScreen> {
                           isRight: false),
                     ),
                   )
-                : const SizedBox()
           ],
         ),
       ),

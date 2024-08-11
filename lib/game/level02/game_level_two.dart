@@ -4,7 +4,6 @@ import 'package:flame/components.dart';
 import 'package:flame/extensions.dart';
 import 'package:flame/flame.dart';
 import 'package:flame_rive/flame_rive.dart';
-import 'package:flame_svg/flame_svg.dart';
 import 'package:gaurds_game/game/components/lost_popup.dart';
 import 'package:gaurds_game/game/components/win_popup.dart';
 import 'package:gaurds_game/game/which_door_game_screen.dart';

@@ -8,6 +8,10 @@ class StorageRepository {
     return _sp.getLevelNumber();
   }
 
+  Future setFirstTime() async {
+    await _sp.setFirstTime();
+  }
+
   Future saveLevel(int level) async {
     await _sp.saveLevel(level);
   }
