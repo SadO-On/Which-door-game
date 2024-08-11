@@ -18,7 +18,7 @@ abstract class _LevelStore with Store {
   final GeminiAI _ai = getIt.get<GeminiAI>(param1: Content.system(""));
 
   @observable
-  int level = 3;
+  int level = 1;
 
   @observable
   bool isLoading = false;
@@ -27,7 +27,7 @@ abstract class _LevelStore with Store {
   void updateLevel(int newLevel) => level = newLevel;
 
   _LevelStore() {
-    // level = _repository.getLevel();
+    level = _repository.getLevel();
   }
 
   Future saveNewLevel(int newLevel) async {

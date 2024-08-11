@@ -34,15 +34,19 @@ class _ChatInputWidgetState extends State<ChatInputWidget> {
               width: MediaQuery.of(context).size.width * 0.7,
               height: MediaQuery.of(context).size.width * 0.11,
               child: TextField(
+                maxLines: 1,
                 onChanged: (value) {
                   prompt = value;
                 },
                 textAlign: TextAlign.center,
                 controller: _controller,
                 decoration: const InputDecoration(
+                  isDense: true,
                   focusedBorder: OutlineInputBorder(),
                   hintStyle: TextStyle(
-                      color: Color(0xffB9B39F), fontWeight: FontWeight.bold),
+                      height: 1.1,
+                      color: Color(0xffB9B39F),
+                      fontWeight: FontWeight.bold),
                   hintText: 'Ask the Guard',
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.all(

@@ -11,12 +11,14 @@ class MessageComponent extends SvgComponent
   FutureOr<void> onLoad() async {
     final message = await Svg.load('images/message_close.svg');
     svg = message;
-    size = Vector2.all(61);
     return super.onLoad();
   }
 
   @override
   void onGameResize(Vector2 size) {
+    height = size.x * 0.07;
+    width = size.x * 0.07;
+
     position = Vector2(size.x * 0.815, size.y * 0.35);
     super.onGameResize(size);
   }

@@ -55,22 +55,27 @@ class GameLevelOne extends Component
 
   @override
   void onGameResize(Vector2 size) {
-    final guardSize = Vector2(size.x * 0.10, size.y * 0.48);
+    final guardSize = Vector2(size.x * 0.11, size.y * 0.53);
+    final btnSize = Vector2(size.x * 0.2, size.y * 0.13);
     final lampSize = Vector2(size.x * 0.12, size.y * 0.48);
 
     willy?.size = guardSize;
     steve?.size = guardSize;
-    willy?.position = Vector2(size.x * 0.30 - (willy?.size.x ?? 0),
-        size.y * 0.61 - (willy?.size.y ?? 0) / 3);
 
-    steve?.position = Vector2(size.x * 0.83 - (steve?.size.x ?? 0),
-        size.y * 0.61 - (steve?.size.y ?? 0) / 3);
+    doorAButton?.size = btnSize;
+    doorBButton?.size = btnSize;
+
+    willy?.position =
+        Vector2(size.x * 0.30 - (willy?.size.x ?? 0), size.y * 0.4);
+
+    steve?.position =
+        Vector2(size.x * 0.83 - (steve?.size.x ?? 0), size.y * 0.4);
 
     lampAnimation?.size = lampSize;
     lampAnimation?.position = Vector2(
         size.x * 0.43, size.y * 0.61 - (lampAnimation?.size.y ?? 0) / 3);
 
-    _optionsSizing(size);
+    _optionsSizing(size, btnSize);
 
     doorAButton?.position = Vector2(
         size.x * 0.09 - (doorAButton?.size.x ?? 0) / 6,
@@ -83,7 +88,13 @@ class GameLevelOne extends Component
     super.onGameResize(size);
   }
 
-  void _optionsSizing(Vector2 size) {
+  void _optionsSizing(Vector2 size, Vector2 btnSize) {
+    chatWithWillyComponent?.size = btnSize;
+    chatWithSteveComponent?.size = btnSize;
+
+    viewWillyIdComponent?.size = btnSize;
+    viewSteveIdComponent?.size = btnSize;
+
     chatWithWillyComponent?.position = Vector2(
         size.x * 0.09 - (chatWithWillyComponent?.size.x ?? 0) / 6,
         size.y * 0.5);

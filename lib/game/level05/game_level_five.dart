@@ -26,8 +26,7 @@ class GameLevelFive extends Component
     implements LevelInterface {
   GameLevelFive({required this.level});
   final Level level;
-  SvgComponent? doorA;
-  SvgComponent? doorB;
+
   GuardComponent? sam;
   RiveButtonComponent? viewSamIdComponent;
   RiveButtonComponent? chatWithSamComponent;
@@ -35,40 +34,29 @@ class GameLevelFive extends Component
   RiveButtonComponent? doorAButton;
   RiveButtonComponent? doorBButton;
   LampComponent? lampAnimation;
-  SvgComponent? background;
+
   @override
   AudioPlayer? player;
   @override
   FutureOr<void> onLoad() async {
-    final svgInstance = await Svg.load('');
-    final backgroundSize = gameRef.size;
-    background = SvgComponent(
-      size: backgroundSize,
-      svg: svgInstance,
-    );
-
-    await addAll(
-        [background!, ClockComponent(), MissionComponent(text: level.riddle)]);
-
-    final sprite = await Svg.load('images/door_a.svg');
-    final spriteB = await Svg.load('images/door_b.svg');
-    final size = Vector2(130, 265);
-
-    doorA = SvgComponent(size: size, svg: sprite);
-    doorB = SvgComponent(size: size, svg: spriteB);
-    addAll([doorA!, doorB!, MessageComponent()]);
+    await addAll([
+      ClockComponent(),
+      MissionComponent(text: level.riddle),
+      MessageComponent()
+    ]);
     final samArtBoard =
         await loadArtboard(RiveFile.asset('assets/rive/sam_idle_standing.riv'));
     sam = GuardComponent(artboard: samArtBoard);
-
-    add(sam!);
 
     final lampArtBoard =
         await loadArtboard(RiveFile.asset('assets/rive/red_lamp.riv'));
     lampAnimation = LampComponent(artboard: lampArtBoard);
     add(lampAnimation!);
     await _loadButtons();
+    add(sam!);
+
     player = await FlameAudio.play('clockSound-levelfive.mp3');
+
     return super.onLoad();
   }
 
@@ -81,31 +69,40 @@ class GameLevelFive extends Component
 
   @override
   void onGameResize(Vector2 size) {
-    doorA?.position =
-        Vector2(size.x * 0.25, size.y * 0.557 - (doorA?.size.y ?? 0) / 2);
-    doorB?.position =
-        Vector2(size.x * 0.78, size.y * 0.557 - (doorB?.size.y ?? 0) / 2);
+    final guardSize = Vector2(size.x * 0.11, size.y * 0.53);
+    final btnSize = Vector2(size.x * 0.2, size.y * 0.13);
+    final lampSize = Vector2(size.x * 0.12, size.y * 0.48);
+
+    sam?.size = guardSize;
     sam?.position = Vector2(size.x * 0.28 - (sam?.size.x ?? 0 - 20),
         size.y * 0.557 - (sam?.size.y ?? 0) / 3);
-    doorAButton?.position = Vector2(size.x * 0.04, size.y * 0.50);
-    doorBButton?.position =
-        Vector2(size.x * 0.63, (size.y * 0.62 - (readTheMessage?.height ?? 0)));
+
+    doorAButton?.size = btnSize;
+    doorBButton?.size = btnSize;
+
+    lampAnimation?.size = lampSize;
+
+    doorAButton?.position =
+        Vector2(size.x * 0.135 - (sam?.size.x ?? 0), size.y * 0.50);
+    doorBButton?.position = Vector2(size.x * 0.60, size.y * 0.5);
     lampAnimation?.position = Vector2(
         size.x * 0.49, size.y * 0.557 - (lampAnimation?.size.y ?? 0) / 3);
-    _optionsSizing(size);
-    background?.size = size;
+    _optionsSizing(size, btnSize);
     super.onGameResize(size);
   }
 
-  void _optionsSizing(Vector2 size) {
-    chatWithSamComponent?.position =
-        Vector2(size.x * 0.13 - (sam?.size.x ?? 0 - 20), size.y * 0.5);
+  void _optionsSizing(Vector2 size, Vector2 btnSize) {
+    chatWithSamComponent?.size = btnSize;
+    viewSamIdComponent?.size = btnSize;
+    readTheMessage?.size = btnSize;
 
-    viewSamIdComponent?.position = Vector2(
-        size.x * 0.13 - (sam?.size.x ?? 0 - 20),
-        (size.y * 0.5 - (viewSamIdComponent?.height ?? 0)));
+    chatWithSamComponent?.position =
+        Vector2(size.x * 0.135 - (sam?.size.x ?? 0), size.y * 0.5);
+
+    viewSamIdComponent?.position = Vector2(size.x * 0.135 - (sam?.size.x ?? 0),
+        (size.y * 0.53 - (viewSamIdComponent?.height ?? 0)));
     readTheMessage?.position =
-        Vector2(size.x * 0.63, (size.y * 0.53 - (readTheMessage?.height ?? 0)));
+        Vector2(size.x * 0.60, (size.y * 0.53 - (readTheMessage?.height ?? 0)));
   }
 
   void openChat() async {
@@ -164,10 +161,7 @@ class GameLevelFive extends Component
   }
 
   void showOptions() async {
-    removeAll([
-      viewSamIdComponent!,
-      chatWithSamComponent!,
-    ]);
+    removeAll([viewSamIdComponent!, chatWithSamComponent!, readTheMessage!]);
     await addAll([doorAButton!, doorBButton!]);
   }
 }
