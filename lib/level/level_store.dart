@@ -27,7 +27,7 @@ abstract class _LevelStore with Store {
   void updateLevel(int newLevel) => level = newLevel;
 
   _LevelStore() {
-    // level = _repository.getLevel();
+    level = _repository.getLevel();
   }
 
   Future saveNewLevel(int newLevel) async {

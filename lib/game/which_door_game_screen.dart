@@ -97,7 +97,7 @@ class WhichDoorGameScreen extends FlameGame {
 
         break;
       default:
-        FlameAudio.bgm.play('levels-soundtrack.mp3', volume: .60);
+        FlameAudio.bgm.play('levels-soundtrack.mp3', volume: .40);
     }
   }
 

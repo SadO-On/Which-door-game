@@ -6,6 +6,7 @@ class Level {
   final int id;
   final List<Guard> guards;
   final String riddle;
+  final String backgroundAssets;
   final int noOfQuestions;
   final ChallengeType type;
   final int time;
@@ -19,6 +20,7 @@ class Level {
     required this.riddle,
     required this.guards,
     required this.type,
+    required this.backgroundAssets,
     this.correctDoor = "",
     required this.noOfDoors,
     this.time = 0,
@@ -31,6 +33,7 @@ class Level {
 final levels = {
   1: Level(
       id: 1,
+      backgroundAssets: "assets/images/background_level_one.svg",
       type: ChallengeType.number,
       guards: [guards['steve']!, guards['willy']!],
       noOfQuestions: 3,
@@ -40,6 +43,7 @@ final levels = {
           'You have 2 doors and 2 guards: one always tells the truth, and the other always lies. Choose one guard and ask three questions to figure out which door is correct'),
   2: Level(
       id: 2,
+      backgroundAssets: "assets/images/background_level_two.svg",
       riddle:
           "Guard Fred knows the correct door to take, but you have just one minute to convince him to reveal it.",
       type: ChallengeType.time,
@@ -49,6 +53,7 @@ final levels = {
       systemInstructions: []),
   3: Level(
       id: 3,
+      backgroundAssets: "assets/images/background_4_doors.svg",
       type: ChallengeType.number,
       riddle:
           "Margaret, the Riddle Master, guards the way. Solve her riddle to proceed.",
@@ -58,6 +63,7 @@ final levels = {
       noOfQuestions: 7),
   4: Level(
     id: 4,
+    backgroundAssets: "assets/images/background_level_four.svg",
     type: ChallengeType.number,
     noOfQuestions: 9,
     noOfDoors: 3,
@@ -71,6 +77,7 @@ final levels = {
     systemInstructions: [],
   ),
   5: Level(
+      backgroundAssets: "assets/images/background_level_5.svg",
       id: 5,
       noOfDoors: 2,
       riddle: "Well, What happened here ?",
@@ -80,6 +87,7 @@ final levels = {
       systemInstructions: []),
   6: Level(
       id: 6,
+      backgroundAssets: "assets/images/background_level_06.svg",
       riddle: "",
       noOfDoors: 0,
       guards: [],

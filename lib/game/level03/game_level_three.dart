@@ -33,7 +33,7 @@ class GameLevelThree extends Component with HasGameRef<WhichDoorGameScreen> {
   SvgComponent? background;
   @override
   FutureOr<void> onLoad() async {
-    final svgInstance = await Svg.load('images/background_4_doors.svg');
+    final svgInstance = await Svg.load('');
     final backgroundSize = gameRef.size;
 
     background = SvgComponent(

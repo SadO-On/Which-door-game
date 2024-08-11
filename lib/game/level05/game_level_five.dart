@@ -40,7 +40,7 @@ class GameLevelFive extends Component
   AudioPlayer? player;
   @override
   FutureOr<void> onLoad() async {
-    final svgInstance = await Svg.load('images/background_level_5.svg');
+    final svgInstance = await Svg.load('');
     final backgroundSize = gameRef.size;
     background = SvgComponent(
       size: backgroundSize,

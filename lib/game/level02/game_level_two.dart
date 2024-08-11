@@ -28,17 +28,10 @@ class GameLevelTwo extends Component with HasGameRef<WhichDoorGameScreen> {
   RiveButtonComponent? doorAButton;
   RiveButtonComponent? doorBButton;
   RiveButtonComponent? doorCButton;
-  SvgComponent? background;
 
   @override
   FutureOr<void> onLoad() async {
-    final svgInstance = await Svg.load('images/background_level_two.svg');
-    background = SvgComponent(
-      size: gameRef.size,
-      svg: svgInstance,
-    );
-
-    addAll([background!, MissionComponent(text: level.riddle)]);
+    add(MissionComponent(text: level.riddle));
 
     final sprite = await Svg.load('images/door_a.svg');
     final spriteB = await Svg.load('images/door_b.svg');
@@ -130,36 +123,44 @@ class GameLevelTwo extends Component with HasGameRef<WhichDoorGameScreen> {
 
   @override
   void onGameResize(Vector2 size) {
+    final doorSize = Vector2(size.x * 0.14, size.y * 0.6);
+    final guardSize = Vector2(size.x * 0.10, size.y * 0.48);
+
+    doorA?.size = doorSize;
+    doorB?.size = doorSize;
+    doorC?.size = doorSize;
+    fred?.size = guardSize;
+
     doorA?.position =
-        Vector2(size.x * 0.25, size.y * 0.557 - (doorA?.size.y ?? 0) / 2);
+        Vector2(size.x * 0.25, size.y * 0.61 - (doorA?.size.y ?? 0) / 2);
     doorB?.position =
-        Vector2(size.x * 0.52, size.y * 0.557 - (doorB?.size.y ?? 0) / 2);
+        Vector2(size.x * 0.52, size.y * 0.61 - (doorB?.size.y ?? 0) / 2);
     doorC?.position =
-        Vector2(size.x * 0.79, size.y * 0.557 - (doorC?.size.y ?? 0) / 2);
-    fred?.position = Vector2(size.x * 0.28 - (fred?.size.x ?? 0 - 20),
-        size.y * 0.557 - (fred?.size.y ?? 0) / 3);
+        Vector2(size.x * 0.79, size.y * 0.61 - (doorC?.size.y ?? 0) / 2);
+
+    fred?.position = Vector2(size.x * 0.28 - (fred?.size.x ?? 0),
+        size.y * 0.61 - (fred?.size.y ?? 0) / 3);
 
     _optionsSizing(size);
 
-    doorAButton?.position = Vector2(size.x * 0.14 - (fred?.size.x ?? 0 - 20),
+    doorAButton?.position = Vector2(
+        doorA?.position.x ?? 0 - (doorA?.width ?? 0) / 2,
         (size.y * 0.5 - (viewFredIdComponent?.height ?? 0)));
 
-    doorBButton?.position = Vector2(size.x * 0.47 - (fred?.size.x ?? 0 - 20),
+    doorBButton?.position = Vector2(size.x * 0.47 - (fred?.size.x ?? 0),
         (size.y * 0.5 - (viewFredIdComponent?.height ?? 0)));
 
-    doorCButton?.position = Vector2(size.x * 0.74 - (fred?.size.x ?? 0 - 20),
+    doorCButton?.position = Vector2(size.x * 0.74 - (fred?.size.x ?? 0),
         (size.y * 0.5 - (viewFredIdComponent?.height ?? 0)));
 
-    background?.size = size;
     super.onGameResize(size);
   }
 
   void _optionsSizing(Vector2 size) {
     chatWithFredIdComponent?.position =
-        Vector2(size.x * 0.14 - (fred?.size.x ?? 0 - 20), size.y * 0.5);
+        Vector2(size.x * 0.10 - (fred?.size.x ?? 0), size.y * 0.5);
 
-    viewFredIdComponent?.position = Vector2(
-        size.x * 0.14 - (fred?.size.x ?? 0 - 20),
+    viewFredIdComponent?.position = Vector2(size.x * 0.10 - (fred?.size.x ?? 0),
         (size.y * 0.5 - (viewFredIdComponent?.height ?? 0)));
   }
 }

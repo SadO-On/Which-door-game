@@ -1,5 +1,6 @@
 import 'package:flame/game.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:gaurds_game/chat/chat_screen.dart';
 import 'package:gaurds_game/data/model/level.dart';
 import 'package:gaurds_game/game/components/back_button_game_overlay.dart';
@@ -22,6 +23,11 @@ class GamePlayContainer extends StatelessWidget {
       gameFactory: () {
         return WhichDoorGameScreen(level: level);
       },
+      backgroundBuilder: (context) => SvgPicture.asset(
+        level.backgroundAssets,
+        fit: BoxFit.fill,
+        semanticsLabel: 'Image of dark brown door in the right of the screen',
+      ),
       overlayBuilderMap: {
         ChatScreen.overlayName: (secondContext, WhichDoorGameScreen game) =>
             ChatScreen(levelNumber: level.id, gameScreen: game),
