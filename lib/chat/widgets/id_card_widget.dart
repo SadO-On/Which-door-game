@@ -1,6 +1,5 @@
 import 'package:flame_rive/flame_rive.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:gaurds_game/data/model/guard.dart';
 import 'package:gaurds_game/data/model/guardMood.dart';
@@ -172,9 +171,6 @@ class _IdCardWidgetState extends State<IdCardWidget>
                           ]),
                         ],
                       ),
-                      const SizedBox(
-                        height: 16,
-                      )
                     ],
                   ),
                 )

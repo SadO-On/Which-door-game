@@ -27,7 +27,8 @@ class GameLevelThree extends Component with HasGameRef<WhichDoorGameScreen> {
   RiveButtonComponent? doorDButton;
   @override
   FutureOr<void> onLoad() async {
-    add(MissionComponent(text: level.riddle, isWithClock: true));
+    add(MissionComponent(
+        text: level.riddle, isWithClock: true, m: gameRef.size.y * 0.5));
     final margaretArtBoard = await loadArtboard(
         RiveFile.asset('assets/rive/margaret_idle_standing.riv'));
     margaret = GuardComponent(artboard: margaretArtBoard);
@@ -39,10 +40,16 @@ class GameLevelThree extends Component with HasGameRef<WhichDoorGameScreen> {
   @override
   void onGameResize(Vector2 size) {
     final guardSize = Vector2(size.x * 0.08, size.y * 0.46);
-
+    final btnSize = Vector2(size.x * 0.19, size.y * 0.1);
+    doorAButton?.size = btnSize;
+    doorBButton?.size = btnSize;
+    doorCButton?.size = btnSize;
+    doorDButton?.size = btnSize;
+    chatWithSamComponent?.size = btnSize;
+    viewSamIdComponent?.size = btnSize;
     margaret?.size = guardSize;
-    margaret?.position = Vector2(size.x * 0.26 - (margaret?.size.x ?? 0 - 20),
-        size.y * 0.557 - (margaret?.size.y ?? 0) / 4);
+    margaret?.position =
+        Vector2(size.x * 0.26 - (margaret?.size.x ?? 0), size.y * 0.48);
     doorAButton?.position = Vector2(size.x * 0.11, size.y * 0.30);
     doorBButton?.position = Vector2(size.x * 0.34, size.y * 0.30);
     doorCButton?.position = Vector2(size.x * 0.59, size.y * 0.30);
@@ -53,10 +60,10 @@ class GameLevelThree extends Component with HasGameRef<WhichDoorGameScreen> {
   }
 
   void _optionsSizing(Vector2 size) {
-    chatWithSamComponent?.position = Vector2(size.x * 0.23, size.y * 0.5);
+    chatWithSamComponent?.position = Vector2(size.x * 0.216, size.y * 0.5);
 
     viewSamIdComponent?.position = Vector2(
-        size.x * 0.23, (size.y * 0.5 - (viewSamIdComponent?.height ?? 0)));
+        size.x * 0.216, (size.y * 0.5 - (viewSamIdComponent?.height ?? 0)));
   }
 
   void openChat() async {

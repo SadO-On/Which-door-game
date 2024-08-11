@@ -3,7 +3,6 @@ import 'dart:async';
 import 'package:flame/components.dart';
 import 'package:flame_svg/flame_svg.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/painting.dart';
 
 class AnswerComponent extends SvgComponent {
   AnswerComponent(this.text, this.index);

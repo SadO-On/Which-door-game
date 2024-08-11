@@ -4,7 +4,6 @@ import 'package:flame/components.dart';
 import 'package:flame/flame.dart';
 import 'package:flame_rive/flame_rive.dart';
 import 'package:flame_svg/flame_svg.dart';
-import 'package:flame_svg/svg_component.dart';
 import 'package:gaurds_game/game/which_door_game_screen.dart';
 
 import '../../chat/chat_screen.dart';

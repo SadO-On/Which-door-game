@@ -3,7 +3,6 @@ import 'dart:async';
 import 'package:flame/components.dart';
 import 'package:flame/flame.dart';
 import 'package:flame_rive/flame_rive.dart';
-import 'package:flame_svg/flame_svg.dart';
 import 'package:gaurds_game/game/components/mission_component.dart';
 import 'package:gaurds_game/game/which_door_game_screen.dart';
 
@@ -19,7 +18,6 @@ class GameLevelFour extends Component with HasGameRef<WhichDoorGameScreen> {
   GameLevelFour({required this.level});
 
   final Level level;
-  SvgComponent? doorA, doorB, doorC;
   GuardComponent? margaret, fred, kane;
   RiveButtonComponent? viewMargaretIdComponent,
       chatWithMargaretComponent,
@@ -30,32 +28,10 @@ class GameLevelFour extends Component with HasGameRef<WhichDoorGameScreen> {
       doorAButton,
       doorBButton,
       doorCButton;
-  SvgComponent? background;
   @override
   FutureOr<void> onLoad() async {
-    final svgInstance = await Svg.load('images/background_level_four.svg');
-
-    final backgroundSize = gameRef.size;
-
-    background = SvgComponent(
-      size: backgroundSize,
-      svg: svgInstance,
-    );
-    addAll(
-        [background!, MissionComponent(text: level.riddle, isWithClock: true)]);
-
-    final sprite = await Svg.load('images/door_a.svg');
-    final spriteB = await Svg.load('images/door_b.svg');
-    final spriteC = await Svg.load('images/door_c.svg');
-
-    final size = Vector2(130, 265);
-
-    doorA = SvgComponent(size: size, svg: sprite);
-    doorB = SvgComponent(size: size, svg: spriteB);
-    doorC = SvgComponent(size: size, svg: spriteC);
-
-    addAll([doorA!, doorB!, doorC!]);
-
+    add(MissionComponent(
+        text: level.riddle, isWithClock: true, m: gameRef.size.y * 0.5));
     final margaretArtBoard = await loadArtboard(
         RiveFile.asset('assets/rive/margaret_idle_standing.riv'));
     margaret = GuardComponent(artboard: margaretArtBoard);
@@ -83,6 +59,16 @@ class GameLevelFour extends Component with HasGameRef<WhichDoorGameScreen> {
     final chatWithFredArtBoard =
         await loadArtboard(RiveFile.asset('assets/rive/button.riv'));
     final viewFredIdArtBoard =
+        await loadArtboard(RiveFile.asset('assets/rive/button.riv'));
+
+    final chatWithMargaretArtBoard =
+        await loadArtboard(RiveFile.asset('assets/rive/button.riv'));
+    final viewMargaretIdArtBoard =
+        await loadArtboard(RiveFile.asset('assets/rive/button.riv'));
+
+    final chatWithKaneArtBoard =
+        await loadArtboard(RiveFile.asset('assets/rive/button.riv'));
+    final viewKaneIdArtBoard =
         await loadArtboard(RiveFile.asset('assets/rive/button.riv'));
 
     final aDoorArtBoard =
@@ -131,28 +117,28 @@ class GameLevelFour extends Component with HasGameRef<WhichDoorGameScreen> {
     });
 
     chatWithKaneComponent =
-        RiveButtonComponent(chatWithFredArtBoard, 'Chat with Kane', () {
+        RiveButtonComponent(chatWithKaneArtBoard, 'Chat with Kane', () {
       gameRef.guardIndex = 2;
       openChat();
       showOptions();
     });
 
     viewKaneIdComponent =
-        RiveButtonComponent(viewFredIdArtBoard, 'View kane’s ID', () {
+        RiveButtonComponent(viewKaneIdArtBoard, 'View kane’s ID', () {
       gameRef.guardIndex = 2;
 
       game.showOverlay(GuardIdPopup.overlayName);
     });
 
     chatWithMargaretComponent =
-        RiveButtonComponent(chatWithFredArtBoard, 'Chat with Margaret', () {
+        RiveButtonComponent(chatWithMargaretArtBoard, 'Chat with Margaret', () {
       gameRef.guardIndex = 1;
       openChat();
       showOptions();
     });
 
     viewMargaretIdComponent =
-        RiveButtonComponent(viewFredIdArtBoard, 'View margaret ID', () {
+        RiveButtonComponent(viewMargaretIdArtBoard, 'View margaret ID', () {
       gameRef.guardIndex = 1;
 
       game.showOverlay(GuardIdPopup.overlayName);
@@ -172,20 +158,22 @@ class GameLevelFour extends Component with HasGameRef<WhichDoorGameScreen> {
     removeAll([
       chatWithFredComponent!,
       viewFredIdComponent!,
+      viewMargaretIdComponent!,
+      viewKaneIdComponent!,
+      chatWithMargaretComponent!,
+      chatWithKaneComponent!,
     ]);
     await addAll([doorAButton!, doorBButton!, doorCButton!]);
   }
 
   @override
   void onGameResize(Vector2 size) {
-    margaret?.width = 100;
-    margaret?.height = 210;
-    doorA?.position =
-        Vector2(size.x * 0.22, size.y * 0.557 - (doorA?.size.y ?? 0) / 2);
-    doorB?.position =
-        Vector2(size.x * 0.52, size.y * 0.557 - (doorB?.size.y ?? 0) / 2);
-    doorC?.position =
-        Vector2(size.x * 0.82, size.y * 0.557 - (doorC?.size.y ?? 0) / 2);
+    final guardSize = Vector2(size.x * 0.11, size.y * 0.53);
+    final btnSize = Vector2(size.x * 0.18, size.y * 0.11);
+
+    margaret?.size = guardSize;
+    fred?.size = guardSize;
+    kane?.size = guardSize;
 
     fred?.position = Vector2(size.x * 0.27 - (fred?.size.x ?? 0 - 20),
         size.y * 0.557 - (fred?.size.y ?? 0) / 3);
@@ -194,37 +182,43 @@ class GameLevelFour extends Component with HasGameRef<WhichDoorGameScreen> {
     kane?.position =
         Vector2(size.x * 0.77, size.y * 0.557 - (fred?.size.y ?? 0) / 3);
 
-    doorAButton?.position =
-        Vector2(size.x * 0.24 - (doorAButton?.size.x ?? 0) / 5, size.y * 0.30);
-    doorBButton?.position =
-        Vector2(size.x * 0.42 - (doorBButton?.size.x ?? 0) / 5, size.y * 0.30);
-    doorCButton?.position =
-        Vector2(size.x * 0.60 - (doorCButton?.size.x ?? 0) / 5, size.y * 0.30);
-    _optionsSizing(size);
-    background?.size = size;
+    doorAButton?.size = btnSize;
+    doorBButton?.size = btnSize;
+    doorCButton?.size = btnSize;
+
+    doorAButton?.position = Vector2(size.x * 0.16, size.y * 0.22);
+    doorBButton?.position = Vector2(size.x * 0.455, size.y * 0.22);
+    doorCButton?.position = Vector2(size.x * 0.76, size.y * 0.22);
+    _optionsSizing(size, btnSize);
     super.onGameResize(size);
   }
 
-  void _optionsSizing(Vector2 size) {
+  void _optionsSizing(Vector2 size, Vector2 btnSize) {
+    chatWithFredComponent?.size = btnSize;
+    viewFredIdComponent?.size = btnSize;
+    chatWithMargaretComponent?.size = btnSize;
+    viewMargaretIdComponent?.size = btnSize;
+    viewKaneIdComponent?.size = btnSize;
+    chatWithKaneComponent?.size = btnSize;
+
     chatWithFredComponent?.position =
-        Vector2(size.x * 0.14 - (fred?.size.x ?? 0 - 20), size.y * 0.5);
+        Vector2(size.x * 0.135 - (fred?.size.x ?? 0), size.y * 0.5);
 
     viewFredIdComponent?.position = Vector2(
-        size.x * 0.14 - (fred?.size.x ?? 0 - 20),
+        size.x * 0.135 - (fred?.size.x ?? 0),
         (size.y * 0.5 - (viewFredIdComponent?.height ?? 0)));
 
     chatWithMargaretComponent?.position =
-        Vector2(size.x * 0.45 - (margaret?.size.x ?? 0 - 20), size.y * 0.5);
+        Vector2(size.x * 0.44 - (margaret?.size.x ?? 0), size.y * 0.5);
 
     viewMargaretIdComponent?.position = Vector2(
-        size.x * 0.45 - (margaret?.size.x ?? 0 - 20),
+        size.x * 0.44 - (margaret?.size.x ?? 0),
         (size.y * 0.5 - (viewMargaretIdComponent?.height ?? 0)));
 
     chatWithKaneComponent?.position =
-        Vector2(size.x * 0.75 - (fred?.size.x ?? 0 - 20), size.y * 0.5);
+        Vector2(size.x * 0.74 - (fred?.size.x ?? 0), size.y * 0.5);
 
-    viewKaneIdComponent?.position = Vector2(
-        size.x * 0.75 - (fred?.size.x ?? 0 - 20),
+    viewKaneIdComponent?.position = Vector2(size.x * 0.74 - (fred?.size.x ?? 0),
         (size.y * 0.5 - (viewFredIdComponent?.height ?? 0)));
   }
 }

@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:flame/components.dart';
-import 'package:flame/extensions.dart';
 import 'package:flame/flame.dart';
 import 'package:flame_rive/flame_rive.dart';
 import 'package:gaurds_game/game/components/lost_popup.dart';

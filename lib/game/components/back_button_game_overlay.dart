@@ -10,7 +10,7 @@ class BackButtonGameOverlay extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 24),
+        padding: const EdgeInsets.symmetric(vertical: 24, horizontal: 4),
         child: Column(
           children: [
             Row(

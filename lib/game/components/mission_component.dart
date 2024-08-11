@@ -3,11 +3,12 @@ import 'package:flame_svg/flame_svg.dart';
 import 'package:flutter/material.dart';
 import 'package:gaurds_game/utils/theme.dart';
 
-class MissionComponent extends TextBoxComponent {
-  MissionComponent({required String text, this.isWithClock = false})
+class MissionComponent extends TextBoxComponent with HasGameRef {
+  MissionComponent(
+      {required String text, this.isWithClock = false, double m = 400})
       : super(
           text: text,
-          boxConfig: const TextBoxConfig(timePerChar: 0.05, maxWidth: 400),
+          boxConfig: TextBoxConfig(timePerChar: 0.05, maxWidth: m),
         );
 
   final bgPaint = Paint()..color = brown;
@@ -26,12 +27,10 @@ class MissionComponent extends TextBoxComponent {
       final svgClockInstance = await Svg.load('images/clock_level_five.svg');
 
       clockLeft = SvgComponent(
-        size: Vector2.all(50),
         svg: svgClockInstance,
       );
 
       clockRight = SvgComponent(
-        size: Vector2.all(50),
         svg: svgClockInstance,
       );
       addAll([clockLeft!, clockRight!]);
@@ -47,9 +46,12 @@ class MissionComponent extends TextBoxComponent {
       fontSize: 12,
       fontFamily: 'Impact',
     ));
+    clockLeft?.size = Vector2.all(size.x * 0.06);
+    clockRight?.size = Vector2.all(size.x * 0.06);
+
     position = Vector2((size.x / 2 - width / 2), 16);
-    clockLeft?.position = Vector2(position.x - size.x / 3 - 12, 0);
-    clockRight?.position = Vector2(position.x + size.x / 5 - 12, 0);
+    clockLeft?.position = Vector2(size.x * 0.17 - (size.x / 2 - width / 2), 0);
+    clockRight?.position = Vector2(size.x * 0.53, 0);
     super.onGameResize(size);
   }
 }

@@ -24,14 +24,15 @@ class _ChatInputWidgetState extends State<ChatInputWidget> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 5),
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
         mainAxisSize: MainAxisSize.max,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Container(
               color: Colors.white,
               width: MediaQuery.of(context).size.width * 0.7,
+              height: MediaQuery.of(context).size.width * 0.11,
               child: TextField(
                 onChanged: (value) {
                   prompt = value;
@@ -51,6 +52,9 @@ class _ChatInputWidgetState extends State<ChatInputWidget> {
                   ),
                 ),
               )),
+          const SizedBox(
+            width: 16,
+          ),
           ThreeDimensionButton(
               width: 66,
               height: 66,

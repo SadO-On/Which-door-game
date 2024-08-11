@@ -9,10 +9,8 @@ import 'package:gaurds_game/game/which_door_game_screen.dart';
 import '../../chat/chat_screen.dart';
 import '../../data/model/level.dart';
 import '../components/guard_id_popup.dart';
-import '../components/lost_popup.dart';
 import '../components/mission_component.dart';
 import '../components/rive_button_component.dart';
-import '../components/win_popup.dart';
 import '../level01/components/guard_component.dart';
 import '../level01/components/lamp_component.dart';
 

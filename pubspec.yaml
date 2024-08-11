@@ -57,6 +57,7 @@ dependencies:
   flame_audio: ^2.10.2
   package_info_plus: ^8.0.2
 
+  rive: any
 dev_dependencies:
   flutter_test:
     sdk: flutter
