@@ -1,5 +1,4 @@
 import 'package:gaurds_game/data/model/math_problem.dart';
-import 'package:gaurds_game/data/model/system_instructions.dart';
 
 import 'guard.dart';
 

@@ -15,11 +15,14 @@ class MainRepository {
         param1: Content.system(
             levels[_levelNumber]?.systemInstructions[guardIndex] ?? ""));
 
-    print(
-        'initModel with system instructions: ${levels[_levelNumber]?.systemInstructions[guardIndex]}');
+    print('initModel with system instructions}');
   }
 
   Future<PromptResponse> sendPrompt(String userText) async {
-    return await _geminiAI.sendPrompt(userText);
+    try {
+      return await _geminiAI.sendPrompt(userText);
+    } catch (e) {
+      rethrow;
+    }
   }
 }

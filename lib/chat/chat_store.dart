@@ -50,9 +50,17 @@ abstract class _ChatStore with Store {
   Future sendPrompt(String text) async {
     isLoading = true;
     addNewConversation(ChatModel(text: text, type: ChattingType.sender));
-    PromptResponse gemini = await _repository.sendPrompt(text);
+    PromptResponse? gemini;
+    try {
+      gemini = await _repository.sendPrompt(text);
+      remainingQuestions -= 1;
+    } catch (e) {
+      gemini = PromptResponse(
+          guardMood: GuardMood.IDLE,
+          response:
+              "Apologies, I wasn't paying attention. Don’t worry, I won’t count that one. Could you repeat it, please?");
+    }
     isLoading = false;
-    remainingQuestions -= 1;
     await player.play(AssetSource('audio/chat pop.mp3'));
     addNewConversation(ChatModel(
         text: gemini.response,

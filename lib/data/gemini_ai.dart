@@ -26,13 +26,17 @@ class GeminiAI {
   final GenerativeModel _generativeModel;
 
   Future<PromptResponse> sendPrompt(String prompt) async {
-    final content = [Content.text(prompt)];
-    final response = await _generativeModel.generateContent(content);
-    final textValue = response.text!;
-    print(textValue);
-    final json = jsonDecode(textValue) as Map<String, dynamic>;
-    final PromptResponse promptResponse = PromptResponse.fromJson(json);
-    return promptResponse;
+    try {
+      final content = [Content.text(prompt)];
+      final response = await _generativeModel.generateContent(content);
+      final textValue = response.text!;
+      print(textValue);
+      final json = jsonDecode(textValue) as Map<String, dynamic>;
+      final PromptResponse promptResponse = PromptResponse.fromJson(json);
+      return promptResponse;
+    } catch (e) {
+      rethrow;
+    }
   }
 
   Future<QuizQuestion> getQuizQuestion() async {
