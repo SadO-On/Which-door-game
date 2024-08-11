@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:gaurds_game/chat/chat_store.dart';
-import 'package:gaurds_game/chat/widgets/chat_input_widget.dart';
-import 'package:gaurds_game/chat/widgets/chat_list_widget.dart';
-import 'package:gaurds_game/chat/widgets/id_card_widget.dart';
-import 'package:gaurds_game/data/model/level.dart';
-import 'package:gaurds_game/game/components/loading_screen.dart';
-import 'package:gaurds_game/game/which_door_game_screen.dart';
-import 'package:gaurds_game/utils/utils.dart';
+import '../utils/utils.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:timer_count_down/timer_count_down.dart';
+import '../data/model/level.dart';
+import '../game/components/loading_screen.dart';
+import '../game/which_door_game_screen.dart';
 import '../widgets/three_dimension_button.dart';
 import '../widgets/top_bar_widget.dart';
+import 'chat_store.dart';
+import 'widgets/chat_input_widget.dart';
+import 'widgets/chat_list_widget.dart';
+import 'widgets/id_card_widget.dart';
 
 class ChatScreen extends StatefulWidget {
   const ChatScreen(
@@ -131,9 +131,6 @@ class _ChatScreenState extends State<ChatScreen> {
                                 ChallengeType.number &&
                             _store.remainingQuestions <= 0) ||
                         _store.isTimesUp) {
-                      print(levels[widget.levelNumber]!.type ==
-                              ChallengeType.time &&
-                          _store.remainingQuestions <= 0);
                       return Row(
                         mainAxisSize: MainAxisSize.max,
                         mainAxisAlignment: MainAxisAlignment.center,

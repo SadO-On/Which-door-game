@@ -1,16 +1,18 @@
 import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
-import 'package:gaurds_game/chat/model/chat_model.dart';
-import 'package:gaurds_game/data/main_repository.dart';
-import 'package:gaurds_game/data/model/guardMood.dart';
-import 'package:gaurds_game/data/model/level.dart';
-import 'package:gaurds_game/locator.dart';
+
 import 'package:mobx/mobx.dart';
 
+import '../data/main_repository.dart';
+import '../data/model/guard_mood.dart';
+import '../data/model/level.dart';
 import '../data/model/prompt_response.dart';
+import '../locator.dart';
+import 'model/chat_model.dart';
 
 part 'chat_store.g.dart';
 
+// ignore: library_private_types_in_public_api
 class ChatStore = _ChatStore with _$ChatStore;
 
 abstract class _ChatStore with Store {
@@ -56,7 +58,7 @@ abstract class _ChatStore with Store {
       remainingQuestions -= 1;
     } catch (e) {
       gemini = PromptResponse(
-          guardMood: GuardMood.IDLE,
+          guardMood: GuardMood.idle,
           response:
               "Apologies, I wasn't paying attention. Don’t worry, I won’t count that one. Could you repeat it, please?");
     }
@@ -67,7 +69,7 @@ abstract class _ChatStore with Store {
         type: ChattingType.receiver,
         mood: gemini.guardMood));
     _controller.jumpTo(_controller.position.maxScrollExtent);
-    if (gemini.guardMood == GuardMood.Nervous) {
+    if (gemini.guardMood == GuardMood.nervous) {
       await player.play(AssetSource('audio/whistle.wav'));
     }
   }

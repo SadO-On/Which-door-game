@@ -2,7 +2,7 @@ import 'package:flame_rive/flame_rive.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:gaurds_game/data/model/guard.dart';
-import 'package:gaurds_game/data/model/guardMood.dart';
+import 'package:gaurds_game/data/model/guard_mood.dart';
 import 'package:rive/rive.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -207,27 +207,27 @@ class _IdCardWidgetState extends State<IdCardWidget>
   String getStateMachineName(GuardMood mood) {
     print(mood.name);
     switch (mood) {
-      case GuardMood.EVIL:
+      case GuardMood.evil:
         return "Evil machine";
-      case GuardMood.Angry:
+      case GuardMood.angry:
         return "Angry machine";
-      case GuardMood.Happy:
+      case GuardMood.happy:
         return "Happy machine";
-      case GuardMood.MAD:
+      case GuardMood.mad:
         return "Mad machine";
-      case GuardMood.FRUSTRATION:
+      case GuardMood.frustration:
         return "Frustration machine";
-      case GuardMood.CLEVER:
+      case GuardMood.clever:
         return "Clever machine";
-      case GuardMood.WISE:
+      case GuardMood.wise:
         return "Wise machine";
-      case GuardMood.BOARD:
+      case GuardMood.board:
         return "Board machine";
-      case GuardMood.LAUGH:
+      case GuardMood.laugh:
         return "Laugh machine";
-      case GuardMood.Calm:
+      case GuardMood.calm:
         return "Calm machine";
-      case GuardMood.Nervous:
+      case GuardMood.nervous:
         return "Nervous machine";
       default:
         return "Idle machine";
