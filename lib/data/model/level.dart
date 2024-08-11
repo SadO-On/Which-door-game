@@ -53,10 +53,10 @@ final levels = {
       systemInstructions: []),
   3: Level(
       id: 3,
-      backgroundAssets: "assets/images/background_4_doors.svg",
+      backgroundAssets: "assets/images/background_level_three.svg",
       type: ChallengeType.number,
       riddle:
-          "Margaret, the Riddle Master, guards the way. Solve her riddle to proceed.",
+          "Margaret, the Riddle Master, guards the way. Solve her riddle to proceed. You've 7 attempts only",
       guards: [guards['margaret']!],
       noOfDoors: 4,
       systemInstructions: [],
