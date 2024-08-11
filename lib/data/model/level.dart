@@ -93,6 +93,19 @@ final levels = {
       guards: [],
       type: ChallengeType.time,
       systemInstructions: []),
+  7: Level(
+      id: 7,
+      backgroundAssets: "assets/images/background_level_finale.svg",
+      type: ChallengeType.number,
+      guards: [
+        guards['newgate']!,
+        guards['roger']!,
+      ],
+      noOfQuestions: 1,
+      noOfDoors: 2,
+      systemInstructions: [],
+      riddle:
+          'Two doors with two guards - one lies, one tells the truth You have to choose and open one of these doors, but you can only ask a single question to one of the guards.'),
 };
 
 enum ChallengeType { time, number }

@@ -19,4 +19,16 @@ class SP {
   Future saveLevel(int levelNumber) async {
     await pref.setInt('level', levelNumber);
   }
+
+  Future resetGame() async {
+    await pref.clear();
+  }
+
+  bool isFinishTheGame() {
+    return pref.getBool('game_finish') ?? false;
+  }
+
+  Future setFinishTheGame() async {
+    await pref.setBool('game_finish', true);
+  }
 }

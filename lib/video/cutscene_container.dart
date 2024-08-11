@@ -3,6 +3,7 @@ import 'package:gaurds_game/data/model/level.dart';
 import 'package:gaurds_game/game/components/loading_screen.dart';
 import 'package:gaurds_game/game/game_play_container.dart';
 import 'package:gaurds_game/locator.dart';
+import 'package:gaurds_game/utils/routes.dart';
 import 'package:gaurds_game/widgets/three_dimension_button.dart';
 import 'package:video_player/video_player.dart';
 
@@ -30,11 +31,20 @@ class _CutSceneContainerScreenState extends State<CutSceneContainerScreen> {
     _controller.addListener(() async {
       if (_controller.value.isCompleted) {
         await widget._storageRepository.setFirstTime();
+        if (widget._storageRepository.getLevel() == 7) {
+          await widget._storageRepository.setFinishTheGame();
+        }
         if (mounted) {
-          Navigator.pushReplacement(
-              context,
-              MaterialPageRoute(
-                  builder: (context) => GamePlayContainer(level: levels[1]!)));
+          if (widget._storageRepository.getLevel() == 7) {
+            Navigator.pushReplacementNamed(context, AppRoutes.home);
+            return;
+          } else {
+            Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(
+                    builder: (context) =>
+                        GamePlayContainer(level: levels[1]!)));
+          }
         }
       }
     });
@@ -67,8 +77,9 @@ class _CutSceneContainerScreenState extends State<CutSceneContainerScreen> {
                 }
               },
             ),
-            widget._storageRepository.isFirstTime()
-                ? const SizedBox()
+            widget._storageRepository.isFirstTime() &&
+                    !widget._storageRepository.isFinishTheGame()
+                ? Container()
                 : Positioned(
                     bottom: 0,
                     right: 0,
@@ -82,11 +93,16 @@ class _CutSceneContainerScreenState extends State<CutSceneContainerScreen> {
                           label: 'Skip the scene',
                           iconSize: 0,
                           onClick: () {
-                            Navigator.pushReplacement(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) =>
-                                        GamePlayContainer(level: levels[1]!)));
+                            if (widget._storageRepository.getLevel() == 7) {
+                              Navigator.of(context).popUntil(
+                                  ModalRoute.withName(AppRoutes.home));
+                            } else {
+                              Navigator.pushReplacement(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => GamePlayContainer(
+                                          level: levels[1]!)));
+                            }
                           },
                           backgroundColor: const Color(0xff653E1A),
                           shadowColor: const Color(0xff99846A),

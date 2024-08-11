@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-import '../data/model/level.dart';
-import '../utils/routes.dart';
 import '../widgets/three_dimension_button.dart';
 
 class FInalLevelWidget extends StatelessWidget {
-  const FInalLevelWidget({super.key});
-
+  FInalLevelWidget({super.key, required this.onClicked});
+  Function onClicked;
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -29,10 +27,7 @@ class FInalLevelWidget extends StatelessWidget {
             label: 'Final level',
             iconSize: 0,
             onClick: () async {
-              Future.delayed(const Duration(milliseconds: 200), () {
-                Navigator.pushNamed(context, AppRoutes.game,
-                    arguments: levels[7]!);
-              });
+              onClicked();
             },
             backgroundColor: const Color(0xff653E1A),
             shadowColor: const Color(0xff99846A),

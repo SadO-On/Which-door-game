@@ -4,6 +4,7 @@ import 'package:gaurds_game/game/components/popup_container_widget.dart';
 import 'package:gaurds_game/level/level_store.dart';
 import 'package:gaurds_game/locator.dart';
 
+import '../../utils/routes.dart';
 import '../which_door_game_screen.dart';
 
 class WinPopup extends StatefulWidget {
@@ -46,9 +47,14 @@ class _WinPopupState extends State<WinPopup> {
         width: null,
         height: null,
         onClick: () async {
-          await _store.saveNewLevel(widget.game.level.id + 1).then((_) {
-            Navigator.pop(context);
-          });
+          if (widget.game.level.id == 7) {
+            Navigator.pushReplacementNamed(context, AppRoutes.cutScene,
+                arguments: "assets/videos/final.mp4");
+          } else {
+            await _store.saveNewLevel(widget.game.level.id + 1).then((_) {
+              Navigator.pop(context);
+            });
+          }
         },
         text: 'You opened the right door!');
   }

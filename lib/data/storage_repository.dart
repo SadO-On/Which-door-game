@@ -19,4 +19,16 @@ class StorageRepository {
   bool isFirstTime() {
     return _sp.isFirstTime();
   }
+
+  bool isFinishTheGame() {
+    return _sp.isFinishTheGame();
+  }
+
+  Future setFinishTheGame() async {
+    await _sp.setFinishTheGame();
+  }
+
+  Future resetGame() async {
+    await _sp.resetGame();
+  }
 }

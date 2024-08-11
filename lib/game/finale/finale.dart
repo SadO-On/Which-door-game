@@ -3,14 +3,15 @@ import 'dart:async';
 import 'package:flame/components.dart';
 import 'package:flame/flame.dart';
 import 'package:flame_rive/flame_rive.dart';
-import 'package:flame_svg/flame_svg.dart';
 import 'package:gaurds_game/game/which_door_game_screen.dart';
 
 import '../../chat/chat_screen.dart';
 import '../../data/model/level.dart';
 import '../components/guard_id_popup.dart';
+import '../components/lost_popup.dart';
 import '../components/mission_component.dart';
 import '../components/rive_button_component.dart';
+import '../components/win_popup.dart';
 import '../level01/components/guard_component.dart';
 import '../level01/components/lamp_component.dart';
 
@@ -18,7 +19,6 @@ class Finale extends Component with HasGameRef<WhichDoorGameScreen> {
   Finale({required this.level});
   final Level level;
 
-  SvgComponent? doorA, doorB;
   GuardComponent? roger, newgate;
   RiveButtonComponent? viewNewgateIdComponent,
       viewRogerIdComponent,
@@ -26,84 +26,81 @@ class Finale extends Component with HasGameRef<WhichDoorGameScreen> {
       chatWithRogerComponent;
   RiveButtonComponent? doorAButton, doorBButton;
   LampComponent? lampAnimation;
-  SvgComponent? background;
 
   @override
   FutureOr<void> onLoad() async {
-    final svgInstance = await Svg.load('images/background_finale.svg');
-
-    background = SvgComponent(
-      size: gameRef.size,
-      svg: svgInstance,
-    );
-
-    addAll([background!, MissionComponent(text: level.riddle)]);
-    final sprite = await Svg.load('images/door_a.svg');
-    final spriteB = await Svg.load('images/door_b.svg');
-
-    final size = Vector2(130, 265);
-    doorA = SvgComponent(size: size, svg: sprite);
-    doorB = SvgComponent(size: size, svg: spriteB);
-    addAll([doorA!, doorB!]);
+    add(MissionComponent(text: level.riddle));
 
     final newgateArtBoard = await loadArtboard(
-        RiveFile.asset('assets/rive/steve_idle_standing.riv')); //TODO
+        RiveFile.asset('assets/rive/newgate_standing_animation.riv'));
     newgate = GuardComponent(artboard: newgateArtBoard);
     final rogerArtBoard = await loadArtboard(
-        RiveFile.asset('assets/rive/willy_idle_standing.riv')); //TODO
+        RiveFile.asset('assets/rive/roger_standing_animation.riv'));
     roger = GuardComponent(artboard: rogerArtBoard);
-    addAll([roger!, newgate!]);
 
     final lampArtBoard =
         await loadArtboard(RiveFile.asset('assets/rive/lamp_animation.riv'));
     lampAnimation = LampComponent(artboard: lampArtBoard);
     add(lampAnimation!);
     await _loadButtons();
+    await addAll([roger!, newgate!]);
+
     return super.onLoad();
   }
 
   @override
   void onGameResize(Vector2 size) {
-    doorA?.position =
-        Vector2(size.x * 0.25, size.y * 0.557 - (doorA?.size.y ?? 0) / 2);
-    doorB?.position =
-        Vector2(size.x * 0.78, size.y * 0.557 - (doorB?.size.y ?? 0) / 2);
+    final guardSize = Vector2(size.x * 0.11, size.y * 0.53);
+    final btnSize = Vector2(size.x * 0.2, size.y * 0.13);
+    final lampSize = Vector2(size.x * 0.12, size.y * 0.48);
 
-    roger?.position = Vector2(size.x * 0.28 - (roger?.size.x ?? 0 - 20),
-        size.y * 0.557 - (roger?.size.y ?? 0) / 3);
+    roger?.size = guardSize;
+    newgate?.size = guardSize;
 
-    newgate?.position = Vector2(size.x * 0.81 - (newgate?.size.x ?? 0 - 20),
+    doorAButton?.size = btnSize;
+    doorBButton?.size = btnSize;
+
+    roger?.position = Vector2(size.x * 0.84 - (newgate?.size.x ?? 0),
         size.y * 0.557 - (newgate?.size.y ?? 0) / 3);
 
+    newgate?.position = Vector2(size.x * 0.29 - (roger?.size.x ?? 0),
+        size.y * 0.557 - (roger?.size.y ?? 0) / 3);
+
+    lampAnimation?.size = lampSize;
     lampAnimation?.position = Vector2(
-        size.x * 0.49, size.y * 0.557 - (lampAnimation?.size.y ?? 0) / 3);
+        size.x * 0.43, size.y * 0.61 - (lampAnimation?.size.y ?? 0) / 3);
 
-    _optionsSizing(size);
+    _optionsSizing(size, btnSize);
 
-    doorAButton?.position = Vector2(size.x * 0.14 - (newgate?.size.x ?? 0 - 20),
+    doorAButton?.position = Vector2(size.x * 0.14 - (newgate?.size.x ?? 0),
         (size.y * 0.5 - (viewNewgateIdComponent?.height ?? 0)));
 
-    doorBButton?.position = Vector2(size.x * 0.68 - (roger?.size.x ?? 0 - 20),
+    doorBButton?.position = Vector2(size.x * 0.70 - (roger?.size.x ?? 0),
         (size.y * 0.5 - (viewRogerIdComponent?.height ?? 0)));
 
-    background?.size = size;
     super.onGameResize(size);
   }
 
-  void _optionsSizing(Vector2 size) {
-    chatWithRogerComponent?.position =
-        Vector2(size.x * 0.14 - (roger?.size.x ?? 0 - 20), size.y * 0.5);
+  void _optionsSizing(Vector2 size, Vector2 btnSize) {
+    chatWithRogerComponent?.size = btnSize;
+    chatWithNewgateComponent?.size = btnSize;
+
+    viewNewgateIdComponent?.size = btnSize;
+    viewRogerIdComponent?.size = btnSize;
 
     chatWithNewgateComponent?.position =
+        Vector2(size.x * 0.14 - (roger?.size.x ?? 0 - 20), size.y * 0.5);
+
+    chatWithRogerComponent?.position =
         Vector2(size.x * 0.68 - (newgate?.size.x ?? 0 - 20), size.y * 0.5);
 
     viewNewgateIdComponent?.position = Vector2(
-        size.x * 0.68 - (newgate?.size.x ?? 0 - 20),
-        (size.y * 0.5 - (viewNewgateIdComponent?.height ?? 0)));
-
-    viewRogerIdComponent?.position = Vector2(
         size.x * 0.14 - (roger?.size.x ?? 0 - 20),
         (size.y * 0.5 - (viewRogerIdComponent?.height ?? 0)));
+
+    viewRogerIdComponent?.position = Vector2(
+        size.x * 0.68 - (newgate?.size.x ?? 0 - 20),
+        (size.y * 0.5 - (viewNewgateIdComponent?.height ?? 0)));
   }
 
   void openChat() async {
@@ -113,35 +110,43 @@ class Finale extends Component with HasGameRef<WhichDoorGameScreen> {
 
   Future _loadButtons() async {
     final chatWithRogerArtBoard =
-        await loadArtboard(RiveFile.asset('assets/rive/button.riv'));
+        await loadArtboard(RiveFile.asset('assets/rive/button_light.riv'));
     final chatWithNewgateArtBoard =
-        await loadArtboard(RiveFile.asset('assets/rive/button.riv'));
+        await loadArtboard(RiveFile.asset('assets/rive/button_light.riv'));
     final viewRogerIdArtBoard =
-        await loadArtboard(RiveFile.asset('assets/rive/button.riv'));
+        await loadArtboard(RiveFile.asset('assets/rive/button_light.riv'));
     final viewNewgateIdArtBoard =
-        await loadArtboard(RiveFile.asset('assets/rive/button.riv'));
+        await loadArtboard(RiveFile.asset('assets/rive/button_light.riv'));
     final aDoorArtBoard =
-        await loadArtboard(RiveFile.asset('assets/rive/button.riv'));
+        await loadArtboard(RiveFile.asset('assets/rive/button_light.riv'));
     final bDoorArtBoard =
-        await loadArtboard(RiveFile.asset('assets/rive/button.riv'));
+        await loadArtboard(RiveFile.asset('assets/rive/button_light.riv'));
 
     doorAButton = RiveButtonComponent(aDoorArtBoard, 'Door A', () {
-      //TODO special ending
+      if (level.correctDoor == "A") {
+        gameRef.showOverlay(WinPopup.overlayName);
+      } else {
+        gameRef.showOverlay(LostPopup.overlayName);
+      }
     });
 
     doorBButton = RiveButtonComponent(bDoorArtBoard, 'Door B', () {
-      //TODO special losing
+      if (level.correctDoor == "B") {
+        gameRef.showOverlay(WinPopup.overlayName);
+      } else {
+        gameRef.showOverlay(LostPopup.overlayName);
+      }
     });
 
     chatWithRogerComponent =
-        RiveButtonComponent(chatWithRogerArtBoard, 'Chat with Willy', () {
+        RiveButtonComponent(chatWithRogerArtBoard, 'Chat with Roger', () {
       gameRef.guardIndex = 1;
       openChat();
       showOptions();
     });
 
     chatWithNewgateComponent =
-        RiveButtonComponent(chatWithNewgateArtBoard, 'Chat with Steve', () {
+        RiveButtonComponent(chatWithNewgateArtBoard, 'Chat with Newgate', () {
       gameRef.guardIndex = 0;
       openChat();
       showOptions();

@@ -9,6 +9,7 @@ import 'package:gaurds_game/utils/theme.dart';
 
 import '../locator.dart';
 import '../utils/routes.dart';
+import '../widgets/three_dimension_button.dart';
 import '../widgets/top_bar_widget.dart';
 
 class LevelScreen extends StatelessWidget {
@@ -44,8 +45,14 @@ class LevelScreen extends StatelessWidget {
                     const SizedBox(
                       height: 24,
                     ),
-                    _store.level == 7
-                        ? const FInalLevelWidget()
+                    _store.level == 7 && !_store.getGameFinished()
+                        ? FInalLevelWidget(
+                            onClicked: () {
+                              _store.setRandomDoor(7);
+                              Navigator.pushNamed(context, AppRoutes.game,
+                                  arguments: levels[7]!);
+                            },
+                          )
                         : Expanded(
                             child: GridView.builder(
                               shrinkWrap: true,
@@ -54,7 +61,7 @@ class LevelScreen extends StatelessWidget {
                                 mainAxisSpacing: 24,
                                 crossAxisCount: 3,
                               ),
-                              itemCount: 6,
+                              itemCount: _store.getGameFinished() ? 7 : 6,
                               itemBuilder: (context, index) {
                                 return Observer(
                                   builder: (_) => LevelButtonWidget(
@@ -85,7 +92,25 @@ class LevelScreen extends StatelessWidget {
                                 );
                               },
                             ),
-                          )
+                          ),
+                    _store.getGameFinished()
+                        ? ThreeDimensionButton(
+                            height: 60,
+                            width: 140,
+                            assetPath: null,
+                            text: 'Reset',
+                            label: 'Reset Game',
+                            iconSize: 0,
+                            onClick: () async {
+                              await _store.resetGame();
+                            },
+                            backgroundColor: const Color(0xff653E1A),
+                            shadowColor: const Color(0xff99846A),
+                            isRight: false)
+                        : const SizedBox(),
+                    const SizedBox(
+                      height: 16,
+                    )
                   ],
                 );
               }),

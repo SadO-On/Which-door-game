@@ -12,9 +12,7 @@ import 'package:gaurds_game/game/level03/game_level_three.dart';
 import 'package:gaurds_game/game/level04/gameLevelFour.dart';
 import 'package:gaurds_game/game/level05/game_level_five.dart';
 import 'package:gaurds_game/game/level06/game_level_six.dart';
-import 'package:gaurds_game/game/level07/game_level_seven.dart';
-import 'package:gaurds_game/game/level09/game_level_nine.dart';
-import 'package:gaurds_game/game/level10/finale.dart';
+import 'package:gaurds_game/game/finale/finale.dart';
 
 import '../data/model/level.dart';
 import 'level_interface.dart';
@@ -66,12 +64,6 @@ class WhichDoorGameScreen extends FlameGame {
         levelComponent = GameLevelSix(level: level);
         return levelComponent!;
       case 7:
-        levelComponent = GameLevelSeven(level: level);
-        return levelComponent!;
-      case 9:
-        levelComponent = GameLevelNine(level: level);
-        return levelComponent!;
-      case 10:
         levelComponent = Finale(level: level);
         return levelComponent!;
       default:
@@ -92,7 +84,9 @@ class WhichDoorGameScreen extends FlameGame {
     switch (level.id) {
       case 5:
         FlameAudio.bgm.play('level-five music.mp3', volume: .75);
-
+        break;
+      case 7:
+        FlameAudio.bgm.play('final_level_music.mp3', volume: .75);
         break;
       default:
         FlameAudio.bgm.play('levels-soundtrack.mp3', volume: .40);

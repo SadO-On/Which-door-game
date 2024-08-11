@@ -6,6 +6,7 @@ import 'package:gaurds_game/utils/utils.dart';
 import 'package:gaurds_game/widgets/three_dimension_button.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import '../game/components/loading_screen.dart';
 import '../utils/theme.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -32,86 +33,92 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       backgroundColor: backgroundColor,
       body: SafeArea(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            SvgPicture.asset('assets/images/Which_door_text.svg',
-                semanticsLabel: 'Game title (Which Door?)'),
-            Row(
-              mainAxisSize: MainAxisSize.max,
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                SvgPicture.asset('assets/images/left_door.svg',
-                    semanticsLabel:
-                        'Image of brown door in the left of the screen'),
-                ThreeDimensionButton(
-                    height: 48,
-                    width: 116,
-                    assetPath: null,
-                    text: 'OPEN',
-                    label: 'Start the game',
-                    iconSize: 0,
-                    onClick: () async {
-                      await _player.play(AssetSource('audio/start game.wav'));
+        child: MediaQuery.of(context).orientation == Orientation.landscape
+            ? const LoadingScreen()
+            : Column(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  SvgPicture.asset('assets/images/Which_door_text.svg',
+                      semanticsLabel: 'Game title (Which Door?)'),
+                  Row(
+                    mainAxisSize: MainAxisSize.max,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      SvgPicture.asset('assets/images/left_door.svg',
+                          semanticsLabel:
+                              'Image of brown door in the left of the screen'),
+                      ThreeDimensionButton(
+                          height: 48,
+                          width: 116,
+                          assetPath: null,
+                          text: 'OPEN',
+                          label: 'Start the game',
+                          iconSize: 0,
+                          onClick: () async {
+                            await _player
+                                .play(AssetSource('audio/start game.wav'));
 
-                      Future.delayed(const Duration(milliseconds: 200), () {
-                        Navigator.pushNamed(context, AppRoutes.level);
-                      });
-                    },
-                    backgroundColor: const Color(0xff653E1A),
-                    shadowColor: const Color(0xff99846A),
-                    isRight: false),
-                SvgPicture.asset('assets/images/right_door.svg',
-                    semanticsLabel:
-                        'Image of dark brown door in the right of the screen')
-              ],
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                GestureDetector(
-                  onTap: () async {
-                    try {
-                      await _launchUrl(_studio_url);
-                    } catch (error) {
-                      //Log it
-                    }
-                  },
-                  child: SvgPicture.asset('assets/images/98sLogo.svg',
-                      width: 90, height: 50, semanticsLabel: '98\'s Logo'),
-                ),
-                GestureDetector(
-                  onTap: () async {
-                    try {
-                      await _launchUrl(_gemini_url);
-                    } catch (error) {
-                      //Log it
-                    }
-                  },
-                  child: Image.asset(
-                    'assets/images/gemini.png',
-                    width: 90,
-                    height: 50,
+                            Future.delayed(const Duration(milliseconds: 200),
+                                () {
+                              Navigator.pushNamed(context, AppRoutes.level);
+                            });
+                          },
+                          backgroundColor: const Color(0xff653E1A),
+                          shadowColor: const Color(0xff99846A),
+                          isRight: false),
+                      SvgPicture.asset('assets/images/right_door.svg',
+                          semanticsLabel:
+                              'Image of dark brown door in the right of the screen')
+                    ],
                   ),
-                )
-              ],
-            ),
-            FutureBuilder(
-              future: getVersionInfo(),
-              builder: (context, snapshot) {
-                if (snapshot.hasData) {
-                  return Text(
-                    snapshot.data as String,
-                    textAlign: TextAlign.center,
-                  );
-                } else {
-                  return Container();
-                }
-              },
-            )
-          ],
-        ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      GestureDetector(
+                        onTap: () async {
+                          try {
+                            await _launchUrl(_studio_url);
+                          } catch (error) {
+                            //Log it
+                          }
+                        },
+                        child: SvgPicture.asset('assets/images/98sLogo.svg',
+                            width: 90,
+                            height: 50,
+                            semanticsLabel: '98\'s Logo'),
+                      ),
+                      GestureDetector(
+                        onTap: () async {
+                          try {
+                            await _launchUrl(_gemini_url);
+                          } catch (error) {
+                            //Log it
+                          }
+                        },
+                        child: Image.asset(
+                          'assets/images/gemini.png',
+                          width: 90,
+                          height: 50,
+                        ),
+                      )
+                    ],
+                  ),
+                  FutureBuilder(
+                    future: getVersionInfo(),
+                    builder: (context, snapshot) {
+                      if (snapshot.hasData) {
+                        return Text(
+                          snapshot.data as String,
+                          textAlign: TextAlign.center,
+                        );
+                      } else {
+                        return Container();
+                      }
+                    },
+                  )
+                ],
+              ),
       ),
     );
   }

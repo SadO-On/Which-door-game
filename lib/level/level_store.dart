@@ -18,7 +18,7 @@ abstract class _LevelStore with Store {
   final GeminiAI _ai = getIt.get<GeminiAI>(param1: Content.system(""));
 
   @observable
-  int level = 1;
+  int level = 7;
 
   @observable
   bool isLoading = false;
@@ -51,7 +51,6 @@ abstract class _LevelStore with Store {
     if (levelNumber == 6) return;
     String correctDoor = getRandomLetter(levels[levelNumber]!.noOfDoors);
     levels[levelNumber]!.correctDoor = correctDoor;
-    print("Correct Door is: $correctDoor");
     switch (levelNumber) {
       case 1:
         levels[levelNumber]!.systemInstructions = [
@@ -81,7 +80,26 @@ abstract class _LevelStore with Store {
           getSamSystemInstruction(correctDoor)
         ];
         break;
+      case 7:
+        levels[levelNumber]!.systemInstructions = [
+          getNewgateSystemInstruction(correctDoor),
+          getRogerInstructions(correctDoor == "A" ? "B" : "A", correctDoor)
+        ];
+        break;
       default:
     }
+  }
+
+  Future gameFinished() async {
+    await _repository.setFinishTheGame();
+  }
+
+  bool getGameFinished() {
+    return _repository.isFinishTheGame();
+  }
+
+  Future resetGame() async {
+    updateLevel(1);
+    await _repository.resetGame();
   }
 }
