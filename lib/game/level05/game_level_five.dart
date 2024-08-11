@@ -4,7 +4,6 @@ import 'package:flame/components.dart';
 import 'package:flame/flame.dart';
 import 'package:flame_audio/flame_audio.dart';
 import 'package:flame_rive/flame_rive.dart';
-import 'package:flame_svg/flame_svg.dart';
 import 'package:gaurds_game/data/model/level.dart';
 import 'package:gaurds_game/game/components/clock_component.dart';
 import 'package:gaurds_game/game/level05/components/big_message_component.dart';
@@ -112,16 +111,16 @@ class GameLevelFive extends Component
 
   Future _loadButtons() async {
     final chatWithSamArtBoard =
-        await loadArtboard(RiveFile.asset('assets/rive/button.riv'));
+        await loadArtboard(RiveFile.asset('assets/rive/button_light.riv'));
     final viewSamIdArtBoard =
-        await loadArtboard(RiveFile.asset('assets/rive/button.riv'));
+        await loadArtboard(RiveFile.asset('assets/rive/button_light.riv'));
     final readMessageArtBoard =
-        await loadArtboard(RiveFile.asset('assets/rive/button.riv'));
+        await loadArtboard(RiveFile.asset('assets/rive/button_light.riv'));
 
     final aDoorArtBoard =
-        await loadArtboard(RiveFile.asset('assets/rive/button.riv'));
+        await loadArtboard(RiveFile.asset('assets/rive/button_light.riv'));
     final bDoorArtBoard =
-        await loadArtboard(RiveFile.asset('assets/rive/button.riv'));
+        await loadArtboard(RiveFile.asset('assets/rive/button_light.riv'));
 
     doorAButton = RiveButtonComponent(aDoorArtBoard, 'Door A', () {
       if (level.correctDoor == "A") {

@@ -19,74 +19,77 @@ class LevelScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      key: _scaffoldKey,
-      backgroundColor: backgroundColor,
-      body: SafeArea(
-        child: Observer(builder: (_) {
-          if (_store.isLoading) {
-            return const LoadingScreen();
-          }
-          return Column(
-            children: [
-              Padding(
-                  padding:
-                      const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16),
-                  child: TopBarWidget(
-                    fontSize: 24,
-                    onBackClicked: () {
-                      Navigator.pop(context);
-                    },
-                    title: 'Levels',
-                  )),
-              const SizedBox(
-                height: 24,
-              ),
-              _store.level == 7
-                  ? const FInalLevelWidget()
-                  : Expanded(
-                      child: GridView.builder(
-                        shrinkWrap: true,
-                        gridDelegate:
-                            const SliverGridDelegateWithFixedCrossAxisCount(
-                          mainAxisSpacing: 24,
-                          crossAxisCount: 3,
-                        ),
-                        itemCount: 6,
-                        itemBuilder: (context, index) {
-                          return Observer(
-                            builder: (_) => LevelButtonWidget(
-                                onClick: (levelNumber) async {
-                                  _store.setRandomDoor(levelNumber);
-                                  if (levelNumber == 1) {
-                                    Navigator.pushNamed(
-                                        context, AppRoutes.cutScene,
-                                        arguments:
-                                            "assets/videos/cutscene.mp4");
-                                    return;
-                                  }
-                                  if (levelNumber == 6) {
-                                    await _store.getQuizQuestion(() {
-                                      Navigator.pushNamed(
-                                          _scaffoldKey.currentContext!,
-                                          AppRoutes.game,
-                                          arguments: levels[6]);
-                                    });
-                                    return;
-                                  }
-                                  Navigator.pushNamed(context, AppRoutes.game,
-                                      arguments: levels[index + 1]!);
-                                },
-                                isOpened: index < _store.level,
-                                levelNumber: index + 1),
-                          );
-                        },
-                      ),
-                    )
-            ],
+    return MediaQuery.of(context).orientation == Orientation.landscape
+        ? const LoadingScreen()
+        : Scaffold(
+            key: _scaffoldKey,
+            backgroundColor: backgroundColor,
+            body: SafeArea(
+              child: Observer(builder: (_) {
+                if (_store.isLoading) {
+                  return const LoadingScreen();
+                }
+                return Column(
+                  children: [
+                    Padding(
+                        padding: const EdgeInsets.symmetric(
+                            vertical: 8.0, horizontal: 16),
+                        child: TopBarWidget(
+                          fontSize: 24,
+                          onBackClicked: () {
+                            Navigator.pop(context);
+                          },
+                          title: 'Levels',
+                        )),
+                    const SizedBox(
+                      height: 24,
+                    ),
+                    _store.level == 7
+                        ? const FInalLevelWidget()
+                        : Expanded(
+                            child: GridView.builder(
+                              shrinkWrap: true,
+                              gridDelegate:
+                                  const SliverGridDelegateWithFixedCrossAxisCount(
+                                mainAxisSpacing: 24,
+                                crossAxisCount: 3,
+                              ),
+                              itemCount: 6,
+                              itemBuilder: (context, index) {
+                                return Observer(
+                                  builder: (_) => LevelButtonWidget(
+                                      onClick: (levelNumber) async {
+                                        _store.setRandomDoor(levelNumber);
+                                        if (levelNumber == 1) {
+                                          Navigator.pushNamed(
+                                              context, AppRoutes.cutScene,
+                                              arguments:
+                                                  "assets/videos/cutscene.mp4");
+                                          return;
+                                        }
+                                        if (levelNumber == 6) {
+                                          await _store.getQuizQuestion(() {
+                                            Navigator.pushNamed(
+                                                _scaffoldKey.currentContext!,
+                                                AppRoutes.game,
+                                                arguments: levels[6]);
+                                          });
+                                          return;
+                                        }
+                                        Navigator.pushNamed(
+                                            context, AppRoutes.game,
+                                            arguments: levels[index + 1]!);
+                                      },
+                                      isOpened: index < _store.level,
+                                      levelNumber: index + 1),
+                                );
+                              },
+                            ),
+                          )
+                  ],
+                );
+              }),
+            ),
           );
-        }),
-      ),
-    );
   }
 }

@@ -87,7 +87,7 @@ final levels = {
       systemInstructions: []),
   6: Level(
       id: 6,
-      backgroundAssets: "assets/images/background_level_06.svg",
+      backgroundAssets: "assets/images/background_level_six.svg",
       riddle: "",
       noOfDoors: 0,
       guards: [],

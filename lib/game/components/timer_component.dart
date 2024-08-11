@@ -51,7 +51,7 @@ class LevelTimerComponent extends TextBoxComponent {
       fontSize: 12,
       fontFamily: 'Impact',
     ));
-    position = Vector2((size.x / 2 - width / 2) - 250, 16);
+    position = Vector2((size.x / 2 - width / 2) - 240, 16);
     super.onGameResize(size);
   }
 }

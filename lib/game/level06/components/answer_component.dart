@@ -14,7 +14,6 @@ class AnswerComponent extends SvgComponent {
   FutureOr<void> onLoad() async {
     final message = await Svg.load('images/message_empty.svg');
     svg = message;
-    size = Vector2.all(61);
     answer = TextComponent(
         text: text,
         anchor: Anchor.topCenter,
@@ -31,19 +30,21 @@ class AnswerComponent extends SvgComponent {
   void onGameResize(Vector2 size) {
     answer?.position =
         Vector2(this.size.x / 2, this.size.y / 2 - (answer?.size.y ?? 0) / 2);
+    height = size.x * 0.07;
+    width = size.x * 0.07;
 
     switch (index) {
       case 0:
-        position = Vector2(size.x * 0.215, size.y * 0.45);
+        position = Vector2(size.x * 0.145, size.y * 0.32);
         break;
       case 1:
-        position = Vector2(size.x * 0.415, size.y * 0.45);
+        position = Vector2(size.x * 0.375, size.y * 0.32);
         break;
       case 2:
-        position = Vector2(size.x * 0.615, size.y * 0.45);
+        position = Vector2(size.x * 0.61, size.y * 0.32);
         break;
       case 3:
-        position = Vector2(size.x * 0.815, size.y * 0.45);
+        position = Vector2(size.x * 0.845, size.y * 0.32);
         break;
       default:
     }
