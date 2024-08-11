@@ -1,13 +1,14 @@
 import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:gaurds_game/utils/routes.dart';
-import 'package:gaurds_game/utils/utils.dart';
-import 'package:gaurds_game/widgets/three_dimension_button.dart';
+
 import 'package:url_launcher/url_launcher.dart';
 
 import '../game/components/loading_screen.dart';
+import '../utils/routes.dart';
 import '../utils/theme.dart';
+import '../utils/utils.dart';
+import '../widgets/three_dimension_button.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});

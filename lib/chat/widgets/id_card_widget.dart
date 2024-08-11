@@ -1,10 +1,12 @@
 import 'package:flame_rive/flame_rive.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:gaurds_game/data/model/guard.dart';
-import 'package:gaurds_game/data/model/guard_mood.dart';
+
 import 'package:rive/rive.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+
+import '../../data/model/guard.dart';
+import '../../data/model/guard_mood.dart';
 
 class IdCardWidget extends StatefulWidget {
   const IdCardWidget({super.key, required this.guard, required this.mood});
@@ -205,7 +207,6 @@ class _IdCardWidgetState extends State<IdCardWidget>
   }
 
   String getStateMachineName(GuardMood mood) {
-    print(mood.name);
     switch (mood) {
       case GuardMood.evil:
         return "Evil machine";

@@ -1,4 +1,4 @@
-package com.example.gaurds_game
+package studio.s98.whichdoor
 
 import io.flutter.embedding.android.FlutterActivity
 

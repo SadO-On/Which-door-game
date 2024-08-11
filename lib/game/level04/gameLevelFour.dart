@@ -3,16 +3,16 @@ import 'dart:async';
 import 'package:flame/components.dart';
 import 'package:flame/flame.dart';
 import 'package:flame_rive/flame_rive.dart';
-import 'package:gaurds_game/game/components/mission_component.dart';
-import 'package:gaurds_game/game/which_door_game_screen.dart';
 
 import '../../chat/chat_screen.dart';
 import '../../data/model/level.dart';
 import '../components/guard_id_popup.dart';
 import '../components/lost_popup.dart';
+import '../components/mission_component.dart';
 import '../components/rive_button_component.dart';
 import '../components/win_popup.dart';
 import '../level01/components/guard_component.dart';
+import '../which_door_game_screen.dart';
 
 class GameLevelFour extends Component with HasGameRef<WhichDoorGameScreen> {
   GameLevelFour({required this.level});

@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:gaurds_game/data/model/level.dart';
-import 'package:gaurds_game/data/model/system_instructions.dart';
-import 'package:gaurds_game/data/storage_repository.dart';
-import 'package:gaurds_game/locator.dart';
-import 'package:gaurds_game/utils/utils.dart';
 import 'package:google_generative_ai/google_generative_ai.dart';
 import 'package:mobx/mobx.dart';
 
 import '../data/gemini_ai.dart';
+import '../data/model/level.dart';
+import '../data/model/system_instructions.dart';
+import '../data/storage_repository.dart';
+import '../locator.dart';
+import '../utils/utils.dart';
 
 part 'level_store.g.dart';
 
