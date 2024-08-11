@@ -1,5 +1,7 @@
 import 'dart:math';
 
+import 'package:package_info_plus/package_info_plus.dart';
+
 extension TimeFormatting on double {
   String toMMSS() {
     int totalSeconds = toInt();
@@ -21,4 +23,11 @@ String getRandomLetter(int count) {
   String selectedLetters = letters.substring(0, count);
   int randomIndex = Random().nextInt(count);
   return selectedLetters[randomIndex];
+}
+
+Future<String> getVersionInfo() async {
+  PackageInfo packageInfo = await PackageInfo.fromPlatform();
+  String version = packageInfo.version;
+  String buildNumber = packageInfo.buildNumber;
+  return '$version ($buildNumber) - BETA';
 }
