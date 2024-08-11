@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flame/components.dart';
+import 'package:flame/extensions.dart';
 import 'package:flame/flame.dart';
 import 'package:flame_rive/flame_rive.dart';
 import 'package:flame_svg/flame_svg.dart';
@@ -18,10 +19,6 @@ import '../level01/components/guard_component.dart';
 class GameLevelTwo extends Component with HasGameRef<WhichDoorGameScreen> {
   GameLevelTwo({required this.level});
   final Level level;
-
-  SvgComponent? doorA;
-  SvgComponent? doorB;
-  SvgComponent? doorC;
   GuardComponent? fred;
   RiveButtonComponent? viewFredIdComponent;
   RiveButtonComponent? chatWithFredIdComponent;
@@ -33,17 +30,6 @@ class GameLevelTwo extends Component with HasGameRef<WhichDoorGameScreen> {
   FutureOr<void> onLoad() async {
     add(MissionComponent(text: level.riddle));
 
-    final sprite = await Svg.load('images/door_a.svg');
-    final spriteB = await Svg.load('images/door_b.svg');
-    final spriteC = await Svg.load('images/door_c.svg');
-
-    final size = Vector2(130, 265);
-    doorA = SvgComponent(size: size, svg: sprite);
-    doorB = SvgComponent(size: size, svg: spriteB);
-    doorC = SvgComponent(size: size, svg: spriteC);
-
-    addAll([doorA!, doorB!, doorC!]);
-
     final fredArtBoard = await loadArtboard(
         RiveFile.asset('assets/rive/guard_fred_idle_standing.riv'));
     fred = GuardComponent(artboard: fredArtBoard);
@@ -54,16 +40,16 @@ class GameLevelTwo extends Component with HasGameRef<WhichDoorGameScreen> {
 
   Future _loadButtons() async {
     final chatWithFredArtBoard =
-        await loadArtboard(RiveFile.asset('assets/rive/button.riv'));
+        await loadArtboard(RiveFile.asset('assets/rive/button_light.riv'));
     final viewFredIdArtBoard =
-        await loadArtboard(RiveFile.asset('assets/rive/button.riv'));
+        await loadArtboard(RiveFile.asset('assets/rive/button_light.riv'));
 
     final aDoorArtBoard =
-        await loadArtboard(RiveFile.asset('assets/rive/button.riv'));
+        await loadArtboard(RiveFile.asset('assets/rive/button_light.riv'));
     final bDoorArtBoard =
-        await loadArtboard(RiveFile.asset('assets/rive/button.riv'));
+        await loadArtboard(RiveFile.asset('assets/rive/button_light.riv'));
     final cDoorArtBoard =
-        await loadArtboard(RiveFile.asset('assets/rive/button.riv'));
+        await loadArtboard(RiveFile.asset('assets/rive/button_light.riv'));
 
     doorAButton = RiveButtonComponent(aDoorArtBoard, 'Door A', () {
       if (level.correctDoor == "A") {
@@ -123,44 +109,34 @@ class GameLevelTwo extends Component with HasGameRef<WhichDoorGameScreen> {
 
   @override
   void onGameResize(Vector2 size) {
-    final doorSize = Vector2(size.x * 0.14, size.y * 0.6);
-    final guardSize = Vector2(size.x * 0.10, size.y * 0.48);
+    final guardSize = Vector2(size.x * 0.11, size.y * 0.53);
+    final btnSize = Vector2(size.x * 0.16, size.y * 0.1);
 
-    doorA?.size = doorSize;
-    doorB?.size = doorSize;
-    doorC?.size = doorSize;
     fred?.size = guardSize;
-
-    doorA?.position =
-        Vector2(size.x * 0.25, size.y * 0.61 - (doorA?.size.y ?? 0) / 2);
-    doorB?.position =
-        Vector2(size.x * 0.52, size.y * 0.61 - (doorB?.size.y ?? 0) / 2);
-    doorC?.position =
-        Vector2(size.x * 0.79, size.y * 0.61 - (doorC?.size.y ?? 0) / 2);
-
     fred?.position = Vector2(size.x * 0.28 - (fred?.size.x ?? 0),
-        size.y * 0.61 - (fred?.size.y ?? 0) / 3);
+        size.y * 0.56 - (fred?.size.y ?? 0) / 3);
 
     _optionsSizing(size);
 
-    doorAButton?.position = Vector2(
-        doorA?.position.x ?? 0 - (doorA?.width ?? 0) / 2,
-        (size.y * 0.5 - (viewFredIdComponent?.height ?? 0)));
+    doorAButton?.size = btnSize;
+    doorBButton?.size = btnSize;
+    doorCButton?.size = btnSize;
 
-    doorBButton?.position = Vector2(size.x * 0.47 - (fred?.size.x ?? 0),
-        (size.y * 0.5 - (viewFredIdComponent?.height ?? 0)));
+    doorAButton?.position = Vector2(size.x * 0.04, size.y * 0.5);
 
-    doorCButton?.position = Vector2(size.x * 0.74 - (fred?.size.x ?? 0),
-        (size.y * 0.5 - (viewFredIdComponent?.height ?? 0)));
+    doorBButton?.position = Vector2(size.x * 0.365, size.y * 0.5);
+
+    doorCButton?.position = Vector2(size.x * 0.62, size.y * 0.5);
 
     super.onGameResize(size);
   }
 
   void _optionsSizing(Vector2 size) {
-    chatWithFredIdComponent?.position =
-        Vector2(size.x * 0.10 - (fred?.size.x ?? 0), size.y * 0.5);
+    chatWithFredIdComponent?.position = Vector2(
+        size.x * 0.22 - (chatWithFredIdComponent?.size.x ?? 0), size.y * 0.5);
 
-    viewFredIdComponent?.position = Vector2(size.x * 0.10 - (fred?.size.x ?? 0),
+    viewFredIdComponent?.position = Vector2(
+        size.x * 0.22 - (viewFredIdComponent?.size.x ?? 0),
         (size.y * 0.5 - (viewFredIdComponent?.height ?? 0)));
   }
 }

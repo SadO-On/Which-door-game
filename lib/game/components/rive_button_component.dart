@@ -43,8 +43,8 @@ class RiveButtonComponent extends RiveComponent with TapCallbacks {
 
   @override
   void onGameResize(Vector2 size) {
-    textComponent.position = Vector2(width / 2 - (textComponent.size.x / 2) - 4,
-        height / 2 - (textComponent.size.y / 2 - textComponent.y / 6));
+    textComponent.position =
+        Vector2(width / 2 - (textComponent.size.x / 2) - 4, height * 0.4);
     super.onGameResize(size);
   }
 

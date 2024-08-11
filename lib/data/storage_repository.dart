@@ -11,4 +11,8 @@ class StorageRepository {
   Future saveLevel(int level) async {
     await _sp.saveLevel(level);
   }
+
+  bool isFirstTime() {
+    return _sp.isFirstTime();
+  }
 }

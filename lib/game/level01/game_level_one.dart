@@ -60,7 +60,6 @@ class GameLevelOne extends Component
 
     willy?.size = guardSize;
     steve?.size = guardSize;
-    willy?.debugMode = true;
     willy?.position = Vector2(size.x * 0.30 - (willy?.size.x ?? 0),
         size.y * 0.61 - (willy?.size.y ?? 0) / 3);
 
@@ -68,7 +67,6 @@ class GameLevelOne extends Component
         size.y * 0.61 - (steve?.size.y ?? 0) / 3);
 
     lampAnimation?.size = lampSize;
-    lampAnimation?.debugMode = true;
     lampAnimation?.position = Vector2(
         size.x * 0.43, size.y * 0.61 - (lampAnimation?.size.y ?? 0) / 3);
 

@@ -8,6 +8,10 @@ class SP {
     return pref.getInt('level') ?? 1;
   }
 
+  bool isFirstTime() {
+    return pref.getBool('cutscene_first') ?? true;
+  }
+
   Future saveLevel(int levelNumber) async {
     await pref.setInt('level', levelNumber);
   }
