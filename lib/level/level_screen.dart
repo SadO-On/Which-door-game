@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:gaurds_game/data/model/level.dart';
 import 'package:gaurds_game/game/components/loading_screen.dart';
+import 'package:gaurds_game/level/final_level.dart';
 import 'package:gaurds_game/level/level_button_widget.dart';
 import 'package:gaurds_game/level/level_store.dart';
 import 'package:gaurds_game/utils/theme.dart';
@@ -41,42 +42,47 @@ class LevelScreen extends StatelessWidget {
               const SizedBox(
                 height: 24,
               ),
-              Expanded(
-                child: GridView.builder(
-                  shrinkWrap: true,
-                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                    mainAxisSpacing: 24,
-                    crossAxisCount: 3,
-                  ),
-                  itemCount: 6,
-                  itemBuilder: (context, index) {
-                    return Observer(
-                      builder: (_) => LevelButtonWidget(
-                          onClick: (levelNumber) async {
-                            _store.setRandomDoor(levelNumber);
-                            if (levelNumber == 1) {
-                              Navigator.pushNamed(context, AppRoutes.cutScene,
-                                  arguments: "assets/videos/cutscene.mp4");
-                              return;
-                            }
-                            if (levelNumber == 6) {
-                              await _store.getQuizQuestion(() {
-                                Navigator.pushNamed(
-                                    _scaffoldKey.currentContext!,
-                                    AppRoutes.game,
-                                    arguments: levels[6]);
-                              });
-                              return;
-                            }
-                            Navigator.pushNamed(context, AppRoutes.game,
-                                arguments: levels[index + 1]!);
-                          },
-                          isOpened: index < _store.level,
-                          levelNumber: index + 1),
-                    );
-                  },
-                ),
-              )
+              _store.level == 7
+                  ? const FInalLevelWidget()
+                  : Expanded(
+                      child: GridView.builder(
+                        shrinkWrap: true,
+                        gridDelegate:
+                            const SliverGridDelegateWithFixedCrossAxisCount(
+                          mainAxisSpacing: 24,
+                          crossAxisCount: 3,
+                        ),
+                        itemCount: 6,
+                        itemBuilder: (context, index) {
+                          return Observer(
+                            builder: (_) => LevelButtonWidget(
+                                onClick: (levelNumber) async {
+                                  _store.setRandomDoor(levelNumber);
+                                  if (levelNumber == 1) {
+                                    Navigator.pushNamed(
+                                        context, AppRoutes.cutScene,
+                                        arguments:
+                                            "assets/videos/cutscene.mp4");
+                                    return;
+                                  }
+                                  if (levelNumber == 6) {
+                                    await _store.getQuizQuestion(() {
+                                      Navigator.pushNamed(
+                                          _scaffoldKey.currentContext!,
+                                          AppRoutes.game,
+                                          arguments: levels[6]);
+                                    });
+                                    return;
+                                  }
+                                  Navigator.pushNamed(context, AppRoutes.game,
+                                      arguments: levels[index + 1]!);
+                                },
+                                isOpened: index < _store.level,
+                                levelNumber: index + 1),
+                          );
+                        },
+                      ),
+                    )
             ],
           );
         }),
