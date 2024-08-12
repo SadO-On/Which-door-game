@@ -49,7 +49,7 @@ class _WinPopupState extends State<WinPopup> {
         onClick: () async {
           if (widget.game.level.id == 7) {
             Navigator.pushReplacementNamed(context, AppRoutes.cutScene,
-                arguments: "assets/videos/final.mp4");
+                arguments: "assets/videos/final-cut-scene.mp4");
           } else {
             await _store.saveNewLevel(widget.game.level.id + 1).then((_) {
               Navigator.pop(context);
