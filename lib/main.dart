@@ -1,5 +1,8 @@
+import 'dart:io';
+
 import 'package:flame_splash_screen/flame_splash_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:gaurds_game/data/model/level.dart';
 import 'package:gaurds_game/game/game_play_container.dart';
@@ -11,7 +14,13 @@ import 'utils/orientation_helpers.dart';
 import 'utils/routes.dart';
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
+
   setupGetIt();
+
+  if (Platform.isAndroid) {
+    SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersive);
+  }
   runApp(MyApp());
 }
 
