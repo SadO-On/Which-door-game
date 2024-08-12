@@ -33,10 +33,6 @@ class WhichDoorGameScreen extends FlameGame {
   @override
   FutureOr<void> onLoad() async {
     await setLandScape();
-
-    add(FpsTextComponent(
-        position: Vector2(30, 20),
-        textRenderer: TextPaint(style: const TextStyle(color: Colors.black))));
     await add(levelDecider());
     playLevelMusic();
     showOverlay(BackButtonGameOverlay.overlayName);
