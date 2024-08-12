@@ -4,7 +4,7 @@
 
 ## **Overview**
 
-**[Your Game Title]** is a 2D puzzle mobile game that challenges players to solve a series of increasingly complex puzzles. In a world where every choice matters, players must engage with AI-powered guards who react dynamically to their questions and actions. The game begins with two guards and two doors, where players must ask one guard three questions to determine the correct door. As the game progresses, the puzzles become more challenging, featuring intelligent guards that make every level unique and engaging.
+**Which door ?** is a 2D puzzle mobile game that challenges players to solve a series of increasingly complex puzzles. In a world where every choice matters, players must engage with AI-powered guards who react dynamically to their questions and actions. The game begins with two guards and two doors, where players must ask one guard three questions to determine the correct door. As the game progresses, the puzzles become more challenging, featuring intelligent guards that make every level unique and engaging.
 
 ## **Features**
 
@@ -21,7 +21,7 @@
 
 ## **Installation**
 
-To test and play **[Your Game Title]**, follow these steps:
+To test and play **Which door ?**, follow these steps:
 
 1. Clone the repository:
    ```bash
