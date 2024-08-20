@@ -58,6 +58,7 @@ dependencies:
   package_info_plus: ^8.0.2
 
   rive: any
+  magnifying_glass: ^2.1.0
 dev_dependencies:
   flutter_test:
     sdk: flutter

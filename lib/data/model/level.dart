@@ -95,6 +95,16 @@ final levels = {
       systemInstructions: []),
   7: Level(
       id: 7,
+      noOfDoors: 3,
+      noOfQuestions: 9,
+      backgroundAssets: "assets/images/background_level_seven.svg",
+      riddle:
+          "One of these guards is carrying a fake ID. Identify him and have him reveal the correct door.",
+      guards: [guards['fred']!, guards['sam']!, guards['willy']!],
+      type: ChallengeType.number,
+      systemInstructions: []),
+  10: Level(
+      id: 7,
       backgroundAssets: "assets/images/background_level_finale.svg",
       type: ChallengeType.number,
       guards: [
@@ -122,10 +132,3 @@ enum ChallengeType { time, number }
   //     systemInstructions: [""""""])
 
 
-    // 7: Level(
-    //   id: 7,
-    //   riddle:
-    //       "One of these guards is carrying a fake ID. Identify him and have him reveal the correct door.",
-    //   guards: [guards['fred']!, guards['sam']!, guards['steve']!],
-    //   type: ChallengeType.number,
-    //   systemInstructions: [""""""]),

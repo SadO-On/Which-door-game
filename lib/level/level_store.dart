@@ -18,7 +18,7 @@ abstract class _LevelStore with Store {
   final GeminiAI _ai = getIt.get<GeminiAI>(param1: Content.system(""));
 
   @observable
-  int level = 1;
+  int level = 7;
 
   @observable
   bool isLoading = false;
@@ -27,7 +27,7 @@ abstract class _LevelStore with Store {
   void updateLevel(int newLevel) => level = newLevel;
 
   _LevelStore() {
-    level = _repository.getLevel();
+    // level = _repository.getLevel();
   }
 
   Future saveNewLevel(int newLevel) async {
@@ -80,7 +80,10 @@ abstract class _LevelStore with Store {
           getSamSystemInstruction(correctDoor)
         ];
         break;
+
       case 7:
+        levels[levelNumber]!.systemInstructions = ["", "", ""];
+      case 10:
         levels[levelNumber]!.systemInstructions = [
           getNewgateSystemInstruction(correctDoor),
           getRogerInstructions(correctDoor == "A" ? "B" : "A", correctDoor)

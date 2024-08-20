@@ -45,8 +45,8 @@ class LevelScreen extends StatelessWidget {
                     const SizedBox(
                       height: 24,
                     ),
-                    _store.level == 7 && !_store.getGameFinished()
-                        ? FInalLevelWidget(
+                    _store.level == 10 && !_store.getGameFinished()
+                        ? FinalLevelWidget(
                             onClicked: () {
                               _store.setRandomDoor(7);
                               Navigator.pushNamed(context, AppRoutes.game,
@@ -61,7 +61,7 @@ class LevelScreen extends StatelessWidget {
                                 mainAxisSpacing: 24,
                                 crossAxisCount: 3,
                               ),
-                              itemCount: _store.getGameFinished() ? 7 : 6,
+                              itemCount: _store.getGameFinished() ? 7 : 7,
                               itemBuilder: (context, index) {
                                 return Observer(
                                   builder: (_) => LevelButtonWidget(

@@ -3,9 +3,9 @@ import 'package:flutter_svg/flutter_svg.dart';
 
 import '../widgets/three_dimension_button.dart';
 
-class FInalLevelWidget extends StatelessWidget {
-  FInalLevelWidget({super.key, required this.onClicked});
-  Function onClicked;
+class FinalLevelWidget extends StatelessWidget {
+  const FinalLevelWidget({super.key, required this.onClicked});
+  final Function onClicked;
   @override
   Widget build(BuildContext context) {
     return Column(
