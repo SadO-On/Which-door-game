@@ -9,11 +9,12 @@ import 'package:gaurds_game/game/components/back_button_game_overlay.dart';
 import 'package:gaurds_game/game/level01/game_level_one.dart';
 import 'package:gaurds_game/game/level02/game_level_two.dart';
 import 'package:gaurds_game/game/level03/game_level_three.dart';
-import 'package:gaurds_game/game/level04/gameLevelFour.dart';
+import 'package:gaurds_game/game/level04/game_level_four.dart';
 import 'package:gaurds_game/game/level05/game_level_five.dart';
 import 'package:gaurds_game/game/level06/game_level_six.dart';
 import 'package:gaurds_game/game/finale/finale.dart';
 import 'package:gaurds_game/game/level07/game_level_seven.dart';
+import 'package:gaurds_game/game/level08/game_level_eight.dart';
 
 import '../data/model/level.dart';
 import 'level_interface.dart';
@@ -62,6 +63,9 @@ class WhichDoorGameScreen extends FlameGame {
         return levelComponent!;
       case 7:
         levelComponent = GameLevelSeven(level: level);
+        return levelComponent!;
+      case 8:
+        levelComponent = GameLevelEight(level: level);
         return levelComponent!;
       case 10:
         levelComponent = Finale(level: level);

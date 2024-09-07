@@ -103,6 +103,15 @@ final levels = {
       guards: [guards['fred']!, guards['sam']!, guards['willy']!],
       type: ChallengeType.number,
       systemInstructions: []),
+  8: Level(
+      id: 8,
+      noOfDoors: 1,
+      noOfQuestions: 10,
+      backgroundAssets: "assets/images/background_level_eight.svg",
+      riddle: "One of thes",
+      guards: [guards['fred']!],
+      type: ChallengeType.number,
+      systemInstructions: []),
   10: Level(
       id: 7,
       backgroundAssets: "assets/images/background_level_finale.svg",

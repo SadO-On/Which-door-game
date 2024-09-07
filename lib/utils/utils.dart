@@ -16,6 +16,7 @@ extension TimeFormatting on double {
 }
 
 String getRandomLetter(int count) {
+  if (count == 1) return "A";
   if (count < 2 || count > 4) {
     throw ArgumentError('Count must be between 2 and 4');
   }

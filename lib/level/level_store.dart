@@ -18,7 +18,7 @@ abstract class _LevelStore with Store {
   final GeminiAI _ai = getIt.get<GeminiAI>(param1: Content.system(""));
 
   @observable
-  int level = 7;
+  int level = 9;
 
   @observable
   bool isLoading = false;
@@ -90,6 +90,7 @@ abstract class _LevelStore with Store {
         ];
         break;
       default:
+        break;
     }
   }
 
